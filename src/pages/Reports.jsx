@@ -234,7 +234,7 @@ export default function Reports() {
           {tab === 0 && (
             <>
               <div className="report-section-title">Talent Distribution</div>
-              <p className="report-section-sub">Peer-assessed scores across Leader, Manager and Independent Contributor dimensions</p>
+              <p className="report-section-sub">Peer-reviewed scores across Leader, Manager and Independent Contributor dimensions</p>
               <div className="talent-grid">
                 <div className="talent-col">
                   <div className="talent-col-header elevate">Who to elevate</div>

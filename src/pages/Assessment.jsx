@@ -77,7 +77,7 @@ export default function Assessment() {
             style={{ marginBottom: 12 }}
             onClick={() => setStep(STEPS.RATEE)}
           >
-            Rate someone →
+            Review someone →
           </button>
 
           <button
@@ -100,8 +100,8 @@ export default function Assessment() {
             <span className="logo-dot" />
             <span className="logo-text">Mind</span>
           </div>
-          <h1 className="login-title">Who are you rating?</h1>
-          <p className="login-sub">Enter the name of the person you'd like to assess.</p>
+          <h1 className="login-title">Who are you reviewing?</h1>
+          <p className="login-sub">Enter the name of the person you'd like to review.</p>
           <form onSubmit={handleStartAssessment}>
             <div className="field">
               <label>Their name</label>
@@ -115,7 +115,7 @@ export default function Assessment() {
             </div>
             {error && <p className="error">{error}</p>}
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Starting...' : 'Start assessment →'}
+              {loading ? 'Starting review...' : 'Start review →'}
             </button>
             <button type="button" className="btn-ghost" style={{ marginTop: 10 }} onClick={() => setStep(STEPS.HOME)}>
               ← Back
@@ -139,7 +139,7 @@ export default function Assessment() {
             <span className="logo-dot" />
             <span className="logo-text">Mind</span>
           </div>
-          <span className="ratee-label">Rating: <strong>{ratee?.user_name}</strong></span>
+          <span className="ratee-label">Reviewing: <strong>{ratee?.user_name}</strong></span>
         </div>
 
         <div className="progress-section">

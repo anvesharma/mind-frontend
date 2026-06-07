@@ -47,7 +47,7 @@ export default function Results() {
         </div>
 
         <h1 className="results-title">{ratee?.user_name}</h1>
-        <p className="results-sub">Assessment complete</p>
+        <p className="results-sub">Review complete</p>
 
         <div className="results-grid">
           {dimensions.map((dim) => (
@@ -73,7 +73,10 @@ export default function Results() {
 
         <div className="results-actions">
           <button className="btn-primary" onClick={() => navigate('/assessment')}>
-            Rate someone else
+            Review someone else
+          </button>
+          <button className="btn-secondary" onClick={() => navigate('/reports')}>
+            View sample reports
           </button>
         </div>
       </div>
