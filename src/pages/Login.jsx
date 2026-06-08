@@ -57,7 +57,7 @@ export default function Login() {
         {step === STEPS.EMAIL ? (
           <form onSubmit={handleSendOtp}>
             <h1 className="login-title">Welcome</h1>
-            <p className="login-sub">Discover the mind behind the person</p>
+            <p className="login-sub">Discover the mind behind your team</p>
 
             <div className="field">
               <label>Your name</label>
