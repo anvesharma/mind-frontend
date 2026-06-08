@@ -37,3 +37,133 @@ button {
   font-family: 'Inter', sans-serif;
   cursor: pointer;
 }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 600px) {
+
+  /* Results page */
+  .result-card {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .result-label {
+    grid-column: 1 / -1;
+    font-size: 12px;
+  }
+
+  .result-score {
+    font-size: 28px;
+    text-align: left;
+    min-width: unset;
+  }
+
+  .result-percentile {
+    text-align: right;
+  }
+
+  .total-percentile {
+    padding: 16px;
+  }
+
+  .results-actions {
+    flex-direction: column;
+  }
+
+  /* Reports general */
+  .reports-header {
+    padding: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .reports-tabs {
+    padding: 12px 16px 0;
+    gap: 2px;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+
+  .reports-tab {
+    font-size: 11px;
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  .reports-content {
+    padding: 20px 16px;
+  }
+
+  /* Manager Quality */
+  .manager-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 14px 16px;
+  }
+
+  .manager-bar {
+    width: 100%;
+  }
+
+  .manager-flag {
+    font-size: 11px;
+  }
+
+  /* Team Culture */
+  .team-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .thi-chart-wrap {
+    padding: 12px;
+    overflow-x: auto;
+  }
+
+  /* Individual Profile */
+  .profile-top {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-radar {
+    width: 100%;
+  }
+
+  .profile-breakdown {
+    grid-template-columns: 1fr;
+  }
+
+  .breakdown-name {
+    min-width: 100px;
+    font-size: 11px;
+  }
+
+  /* Flashcard */
+  .fc-face {
+    padding: 24px 20px;
+  }
+
+  .fc-attribute {
+    font-size: 22px;
+  }
+
+  .fc-number {
+    font-size: 42px;
+  }
+
+  .fc-card {
+    height: 320px;
+  }
+
+  /* Assessment */
+  .assessment-wrapper {
+    padding: 0 4px;
+  }
+
+  .assessment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+}
