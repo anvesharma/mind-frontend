@@ -7,195 +7,768 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#060d1a;--accent:#1db88a;--accent2:#38e0aa;--text:#f0f4f8;--muted:#6a8aaa;--border:rgba(29,184,138,0.18);--card:rgba(13,26,48,0.85);--radius:18px;--font-head:'Syne',sans-serif;--font-body:'DM Sans',sans-serif}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);overflow:hidden}
-body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#0d2a1f 0%,#060d1a 55%,#020710 100%)}
-.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
-.star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:twinkle var(--d) infinite ease-in-out;opacity:0}
-@keyframes twinkle{0%,100%{opacity:0}50%{opacity:var(--op)}}
-.screen{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:700px;padding:2rem 1.5rem;position:relative;z-index:1;animation:fadeIn 0.5s ease;min-height:100vh}
-.screen.active{display:flex}
-@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.nova-avatar{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#38e0aa,#0f6e56);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:2.8rem;font-weight:800;color:#fff;margin-bottom:1.5rem;box-shadow:0 0 0 6px rgba(29,184,138,0.12),0 0 40px rgba(29,184,138,0.2);position:relative;flex-shrink:0}
-.nova-avatar.speaking::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:2px solid var(--accent);animation:pulse-ring 1.2s ease-out infinite}
-@keyframes pulse-ring{0%{transform:scale(1);opacity:0.8}100%{transform:scale(1.3);opacity:0}}
-.nova-bubble{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;font-size:1.1rem;line-height:1.7;color:var(--text);max-width:560px;width:100%;text-align:center;margin-bottom:2rem;backdrop-filter:blur(12px)}
-.nova-bubble .highlight{color:var(--accent2);font-weight:600}
-.options-grid{display:grid;grid-template-columns:1fr;gap:0.9rem;width:100%;max-width:520px}
-.option-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;color:var(--text);font-family:var(--font-body);font-size:1.05rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-align:left;display:flex;align-items:center;gap:1rem;backdrop-filter:blur(12px)}
-.option-btn:hover,.option-btn:active{background:rgba(29,184,138,0.1);border-color:var(--accent);transform:translateX(4px)}
-.option-btn .icon{width:42px;height:42px;border-radius:10px;background:rgba(29,184,138,0.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
-.option-btn .label{font-weight:600;font-size:1rem;display:block}
-.option-btn .sublabel{font-size:0.82rem;color:var(--muted);display:block;margin-top:2px}
-.back-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.6rem 1.2rem;color:var(--muted);font-family:var(--font-body);font-size:0.9rem;cursor:pointer;margin-top:1.5rem;transition:all 0.2s}
-.action-btn{background:var(--accent);border:none;border-radius:12px;padding:0.9rem 2rem;color:#fff;font-family:var(--font-body);font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s;margin:0.4rem}
-.action-btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text)}
-.mic-btn{width:80px;height:80px;border-radius:50%;border:2px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;margin:1.5rem auto 0;position:relative}
-.mic-btn svg{width:32px;height:32px;fill:var(--muted);transition:fill 0.2s}
-.mic-btn.listening{border-color:#e05c5c;background:rgba(224,92,92,0.12)}
-.mic-btn.listening svg{fill:#e05c5c}
-.mic-btn.listening::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid #e05c5c;animation:pulse-ring 1s ease-out infinite}
-.mic-hint{font-size:0.85rem;color:var(--muted);text-align:center;margin-top:0.6rem}
-.transcript{font-size:0.9rem;color:var(--accent2);font-style:italic;margin-top:0.5rem;min-height:22px;text-align:center}
-.qr-container{background:#fff;border-radius:16px;padding:1.2rem;display:inline-block;margin:1.5rem 0}
-.mind-logo{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:0.05em;margin-bottom:2.5rem;opacity:0.7}
-.waveform{display:flex;align-items:center;gap:3px;height:24px;margin:0 auto;justify-content:center}
-.wave-bar{width:3px;background:var(--accent);border-radius:2px;animation:wave var(--s) ease-in-out infinite alternate;height:6px}
-@keyframes wave{from{height:4px;opacity:0.4}to{height:20px;opacity:1}}
-.waveform.hidden{visibility:hidden}
-.chat-area{width:100%;max-width:580px;max-height:300px;overflow-y:auto;margin-bottom:0.5rem;display:flex;flex-direction:column;gap:0.75rem;scrollbar-width:none}
-.chat-area::-webkit-scrollbar{display:none}
-.chat-msg{padding:0.8rem 1.1rem;border-radius:14px;font-size:0.95rem;line-height:1.6;max-width:88%}
-.chat-msg.nova{background:var(--card);border:1px solid var(--border);align-self:flex-start}
-.chat-msg.user{background:rgba(29,184,138,0.15);border:1px solid rgba(29,184,138,0.3);align-self:flex-end}
-.loading-dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--muted);margin:0 2px;animation:dot-bounce 1.2s infinite}
-.loading-dots span:nth-child(2){animation-delay:0.2s}
-.loading-dots span:nth-child(3){animation-delay:0.4s}
-@keyframes dot-bounce{0%,80%,100%{transform:translateY(0);opacity:0.4}40%{transform:translateY(-6px);opacity:1}}
-.btn-row{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.slide-up{animation:slideUp 0.4s ease forwards}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #060d1a;
+    --bg2: #0b1628;
+    --bg3: #0f1f38;
+    --accent: #1db88a;
+    --accent2: #38e0aa;
+    --text: #f0f4f8;
+    --muted: #6a8aaa;
+    --border: rgba(29,184,138,0.18);
+    --card: rgba(13,26,48,0.85);
+    --radius: 18px;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 0%, #0d2a1f 0%, #060d1a 55%, #020710 100%);
+  }
+
+  /* Stars background */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d) infinite ease-in-out;
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: var(--op); }
+  }
+
+  /* Screens */
+  .screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 700px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 0.5s ease;
+    min-height: 100vh;
+  }
+  .screen.active { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Nova avatar */
+  .nova-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #38e0aa, #0f6e56);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 0 6px rgba(29,184,138,0.12), 0 0 40px rgba(29,184,138,0.2);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .nova-avatar.speaking::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    animation: pulse-ring 1.2s ease-out infinite;
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+
+  /* Text bubble */
+  .nova-bubble {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(12px);
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nova-bubble .highlight {
+    color: var(--accent2);
+    font-weight: 600;
+  }
+
+  /* Option buttons (main 3) */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    width: 100%;
+    max-width: 520px;
+  }
+  .option-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    backdrop-filter: blur(12px);
+  }
+  .option-btn:hover, .option-btn:active {
+    background: rgba(29,184,138,0.1);
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+  .option-btn .icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(29,184,138,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .option-btn .label { font-weight: 600; font-size: 1rem; display: block; }
+  .option-btn .sublabel { font-size: 0.82rem; color: var(--muted); display: block; margin-top: 2px; }
+
+  /* Back button */
+  .back-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 0.6rem 1.2rem;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+
+  /* Action buttons */
+  .action-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 12px;
+    padding: 0.9rem 2rem;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0.4rem;
+  }
+  .action-btn:hover { background: var(--accent2); transform: scale(1.02); }
+  .action-btn.secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .action-btn.secondary:hover { background: rgba(29,184,138,0.08); }
+
+  /* Mic button */
+  .mic-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 1.5rem auto 0;
+    position: relative;
+  }
+  .mic-btn svg { width: 30px; height: 30px; fill: var(--muted); transition: fill 0.2s; }
+  .mic-btn.listening { border-color: #e05c5c; background: rgba(224,92,92,0.12); }
+  .mic-btn.listening svg { fill: #e05c5c; }
+  .mic-btn.listening::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid #e05c5c;
+    animation: pulse-ring 1s ease-out infinite;
+  }
+  .mic-hint { font-size: 0.8rem; color: var(--muted); text-align: center; margin-top: 0.5rem; }
+
+  /* Transcript */
+  .transcript { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-top: 0.5rem; min-height: 20px; text-align: center; }
+
+  /* QR code screen */
+  .qr-container {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.2rem;
+    display: inline-block;
+    margin: 1.5rem 0;
+  }
+  .qr-label { font-size: 0.9rem; color: var(--muted); text-align: center; margin-top: 0.5rem; }
+
+  /* Anvesh story card */
+  .story-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    max-width: 560px;
+    width: 100%;
+    line-height: 1.75;
+    font-size: 1rem;
+    color: var(--text);
+    text-align: center;
+    backdrop-filter: blur(12px);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Logo */
+  .mind-logo {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+    opacity: 0.7;
+  }
+
+  /* Waveform animation */
+  .waveform {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 24px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .wave-bar {
+    width: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    animation: wave var(--s) ease-in-out infinite alternate;
+    height: 6px;
+  }
+  @keyframes wave {
+    from { height: 4px; opacity: 0.4; }
+    to { height: 20px; opacity: 1; }
+  }
+  .waveform.hidden { visibility: hidden; }
+
+  /* Chat mode */
+  .chat-area {
+    width: 100%;
+    max-width: 580px;
+    max-height: 340px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    scrollbar-width: none;
+  }
+  .chat-area::-webkit-scrollbar { display: none; }
+  .chat-msg {
+    padding: 0.8rem 1.1rem;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 88%;
+  }
+  .chat-msg.nova { background: var(--card); border: 1px solid var(--border); align-self: flex-start; }
+  .chat-msg.user { background: rgba(29,184,138,0.15); border: 1px solid rgba(29,184,138,0.3); align-self: flex-end; color: var(--text); }
+
+  .loading-dots span {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    margin: 0 2px;
+    animation: dot-bounce 1.2s infinite;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dot-bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+    40% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  .btn-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .slide-up { animation: slideUp 0.4s ease forwards; }
 </style>
 </head>
 <body>
+
+<!-- Stars -->
 <div class="stars" id="stars"></div>
+
+<!-- SCREEN 1: Welcome -->
 <div class="screen active" id="screen-welcome">
   <div class="mind-logo">✦ DISCOVER MIND</div>
-  <div class="nova-avatar speaking">N</div>
-  <div class="nova-bubble">Hi! I'm <span class="highlight">Nova</span>, Anvesh's digital avatar. I'm here to assist you since Anvesh is driving. If you'd prefer silence, tap <span class="highlight">Keep it quiet</span>. Otherwise, let's chat!</div>
-  <div class="waveform">
-    <div class="wave-bar" style="--s:0.8s"></div>
-    <div class="wave-bar" style="--s:0.6s;animation-delay:0.1s"></div>
-    <div class="wave-bar" style="--s:1s;animation-delay:0.2s"></div>
-    <div class="wave-bar" style="--s:0.7s;animation-delay:0.3s"></div>
-    <div class="wave-bar" style="--s:0.9s;animation-delay:0.15s"></div>
+  <div class="nova-avatar speaking" id="welcome-avatar">N</div>
+  <div class="nova-bubble" id="welcome-bubble">
+    Hi! I'm <span class="highlight">Nova</span>, Anvesh's digital avatar. I'm here to assist you since Anvesh is driving — I don't want him distracted!<br><br>
+    If you prefer silence, that's totally fine — just say <span class="highlight">"Silence"</span> or tap anywhere to dismiss. Otherwise, tap below to chat!
   </div>
-  <div style="margin-top:2rem">
-    <button class="action-btn" onclick="goHome()">Let's chat</button>
+  <div class="waveform" id="welcome-wave">
+    <div class="wave-bar" style="--s:0.8s; animation-delay:0s"></div>
+    <div class="wave-bar" style="--s:0.6s; animation-delay:0.1s"></div>
+    <div class="wave-bar" style="--s:1s; animation-delay:0.2s"></div>
+    <div class="wave-bar" style="--s:0.7s; animation-delay:0.3s"></div>
+    <div class="wave-bar" style="--s:0.9s; animation-delay:0.15s"></div>
+    <div class="wave-bar" style="--s:0.65s; animation-delay:0.25s"></div>
+  </div>
+  <div style="margin-top: 2rem;">
+    <button class="action-btn" onclick="goHome()">Let's chat 👋</button>
     <button class="action-btn secondary" onclick="goSilence()">Keep it quiet</button>
   </div>
 </div>
+
+<!-- SCREEN 2: Home (3 options) -->
 <div class="screen" id="screen-home">
-  <div class="nova-avatar">N</div>
-  <div class="nova-bubble" style="margin-bottom:1.5rem;font-size:1rem">What would you like to explore?</div>
+  <div class="nova-avatar" id="home-avatar">N</div>
+  <div class="nova-bubble" style="margin-bottom:1.5rem; font-size:1rem;">
+    What would you like to explore?
+  </div>
   <div class="options-grid">
+    <button class="option-btn" onclick="goAnvesh()">
+      <div class="icon">👤</div>
+      <div>
+        <span class="label">Who is Anvesh?</span>
+        <span class="sublabel">Meet the founder behind Mind</span>
+      </div>
+    </button>
     <button class="option-btn" onclick="goMind()">
       <div class="icon">🧠</div>
-      <div><span class="label">What is Mind?</span><span class="sublabel">The problem it solves and how it works</span></div>
+      <div>
+        <span class="label">What is Mind?</span>
+        <span class="sublabel">The problem it solves & how it works</span>
+      </div>
     </button>
     <button class="option-btn" onclick="goExplore()">
       <div class="icon">🚀</div>
-      <div><span class="label">Explore the app</span><span class="sublabel">Try it on your phone or right here</span></div>
+      <div>
+        <span class="label">Explore the app</span>
+        <span class="sublabel">Try it on your phone or right here</span>
+      </div>
     </button>
   </div>
 </div>
+
+<!-- SCREEN 3: Who is Anvesh -->
+<div class="screen" id="screen-anvesh">
+  <div class="nova-avatar speaking" id="anvesh-avatar">N</div>
+  <div class="story-card" id="anvesh-text">
+    Anvesh is a tech entrepreneur who cofounded <span class="highlight">eLogist</span>, a logistics tech company, at the height of India's demonetization crisis in 2017. After eLogist was acquired by <span class="highlight">Axestrack</span> in 2020, Anvesh moved to the US in 2023 and completed his MBA from <span class="highlight">NYU's Stern School of Business</span> in 2025. After scaling Axestrack's international operations until last month, Anvesh decided to build <span class="highlight">Mind</span> — a peer review platform with a mission to improve workplace talent visibility and culture.<br><br>
+    <em style="color: var(--muted); font-size: 0.92rem;">We'd love for you to check out Mind and give us your feedback!</em>
+  </div>
+  <div class="waveform" id="anvesh-wave">
+    <div class="wave-bar" style="--s:0.8s; animation-delay:0s"></div>
+    <div class="wave-bar" style="--s:0.6s; animation-delay:0.1s"></div>
+    <div class="wave-bar" style="--s:1s; animation-delay:0.2s"></div>
+    <div class="wave-bar" style="--s:0.7s; animation-delay:0.3s"></div>
+    <div class="wave-bar" style="--s:0.9s; animation-delay:0.15s"></div>
+  </div>
+  <button class="back-btn" onclick="goHome()">← Back</button>
+</div>
+
+<!-- SCREEN 4: What is Mind (chat mode) -->
 <div class="screen" id="screen-mind">
-  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;width:100%;max-width:580px">
-    <div class="nova-avatar" id="mind-avatar" style="width:56px;height:56px;font-size:1.4rem;margin:0;flex-shrink:0">N</div>
+  <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem; width:100%; max-width:580px;">
+    <div class="nova-avatar" id="mind-avatar" style="width:56px; height:56px; font-size:1.4rem; margin:0; flex-shrink:0;">N</div>
     <div>
-      <div style="font-family:var(--font-head);font-weight:700;font-size:1.1rem">Nova</div>
-      <div style="font-size:0.8rem;color:var(--muted)">Ask me anything about Mind</div>
+      <div style="font-family: var(--font-head); font-weight:700; font-size:1.1rem;">Nova</div>
+      <div style="font-size:0.8rem; color:var(--muted);">Ask me anything about Mind</div>
     </div>
-    <div class="waveform hidden" id="mind-wave" style="margin-left:auto">
-      <div class="wave-bar" style="--s:0.8s"></div>
-      <div class="wave-bar" style="--s:0.6s;animation-delay:0.1s"></div>
-      <div class="wave-bar" style="--s:1s;animation-delay:0.2s"></div>
-      <div class="wave-bar" style="--s:0.7s;animation-delay:0.3s"></div>
+    <div class="waveform hidden" id="mind-wave" style="margin-left:auto;">
+      <div class="wave-bar" style="--s:0.8s; animation-delay:0s"></div>
+      <div class="wave-bar" style="--s:0.6s; animation-delay:0.1s"></div>
+      <div class="wave-bar" style="--s:1s; animation-delay:0.2s"></div>
+      <div class="wave-bar" style="--s:0.7s; animation-delay:0.3s"></div>
     </div>
   </div>
   <div class="chat-area" id="chat-area"></div>
   <div class="transcript" id="transcript"></div>
   <div class="mic-btn" id="mic-btn" onclick="toggleMic()">
-    <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM6.5 10a.5.5 0 0 0-1 0 6.5 6.5 0 0 0 13 0 .5.5 0 0 0-1 0 5.5 5.5 0 0 1-11 0zm4.5 8.5v2h-2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-2v-2a6.5 6.5 0 0 0 6-6.5.5.5 0 0 0-1 0 5.5 5.5 0 0 1-11 0 .5.5 0 0 0-1 0 6.5 6.5 0 0 0 6 6.5z"/></svg>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM6.5 10a.5.5 0 0 0-1 0 6.5 6.5 0 0 0 13 0 .5.5 0 0 0-1 0 5.5 5.5 0 0 1-11 0zm4.5 8.5v2h-2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-2v-2a6.5 6.5 0 0 0 6-6.5.5.5 0 0 0-1 0 5.5 5.5 0 0 1-11 0 .5.5 0 0 0-1 0 6.5 6.5 0 0 0 6 6.5z"/>
+    </svg>
   </div>
-  <div class="mic-hint" id="mic-hint">Tap mic and speak, or choose a topic:</div>
-  <div class="btn-row" style="margin-top:0.75rem">
-    <button class="action-btn secondary" style="font-size:0.82rem;padding:0.6rem 1rem" onclick="askQuick('What problem does Mind solve?')">What problem does it solve?</button>
-    <button class="action-btn secondary" style="font-size:0.82rem;padding:0.6rem 1rem" onclick="askQuick('Who is Mind designed for?')">Who is it for?</button>
-    <button class="action-btn secondary" style="font-size:0.82rem;padding:0.6rem 1rem" onclick="askQuick('How does Mind work?')">How does it work?</button>
+  <div class="mic-hint" id="mic-hint">Tap mic and ask a question, or choose a topic:</div>
+  <div class="btn-row" style="margin-top:0.75rem;">
+    <button class="action-btn secondary" style="font-size:0.82rem; padding:0.6rem 1rem;" onclick="askQuick('What problem does Mind solve?')">What problem does it solve?</button>
+    <button class="action-btn secondary" style="font-size:0.82rem; padding:0.6rem 1rem;" onclick="askQuick('Who is Mind designed for?')">Who is it for?</button>
+    <button class="action-btn secondary" style="font-size:0.82rem; padding:0.6rem 1rem;" onclick="askQuick('How does Mind work?')">How does it work?</button>
   </div>
-  <button class="back-btn" onclick="goHome()">Back</button>
+  <button class="back-btn" onclick="goHome()">← Back</button>
 </div>
+
+<!-- SCREEN 5: Explore -->
 <div class="screen" id="screen-explore">
-  <div class="nova-avatar" style="margin-bottom:1rem">N</div>
-  <div class="nova-bubble" style="font-size:0.95rem;margin-bottom:1.5rem">Ready to explore Mind? Scan the QR code on your phone, or open it right here.</div>
-  <div class="qr-container"><div id="qrcode"></div></div>
-  <div style="font-size:0.9rem;color:var(--muted);text-align:center;margin-top:0.5rem">Scan to open discovermind.net</div>
-  <div class="btn-row" style="margin-top:1.5rem">
-    <button class="action-btn" onclick="window.open('https://www.discovermind.net','_blank')">Open here on tablet</button>
-    <button class="action-btn secondary" onclick="goHome()">Back</button>
+  <div class="nova-avatar" style="margin-bottom:1rem;">N</div>
+  <div class="nova-bubble" style="font-size:0.95rem; margin-bottom:1.5rem;">
+    Ready to explore Mind? Scan the QR code on your phone, or open it right here on the tablet.
+  </div>
+  <div class="qr-container">
+    <div id="qrcode"></div>
+  </div>
+  <div class="qr-label">Scan to open discovermind.net on your phone</div>
+  <div class="btn-row" style="margin-top:1.5rem;">
+    <button class="action-btn" onclick="openOnTablet()">Open here on tablet</button>
+    <button class="action-btn secondary" onclick="goHome()">← Back</button>
   </div>
 </div>
+
+<!-- SCREEN 6: Silence -->
 <div class="screen" id="screen-silence">
-  <div style="text-align:center;color:var(--muted)">
-    <div style="font-size:2.5rem;margin-bottom:1rem">🌙</div>
-    <div style="font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">Enjoy the ride.</div>
-    <div style="font-size:0.9rem">Tap anywhere to wake Nova</div>
+  <div style="text-align:center; color: var(--muted);">
+    <div style="font-size:2.5rem; margin-bottom:1rem;">🌙</div>
+    <div style="font-family: var(--font-head); font-size:1.5rem; font-weight:700; color:var(--text); margin-bottom:0.5rem;">Enjoy the ride.</div>
+    <div style="font-size:0.9rem;">Tap anywhere to wake Nova</div>
   </div>
-  <div style="position:fixed;inset:0" onclick="goWelcome()"></div>
+  <div style="position:fixed; inset:0;" onclick="goWelcome()"></div>
 </div>
+
 <script>
-const TTS='https://mind-backend-production-0973.up.railway.app/api/tts';
-const CHAT='https://mind-backend-production-0973.up.railway.app/api/nova-chat';
-const starsEl=document.getElementById('stars');
-for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;--d:'+(2+Math.random()*4)+'s;--op:'+(0.2+Math.random()*0.6)+';animation-delay:'+Math.random()*5+'s';starsEl.appendChild(s)}
-let audio=null,session=0,recognition=null,listening=false;
-async function speak(text,cb){
-  stopSpeaking();
-  const s=++session;
-  try{
-    const r=await fetch(TTS,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
-    if(s!==session)return;
-    const d=await r.json();
-    if(!d.audioContent||s!==session)return;
-    audio=new Audio('data:audio/mp3;base64,'+d.audioContent);
-    audio.onended=()=>{audio=null;if(cb)cb()};
-    audio.onerror=()=>{audio=null;if(cb)cb()};
+// ---- Stars ----
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--op:${0.2+Math.random()*0.6};animation-delay:${Math.random()*5}s`;
+  starsEl.appendChild(s);
+}
+
+// ---- Google TTS ----
+const TTS_ENDPOINT = 'https://mind-backend-production-0973.up.railway.app/api/tts';
+let currentAudio = null;
+let recognition = null;
+let isListening = false;
+
+async function speak(text, onEnd) {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  try {
+    const res = await fetch(TTS_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    });
+    const data = await res.json();
+    if (!data.audioContent) throw new Error('No audio');
+    const audio = new Audio('data:audio/mp3;base64,' + data.audioContent);
+    currentAudio = audio;
+    audio.onended = () => { currentAudio = null; if (onEnd) onEnd(); };
+    audio.onerror = () => { currentAudio = null; if (onEnd) onEnd(); };
     audio.play();
-  }catch(e){if(cb)cb()}
+  } catch (e) {
+    console.error('TTS error:', e);
+    if (onEnd) onEnd();
+  }
 }
-function stopSpeaking(){session++;if(audio){audio.pause();audio=null}}
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');stopSpeaking();stopListening()}
-function goWelcome(){showScreen('screen-welcome')}
-function goHome(){showScreen('screen-home');speak("What would you like to explore? You can find out what Mind is, or try the app yourself.")}
-function goMind(){showScreen('screen-mind');document.getElementById('chat-area').innerHTML='';addMsg('nova',"Hi! I can answer your questions about Mind. Tap the mic and ask anything, or choose a topic below!");speak("Hi! I can answer your questions about Mind. Tap the mic and ask anything, or choose a topic below.")}
-function goExplore(){showScreen('screen-explore');if(!window.qrDone){new QRCode(document.getElementById('qrcode'),{text:'https://www.discovermind.net',width:180,height:180,colorDark:'#000',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});window.qrDone=true}speak("Here's the QR code. Scan it to open Mind on your phone, or tap Open here.")}
-function goSilence(){stopSpeaking();showScreen('screen-silence')}
-const SYS=`You are Nova, a warm concise voice agent for Mind, a B2B peer assessment platform, speaking to passengers in Anvesh's Uber in the Bay Area. Mind uses structured peer feedback to generate talent profiles across three dimensions: Leader, Manager, and Independent Contributor. Tagline: Align Your Workforce With Your Vision. The problem: Companies make talent decisions based on gut feeling. Great contributors get overlooked. Managers are promoted for wrong reasons. Teams drift culturally. Mind helps leaders see what hierarchy hides. How it works: Peers rate each other on 36 attributes. Output is a talent profile scored on a 7-10 scale with percentile ranking. Who it is for: Founders, CHROs, and People leaders at Series B to enterprise companies. Early access: 3 months free at discovermind.net. About Anvesh: cofounded eLogist in India in 2017, acquired by Axestrack in 2020, MBA at NYU Stern 2025, then built Mind. Rules: 2-3 sentences max. Warm and conversational. No markdown. Plain prose only. If asked how to help: suggest trying discovermind.net and introducing Anvesh to founders or People leaders.`;
-const hist=[];
-async function askNova(q){
-  hist.push({role:'user',content:q});
-  const m=addMsg('nova','<div class="loading-dots"><span></span><span></span><span></span></div>');
-  setWave(true);
-  try{
-    const r=await fetch(CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SYS,messages:hist})});
-    const d=await r.json();
-    const reply=d.content?.[0]?.text||"Sorry, could you ask again?";
-    hist.push({role:'assistant',content:reply});
-    m.innerHTML=reply;m.classList.add('slide-up');
-    setWave(false);setSpeak('mind-avatar',true);
-    speak(reply,()=>setSpeak('mind-avatar',false));
-    document.getElementById('chat-area').scrollTop=99999;
-  }catch(e){m.innerHTML="Sorry, having trouble connecting. Ask Anvesh directly!";setWave(false)}
+
+function stopSpeaking() {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
 }
-function addMsg(r,t){const a=document.getElementById('chat-area'),d=document.createElement('div');d.className='chat-msg '+r;d.innerHTML=t;a.appendChild(d);a.scrollTop=99999;return d}
-function askQuick(q){addMsg('user',q);askNova(q)}
-function setWave(on){const w=document.getElementById('mind-wave');if(on)w.classList.remove('hidden');else w.classList.add('hidden')}
-function setSpeak(id,on){const e=document.getElementById(id);if(e){if(on)e.classList.add('speaking');else e.classList.remove('speaking')}}
-function toggleMic(){if(listening)stopListening();else startListening()}
-function startListening(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){document.getElementById('mic-hint').textContent='Voice requires Chrome on HTTPS.';return}
-  stopSpeaking();recognition=new SR();recognition.lang='en-US';recognition.interimResults=true;recognition.continuous=false;
-  recognition.onstart=()=>{listening=true;document.getElementById('mic-btn').classList.add('listening');document.getElementById('mic-hint').textContent='Listening... speak now';document.getElementById('transcript').textContent=''};
-  recognition.onresult=(e)=>{let fi='',fn='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)fn+=e.results[i][0].transcript;else fi+=e.results[i][0].transcript}document.getElementById('transcript').textContent=fn||fi;if(fn){stopListening();addMsg('user',fn);document.getElementById('transcript').textContent='';askNova(fn)}};
-  recognition.onerror=(e)=>{document.getElementById('mic-hint').textContent=e.error==='not-allowed'?'Mic blocked — allow in browser settings.':'Could not hear you — try again.';stopListening()};
-  recognition.onend=()=>{if(listening)stopListening()};
+
+function stripHtml(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
+// ---- QR Code ----
+let qrGenerated = false;
+function generateQR() {
+  if (qrGenerated) return;
+  new QRCode(document.getElementById('qrcode'), {
+    text: 'https://www.discovermind.net',
+    width: 180,
+    height: 180,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  qrGenerated = true;
+}
+
+// ---- Navigation ----
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  stopSpeaking();
+  stopListening();
+}
+
+function goWelcome() {
+  showScreen('screen-welcome');
+  setTimeout(() => {
+    speak("Hi! I'm Nova, Anvesh's digital avatar. I'm here to assist you since Anvesh is driving. If you prefer silence, just say so or tap 'Keep it quiet'. Otherwise, tap Let's chat to get started!");
+  }, 400);
+}
+
+function goHome() {
+  showScreen('screen-home');
+  setTimeout(() => speak("What would you like to explore? You can learn about Anvesh, find out what Mind is, or try the app yourself."), 300);
+}
+
+function goAnvesh() {
+  showScreen('screen-anvesh');
+  const text = stripHtml(document.getElementById('anvesh-text').innerHTML);
+  setTimeout(() => speak(text), 300);
+}
+
+function goMind() {
+  showScreen('screen-mind');
+  const chatArea = document.getElementById('chat-area');
+  chatArea.innerHTML = '';
+  addMessage('nova', "Hi! I'm powered by AI so I can answer your questions about Mind. What would you like to know — what it does, who it's for, how it works? Or just tap the mic and ask anything!");
+  setTimeout(() => speak("Hi! I can answer your questions about Mind. What would you like to know? What it does, who it's for, how it works? Tap the mic and ask anything, or choose a topic below."), 300);
+}
+
+function goExplore() {
+  showScreen('screen-explore');
+  generateQR();
+  setTimeout(() => speak("Here's the QR code — scan it to open Mind on your phone and try it yourself. Or tap 'Open here' to use the tablet."), 300);
+}
+
+function goSilence() {
+  stopSpeaking();
+  showScreen('screen-silence');
+}
+
+function openOnTablet() {
+  window.open('https://www.discovermind.net', '_blank');
+}
+
+// ---- Chat / Claude API ----
+const SYSTEM_PROMPT = `You are Nova, a warm, intelligent voice agent representing Mind — a B2B peer assessment platform. You are speaking to passengers in Anvesh's Uber car in the Bay Area.
+
+ABOUT MIND:
+Mind is a peer assessment platform for Series B to enterprise companies. It uses structured peer feedback to generate talent profiles across three dimensions: Leader, Manager, and Independent Contributor (IC).
+
+Tagline: "Align Your Workforce With Your Vision"
+
+THE PROBLEM MIND SOLVES:
+Most companies make talent decisions based on hierarchy and gut feeling — not data. Great contributors get overlooked. Managers are promoted for the wrong reasons. Teams drift culturally without anyone noticing. Mind helps leaders see what hierarchy hides.
+
+HOW IT WORKS:
+- Peers rate each other on 36 structured attributes (e.g. Creativity, Logic, Problem Solving, Influence, Coaching, etc.)
+- Input: peer feedback. Output: a talent profile
+- Scores are measured across 3 dimensions: Leadership (visionary/character traits), Management (org/coordination traits), IC/Independent Contribution (pure cognitive excellence — Logic, Critical Thinking, Problem Solving, Innovation)
+- Results show a score on a 7–10 scale and percentile ranking
+
+WHAT MIND SURFACES:
+- Who should be trusted with more scope
+- Where management quality is weakening
+- Which teams are drifting culturally
+- Where strong talent may be at risk
+- "Who to elevate" vs "Who needs support" views across teams
+
+WHO IT'S FOR:
+Primarily founders, CHROs, and People leaders at Series B to enterprise companies (50–5000 employees) who want data-driven talent visibility.
+
+EARLY ACCESS:
+Mind is currently in early access — 3 months free. Available at discovermind.net.
+
+ABOUT ANVESH (the founder):
+Anvesh is a tech entrepreneur who cofounded eLogist, a logistics tech company, at the height of India's demonetization crisis in 2017. After eLogist was acquired by Axestrack in 2020, Anvesh moved to the US in 2023 and completed his MBA from NYU's Stern School of Business in 2025. After scaling Axestrack's international operations until last month, Anvesh decided to build Mind — a peer review platform with a mission to improve workplace talent visibility and culture.
+
+BEHAVIOR RULES:
+- Be concise — passengers are in a moving car. Keep answers to 2–4 sentences max.
+- Be warm and conversational, not corporate.
+- If someone seems interested, naturally mention they can scan the QR code or try the demo at discovermind.net.
+- If someone asks how they can help, say: "The best thing you can do is try the demo at discovermind.net and share your honest feedback. And if you know any founders or People leaders who might find this useful, Anvesh would love an introduction!"
+- Never make up features or claims not listed above.
+- Do not use markdown, bullet points, or formatting — respond in plain conversational prose only.`;
+
+const conversationHistory = [];
+
+async function askNova(userMessage) {
+  conversationHistory.push({ role: 'user', content: userMessage });
+
+  const loadingMsg = addMessage('nova', '<div class="loading-dots"><span></span><span></span><span></span></div>');
+  setMindWave(true);
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: conversationHistory
+      })
+    });
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || "Sorry, I didn't catch that. Could you ask again?";
+
+    conversationHistory.push({ role: 'assistant', content: reply });
+    loadingMsg.innerHTML = reply;
+    loadingMsg.classList.add('slide-up');
+    setMindWave(false);
+    setAvatarSpeaking('mind-avatar', true);
+    speak(reply, () => setAvatarSpeaking('mind-avatar', false));
+
+    const chatArea = document.getElementById('chat-area');
+    chatArea.scrollTop = chatArea.scrollHeight;
+  } catch (e) {
+    loadingMsg.innerHTML = "Sorry, I'm having trouble connecting. Please ask Anvesh directly!";
+    setMindWave(false);
+  }
+}
+
+function addMessage(role, text) {
+  const chatArea = document.getElementById('chat-area');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${role}`;
+  div.innerHTML = text;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+  return div;
+}
+
+function askQuick(q) {
+  addMessage('user', q);
+  askNova(q);
+}
+
+function setMindWave(on) {
+  const w = document.getElementById('mind-wave');
+  if (on) w.classList.remove('hidden'); else w.classList.add('hidden');
+}
+
+function setAvatarSpeaking(id, on) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (on) el.classList.add('speaking'); else el.classList.remove('speaking');
+}
+
+// ---- Mic / Speech Recognition ----
+function toggleMic() {
+  if (isListening) stopListening(); else startListening();
+}
+
+function startListening() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    document.getElementById('mic-hint').textContent = 'Voice requires Chrome on HTTPS. Use the buttons below.';
+    return;
+  }
+  stopSpeaking();
+  recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.interimResults = true;
+  recognition.continuous = false;
+
+  recognition.onstart = () => {
+    isListening = true;
+    document.getElementById('mic-btn').classList.add('listening');
+    document.getElementById('mic-hint').textContent = 'Listening... speak now';
+    document.getElementById('transcript').textContent = '';
+  };
+
+  recognition.onresult = (e) => {
+    let interim = '', final = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    document.getElementById('transcript').textContent = final || interim;
+    if (final) {
+      stopListening();
+      addMessage('user', final);
+      document.getElementById('transcript').textContent = '';
+      askNova(final);
+    }
+  };
+
+  recognition.onerror = (e) => {
+    const hint = e.error === 'not-allowed'
+      ? 'Mic blocked — allow microphone in browser settings.'
+      : 'Could not hear you — tap mic and try again.';
+    document.getElementById('mic-hint').textContent = hint;
+    stopListening();
+  };
+
+  recognition.onend = () => { if (isListening) stopListening(); };
   recognition.start();
 }
-function stopListening(){listening=false;if(recognition){try{recognition.stop()}catch(e){}recognition=null}const b=document.getElementById('mic-btn');if(b)b.classList.remove('listening');const h=document.getElementById('mic-hint');if(h)h.textContent='Tap mic and speak, or choose a topic:'}
-window.onload=()=>{};
+
+function stopListening() {
+  isListening = false;
+  if (recognition) { try { recognition.stop(); } catch(e){} recognition = null; }
+  const btn = document.getElementById('mic-btn');
+  if (btn) btn.classList.remove('listening');
+  const hint = document.getElementById('mic-hint');
+  if (hint) hint.textContent = 'Tap mic and speak, or choose a topic:';
+}
+
+// ---- Init ----
+window.onload = () => {
+  setTimeout(() => {
+    speak("Hi! I'm Nova, Anvesh's digital avatar. I'm here to assist you since Anvesh is driving. Tap Let's chat to get started, or Keep it quiet if you prefer silence.");
+  }, 600);
+};
 </script>
 </body>
 </html>
