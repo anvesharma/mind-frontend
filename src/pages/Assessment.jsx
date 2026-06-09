@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../api';
 import Flashcard from '../components/Flashcard';
 import './Assessment.css';
@@ -8,6 +8,8 @@ const STEPS = { HOME: 'home', RATEE: 'ratee', ASSESSMENT: 'assessment' };
 
 export default function Assessment() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const mode = location.state?.mode || localStorage.getItem('mind_mode') || 'work';
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [step, setStep] = useState(STEPS.HOME);
   const [rateeName, setRateeName] = useState('');
@@ -53,14 +55,17 @@ export default function Assessment() {
         setCurrentIndex((prev) => prev + 1);
       } else {
         await api.post('/responses/complete', { ratee_id: ratee.user_id });
-        navigate(`/results/${ratee.user_id}`);
+        if (mode === 'personal') {
+          navigate(`/personal-results/${ratee.user_id}`);
+        } else {
+          navigate(`/results/${ratee.user_id}`);
+        }
       }
     } catch {
       setError('Failed to save response. Please try again.');
     }
   };
 
-  // HOME — two paths
   if (step === STEPS.HOME) {
     return (
       <div className="assessment-bg">
@@ -71,19 +76,10 @@ export default function Assessment() {
           </div>
           <h1 className="login-title">Welcome, {user.user_name}</h1>
           <p className="login-sub">What would you like to do?</p>
-
-          <button
-            className="btn-primary"
-            style={{ marginBottom: 12 }}
-            onClick={() => setStep(STEPS.RATEE)}
-          >
-            Review someone →
+          <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
+            {mode === 'personal' ? 'Get my Mind profile →' : 'Review someone →'}
           </button>
-
-          <button
-            className="btn-ghost"
-            onClick={() => navigate('/reports')}
-          >
+          <button className="btn-ghost" onClick={() => navigate('/reports')}>
             View sample reports
           </button>
         </div>
@@ -91,7 +87,6 @@ export default function Assessment() {
     );
   }
 
-  // RATEE — enter name
   if (step === STEPS.RATEE) {
     return (
       <div className="assessment-bg">
@@ -100,8 +95,14 @@ export default function Assessment() {
             <span className="logo-dot" />
             <span className="logo-text">Mind</span>
           </div>
-          <h1 className="login-title">Who are you reviewing?</h1>
-          <p className="login-sub">Enter the name of the person you'd like to review.</p>
+          <h1 className="login-title">
+            {mode === 'personal' ? 'Who are you rating?' : 'Who are you reviewing?'}
+          </h1>
+          <p className="login-sub">
+            {mode === 'personal'
+              ? 'Enter the name of the person you\'re rating to build their profile.'
+              : 'Enter the name of the person you\'d like to review.'}
+          </p>
           <form onSubmit={handleStartAssessment}>
             <div className="field">
               <label>Their name</label>
@@ -115,7 +116,7 @@ export default function Assessment() {
             </div>
             {error && <p className="error">{error}</p>}
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Starting review...' : 'Start review →'}
+              {loading ? 'Starting...' : 'Start →'}
             </button>
             <button type="button" className="btn-ghost" style={{ marginTop: 10 }} onClick={() => setStep(STEPS.HOME)}>
               ← Back
@@ -141,7 +142,6 @@ export default function Assessment() {
           </div>
           <span className="ratee-label">Reviewing: <strong>{ratee?.user_name}</strong></span>
         </div>
-
         <div className="progress-section">
           <div className="progress-info">
             <span className="progress-count">{currentIndex + 1} of {questions.length}</span>
@@ -151,7 +151,6 @@ export default function Assessment() {
             <div className="progress-fill" style={{ width: `${progress}%` }} />
           </div>
         </div>
-
         {error && <p className="error" style={{ textAlign: 'center', marginBottom: 16 }}>{error}</p>}
         <Flashcard
           key={currentQuestion.question_id}

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../api';
 import './Login.css';
 
 const STEPS = { EMAIL: 'email', OTP: 'otp' };
 
-export default function Login() {
+export default function Login({ mode: modeProp }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const mode = modeProp || location.state?.mode || 'work';
   const [step, setStep] = useState(STEPS.EMAIL);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -38,7 +40,8 @@ export default function Login() {
       const res = await api.post('/auth/verify-otp', { email, otp, name });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
-      navigate('/assessment');
+      localStorage.setItem('mind_mode', mode);
+      navigate('/assessment', { state: { mode } });
     } catch {
       setError('Invalid or expired OTP. Please try again.');
     } finally {
@@ -57,7 +60,11 @@ export default function Login() {
         {step === STEPS.EMAIL ? (
           <form onSubmit={handleSendOtp}>
             <h1 className="login-title">Welcome</h1>
-            <p className="login-sub">Discover the mind behind your team</p>
+            <p className="login-sub">
+              {mode === 'personal'
+                ? 'Find out who you really are — rated by people who know you best'
+                : 'Discover the mind behind your team'}
+            </p>
 
             <div className="field">
               <label>Your name</label>
