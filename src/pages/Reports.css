@@ -340,3 +340,118 @@
   min-width: 140px;
   font-weight: 500;
 }
+
+/* ============================================
+   MOBILE RESPONSIVE — 768px and below
+   ============================================ */
+@media (max-width: 768px) {
+
+  /* Header */
+  .reports-header {
+    padding: 16px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Tabs — horizontal scroll, no wrap */
+  .reports-tabs {
+    padding: 0;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .reports-tabs::-webkit-scrollbar { display: none; }
+  .reports-tab {
+    font-size: 12px;
+    padding: 10px 14px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Content */
+  .reports-content {
+    padding: 20px 16px;
+  }
+
+  .report-section-title { font-size: 17px; }
+  .report-section-sub { font-size: 12px; margin-bottom: 20px; }
+
+  /* ---- Talent Distribution ---- */
+  .talent-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .talent-card { padding: 14px 16px; }
+  .talent-scores { gap: 12px; }
+
+  /* ---- Team Culture ---- */
+  .thi-chart-wrap { padding: 16px; }
+
+  .team-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .thi-legend {
+    gap: 10px;
+    justify-content: flex-start;
+  }
+
+  /* ---- Manager Quality ---- */
+  .manager-row {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    padding: 14px 16px;
+    gap: 8px;
+  }
+
+  .manager-info { grid-column: 1; grid-row: 1; }
+  .manager-bar  { grid-column: 1 / -1; grid-row: 2; }
+  .manager-trend { grid-column: 2; grid-row: 1; align-self: start; }
+  .manager-flag { grid-column: 1 / -1; grid-row: 3; }
+
+  /* ---- Individual Profile ---- */
+  .profile-top {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Stack scores in 2x2 grid on mobile */
+  .profile-scores {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .profile-score-card { padding: 12px 14px; }
+  .profile-score-val { font-size: 22px; margin-bottom: 6px; }
+
+  /* Radar comes AFTER scores — reorder via flex */
+  .profile-radar {
+    order: 2;
+    padding: 16px;
+  }
+
+  /* Percentile card spans full width */
+  .accent-card { grid-column: 1 / -1; }
+
+  /* Breakdown */
+  .profile-breakdown {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .breakdown-name { min-width: 110px; font-size: 11px; }
+
+}
+
+/* Extra small phones */
+@media (max-width: 390px) {
+  .reports-tab { font-size: 11px; padding: 8px 10px; }
+  .profile-scores { grid-template-columns: 1fr; }
+  .accent-card { grid-column: 1; }
+}
