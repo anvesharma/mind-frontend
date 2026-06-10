@@ -8,6 +8,7 @@ import PersonalResults from './pages/PersonalResults';
 import PersonalResultsPreview from './pages/PersonalResultsPreview';
 import GetRated from './pages/GetRated';
 import FriendRating from './pages/FriendRating';
+import PeerResults from './pages/PeerResults';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Reports from './pages/Reports';
 
@@ -25,8 +26,8 @@ function App() {
         <Route path="/discover" element={<Login mode="personal" />} />
         <Route path="/assessment" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
         <Route path="/results/:rateeId" element={<ProtectedRoute><Results /></ProtectedRoute>} />
-        <Route path="/peer-results/:rateeId" element={<ProtectedRoute><PersonalResults peer={true} /></ProtectedRoute>} />
-        <Route path="/peer-results/:rateeId" element={<ProtectedRoute><PersonalResults peer={true} /></ProtectedRoute>} />
+        <Route path="/peer-results/:rateeId" element={<PeerResults />} />
+        <Route path="/peer-results/:rateeId" element={<PeerResults />} />
         <Route path="/personal-results/:rateeId" element={<ProtectedRoute><PersonalResults /></ProtectedRoute>} />
         <Route path="/results-preview" element={<ProtectedRoute><PersonalResultsPreview /></ProtectedRoute>} />
         <Route path="/get-rated" element={<ProtectedRoute><GetRated /></ProtectedRoute>} />
