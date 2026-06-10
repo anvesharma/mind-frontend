@@ -15,19 +15,14 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
 .screen{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:700px;padding:2rem 1.5rem;position:relative;z-index:1;animation:fadeIn 0.5s ease;min-height:100vh}
 .screen.active{display:flex}
 @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-/* Nova nebula orb */
 .nova-orb-wrap{position:relative;cursor:pointer;margin-bottom:1.5rem;flex-shrink:0}
 .nova-orb-wrap canvas{border-radius:50%;display:block}
 .nova-orb-label{font-family:'Palatino Linotype',Palatino,'Book Antiqua',serif;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3.2rem;font-weight:400;color:rgba(255,255,255,0.95);pointer-events:none;text-shadow:0 0 20px rgba(56,224,170,0.8),0 0 40px rgba(29,184,138,0.4);letter-spacing:2px}
 .nova-pulse-ring{position:absolute;inset:-10px;border-radius:50%;border:1.5px solid var(--accent);animation:pulse-ring 3s ease-out infinite;pointer-events:none}
 .nova-pulse-ring2{position:absolute;inset:-20px;border-radius:50%;border:1px solid rgba(29,184,138,0.3);animation:pulse-ring 3s ease-out infinite;animation-delay:1s;pointer-events:none}
 @keyframes pulse-ring{0%{transform:scale(1);opacity:0.8}100%{transform:scale(1.15);opacity:0}}
-
-/* Small avatar for inner screens */
 .nova-avatar{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#38e0aa,#0f6e56);display:flex;align-items:center;justify-content:center;font-family:'Palatino Linotype',Palatino,serif;font-size:1.4rem;font-weight:400;color:#fff;flex-shrink:0;position:relative;box-shadow:0 0 0 4px rgba(29,184,138,0.12),0 0 20px rgba(29,184,138,0.2)}
 .nova-avatar.speaking::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--accent);animation:pulse-ring 1.2s ease-out infinite}
-
 .nova-bubble{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;font-size:1.1rem;line-height:1.7;color:var(--text);max-width:560px;width:100%;text-align:center;margin-bottom:2rem;backdrop-filter:blur(12px)}
 .nova-bubble .highlight{color:var(--accent2);font-weight:600}
 .tap-hint{font-size:0.85rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-top:1rem}
@@ -69,8 +64,6 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
 </head>
 <body>
 <canvas id="starfield"></canvas>
-
-<!-- SCREEN 0: Landing -->
 <div class="screen active" id="screen-landing">
   <div class="nova-orb-wrap" id="orb-wrap" onclick="goWelcome()">
     <canvas id="nebula" width="260" height="260"></canvas>
@@ -81,8 +74,6 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
   <div class="tap-hint">Tap Nova to begin</div>
   <div class="mind-logo">✦ DISCOVER MIND</div>
 </div>
-
-<!-- SCREEN 1: Welcome -->
 <div class="screen" id="screen-welcome">
   <div class="nova-orb-wrap" onclick="goHome()" style="width:140px;height:140px;margin-bottom:1.5rem">
     <canvas id="nebula2" width="140" height="140"></canvas>
@@ -90,15 +81,13 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
     <div class="nova-pulse-ring"></div>
   </div>
   <div class="nova-bubble">
-    Hi! I'm <span class="highlight">Nova</span>, Anvesh's digital avatar. I'm here to assist you since Anvesh is driving. If you'd prefer silence, tap <span class="highlight">Keep it quiet</span>. Otherwise, let's chat!
+    Hi! I'm <span class="highlight">Nova</span>, Anvesh's digital avatar. I'm here to assist you. If you'd prefer silence, tap <span class="highlight">Keep it quiet</span>. Otherwise, let's chat!
   </div>
   <div>
     <button class="action-btn" onclick="goHome()">Let's chat</button>
     <button class="action-btn secondary" onclick="goSilence()">Keep it quiet</button>
   </div>
 </div>
-
-<!-- SCREEN 2: Home -->
 <div class="screen" id="screen-home">
   <div class="nova-orb-wrap" style="width:100px;height:100px;margin-bottom:1.2rem">
     <canvas id="nebula3" width="100" height="100"></canvas>
@@ -108,11 +97,11 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
   <div class="options-grid">
     <button class="option-btn" onclick="goMindForYou()">
       <div class="icon">✨</div>
-      <div><span class="label">What is Mind for You?</span><span class="sublabel">Discover your strengths & personality type</span></div>
+      <div><span class="label">What is Mind for You?</span><span class="sublabel">Discover your strengths and personality type</span></div>
     </button>
     <button class="option-btn" onclick="goMind()">
       <div class="icon">🧠</div>
-      <div><span class="label">What is Mind for Work?</span><span class="sublabel">Talent visibility for teams & companies</span></div>
+      <div><span class="label">What is Mind for Work?</span><span class="sublabel">Talent visibility for teams and companies</span></div>
     </button>
     <button class="option-btn" onclick="goExplore()">
       <div class="icon">🚀</div>
@@ -120,8 +109,6 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
     </button>
   </div>
 </div>
-
-<!-- SCREEN 3: What is Mind -->
 <div class="screen" id="screen-mind">
   <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;width:100%;max-width:580px">
     <div class="nova-avatar" id="mind-avatar">N</div>
@@ -149,8 +136,6 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
   </div>
   <button class="back-btn" onclick="goHome()">Back</button>
 </div>
-
-<!-- SCREEN 4: Explore -->
 <div class="screen" id="screen-explore">
   <div class="nova-orb-wrap" style="width:80px;height:80px;margin-bottom:1rem">
     <canvas id="nebula4" width="80" height="80"></canvas>
@@ -164,8 +149,6 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
     <button class="action-btn secondary" onclick="goHome()">Back</button>
   </div>
 </div>
-
-<!-- SCREEN 5: Silence -->
 <div class="screen" id="screen-silence">
   <div style="text-align:center;color:var(--muted)">
     <div style="font-size:2.5rem;margin-bottom:1rem">🌙</div>
@@ -174,12 +157,9 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
   </div>
   <div style="position:fixed;inset:0" onclick="showScreen('screen-landing')"></div>
 </div>
-
 <script>
 const TTS='https://mind-backend-production-0973.up.railway.app/api/tts';
 const CHAT='https://mind-backend-production-0973.up.railway.app/api/nova-chat';
-
-// ---- Moving star field ----
 (function(){
   const c=document.getElementById('starfield');
   const ctx=c.getContext('2d');
@@ -201,35 +181,25 @@ const CHAT='https://mind-backend-production-0973.up.railway.app/api/nova-chat';
   }
   tick();
 })();
-
-// ---- Nebula canvas painter ----
 function paintNebula(canvasId,size){
   const c=document.getElementById(canvasId);
   if(!c)return null;
   const ctx=c.getContext('2d');
   const cx=size/2,cy=size/2,r=size/2;
-  let t=0;
-  // Blob state for organic movement
   const blobs=[
-    {ox:cx*0.8,oy:cy*0.9,rx:size*0.42,ry:size*0.34,a:0,da:0.003,pox:0,poy:0,dpx:(Math.random()-0.5)*0.3,dpy:(Math.random()-0.5)*0.3,col:'#38e0aa',op:0.55},
-    {ox:cx*1.2,oy:cy*0.75,rx:size*0.33,ry:size*0.27,a:0.5,da:-0.002,pox:0,poy:0,dpx:(Math.random()-0.5)*0.25,dpy:(Math.random()-0.5)*0.25,col:'#a8f0d8',op:0.45},
-    {ox:cx*0.85,oy:cy*1.25,rx:size*0.37,ry:size*0.29,a:1,da:0.0025,pox:0,poy:0,dpx:(Math.random()-0.5)*0.28,dpy:(Math.random()-0.5)*0.28,col:'#0f6e56',op:0.5},
-    {ox:cx*1.1,oy:cy*1.1,rx:size*0.28,ry:size*0.22,a:2,da:-0.0018,pox:0,poy:0,dpx:(Math.random()-0.5)*0.2,dpy:(Math.random()-0.5)*0.2,col:'#1db88a',op:0.4},
+    {ox:cx*0.8,oy:cy*0.9,rx:size*0.42,ry:size*0.34,a:0,da:0.003,pox:0,poy:0,dpx:(Math.random()-0.5)*0.3,dpy:(Math.random()-0.5)*0.3,col:'#38e0aa'},
+    {ox:cx*1.2,oy:cy*0.75,rx:size*0.33,ry:size*0.27,a:0.5,da:-0.002,pox:0,poy:0,dpx:(Math.random()-0.5)*0.25,dpy:(Math.random()-0.5)*0.25,col:'#a8f0d8'},
+    {ox:cx*0.85,oy:cy*1.25,rx:size*0.37,ry:size*0.29,a:1,da:0.0025,pox:0,poy:0,dpx:(Math.random()-0.5)*0.28,dpy:(Math.random()-0.5)*0.28,col:'#0f6e56'},
+    {ox:cx*1.1,oy:cy*1.1,rx:size*0.28,ry:size*0.22,a:2,da:-0.0018,pox:0,poy:0,dpx:(Math.random()-0.5)*0.2,dpy:(Math.random()-0.5)*0.2,col:'#1db88a'},
   ];
-  // Pulse state
   let pulse=1,dpulse=0.0015;
-
   function draw(){
     ctx.clearRect(0,0,size,size);
     ctx.save();
     ctx.beginPath();ctx.arc(cx,cy,r-1,0,Math.PI*2);ctx.clip();
-
-    // Deep bg
     const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
     bg.addColorStop(0,'#0d2a1f');bg.addColorStop(1,'#060d1a');
     ctx.fillStyle=bg;ctx.fillRect(0,0,size,size);
-
-    // Organic blobs
     blobs.forEach(b=>{
       b.pox+=b.dpx;b.poy+=b.dpy;
       if(Math.abs(b.pox)>size*0.12)b.dpx*=-1;
@@ -239,203 +209,83 @@ function paintNebula(canvasId,size){
       ctx.save();
       ctx.translate(bx,by);ctx.rotate(b.a);
       const g=ctx.createRadialGradient(0,0,0,0,0,b.rx);
-      g.addColorStop(0,b.col+'cc');
-      g.addColorStop(0.4,b.col+'66');
-      g.addColorStop(1,b.col+'00');
-      ctx.fillStyle=g;
-      ctx.scale(1,b.ry/b.rx);
+      g.addColorStop(0,b.col+'cc');g.addColorStop(0.4,b.col+'66');g.addColorStop(1,b.col+'00');
+      ctx.fillStyle=g;ctx.scale(1,b.ry/b.rx);
       ctx.beginPath();ctx.arc(0,0,b.rx,0,Math.PI*2);ctx.fill();
       ctx.restore();
     });
-
-    // Bright core
     pulse+=dpulse;if(pulse>1.08||pulse<0.94)dpulse*=-1;
     const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,r*0.38*pulse);
-    cg.addColorStop(0,'rgba(224,255,244,0.95)');
-    cg.addColorStop(0.25,'rgba(56,224,170,0.7)');
-    cg.addColorStop(0.6,'rgba(13,42,31,0.4)');
-    cg.addColorStop(1,'rgba(6,13,26,0)');
+    cg.addColorStop(0,'rgba(224,255,244,0.95)');cg.addColorStop(0.25,'rgba(56,224,170,0.7)');
+    cg.addColorStop(0.6,'rgba(13,42,31,0.4)');cg.addColorStop(1,'rgba(6,13,26,0)');
     ctx.fillStyle=cg;ctx.beginPath();ctx.arc(cx,cy,r*0.38*pulse,0,Math.PI*2);ctx.fill();
-
-    // Small star sparks
-    [[cx*0.6,cy*0.7,2],[cx*1.35,cy*1.1,1.5],[cx*0.75,cy*1.3,1.2],[cx*1.1,cy*0.6,1.8]].forEach(([sx,sy,sr])=>{
-      const sparkOp=0.3+0.4*Math.sin(t*0.7+sx);
-      ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);
-      ctx.fillStyle=`rgba(168,240,216,${sparkOp})`;ctx.fill();
-    });
-
-    // Rim glow
     const rim=ctx.createRadialGradient(cx,cy,r*0.85,cx,cy,r);
-    rim.addColorStop(0,'rgba(29,184,138,0)');
-    rim.addColorStop(1,'rgba(29,184,138,0.25)');
+    rim.addColorStop(0,'rgba(29,184,138,0)');rim.addColorStop(1,'rgba(29,184,138,0.25)');
     ctx.fillStyle=rim;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
-
     ctx.restore();
-    t+=0.016;
-    return requestAnimationFrame(draw);
+    requestAnimationFrame(draw);
   }
   return draw();
 }
-
-// Init all nebula canvases
-paintNebula('nebula',260);
-paintNebula('nebula2',140);
-paintNebula('nebula3',100);
-paintNebula('nebula4',80);
-
-// ---- Audio ----
+paintNebula('nebula',260);paintNebula('nebula2',140);paintNebula('nebula3',100);paintNebula('nebula4',80);
 const audioCache={};
 let curAudio=null,speakSession=0,recognition=null,listening=false;
-
-const WELCOME_TEXT="Hi! I'm Nova, Anvesh's digital avatar. I'm here to assist you since Anvesh is driving. If you'd prefer silence, tap Keep it quiet. Otherwise, let's chat!";
+const WELCOME_TEXT="Hi! I'm Nova, Anvesh's digital avatar. I'm here to assist you. If you'd prefer silence, tap Keep it quiet. Otherwise, let's chat!";
 const HOME_TEXT="What would you like to explore? You can learn about Mind for You, Mind for Work, or try the app yourself.";
 const MIND_TEXT="Hi! I can answer your questions about Mind. Tap the mic and ask anything, or choose a topic below.";
 const EXPLORE_TEXT="Here's the QR code. Scan it to open Mind on your phone, or tap Open here.";
-
 async function prefetch(text){
   if(audioCache[text])return;
-  try{
-    const r=await fetch(TTS,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
-    const d=await r.json();
-    if(d.audioContent)audioCache[text]='data:audio/mp3;base64,'+d.audioContent;
-  }catch(e){}
+  try{const r=await fetch(TTS,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
+  const d=await r.json();if(d.audioContent)audioCache[text]='data:audio/mp3;base64,'+d.audioContent;}catch(e){}
 }
-
-// Prefetch all on load — runs silently in background
-window.addEventListener('load',()=>{
-  prefetch(WELCOME_TEXT);
-  prefetch(HOME_TEXT);
-  prefetch(MIND_TEXT);
-  prefetch(EXPLORE_TEXT);
-});
-
+window.addEventListener('load',()=>{prefetch(WELCOME_TEXT);prefetch(HOME_TEXT);prefetch(MIND_TEXT);prefetch(EXPLORE_TEXT);});
 async function speak(text,cb){
-  stopSpeaking();
-  const s=++speakSession;
-  try{
-    let src=audioCache[text];
-    if(!src){
-      const r=await fetch(TTS,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
-      if(s!==speakSession)return;
-      const d=await r.json();
-      if(!d.audioContent||s!==speakSession)return;
-      src='data:audio/mp3;base64,'+d.audioContent;
-      audioCache[text]=src;
-    }
+  stopSpeaking();const s=++speakSession;
+  try{let src=audioCache[text];
+    if(!src){const r=await fetch(TTS,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
+    if(s!==speakSession)return;const d=await r.json();
+    if(!d.audioContent||s!==speakSession)return;src='data:audio/mp3;base64,'+d.audioContent;audioCache[text]=src;}
     if(s!==speakSession)return;
     curAudio=new Audio(src);
-    curAudio.onended=()=>{curAudio=null;if(cb)cb()};
-    curAudio.onerror=()=>{curAudio=null;if(cb)cb()};
-    curAudio.play();
+    curAudio.onended=()=>{curAudio=null;if(cb)cb()};curAudio.onerror=()=>{curAudio=null;if(cb)cb()};curAudio.play();
   }catch(e){console.error(e);if(cb)cb()}
 }
-
 function stopSpeaking(){speakSession++;if(curAudio){curAudio.pause();curAudio=null}}
-
-// ---- Navigation ----
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  stopSpeaking();stopListening();
-}
-
-function goWelcome(){
-  showScreen('screen-welcome');
-  speak(WELCOME_TEXT);
-}
-
-function goHome(){
-  showScreen('screen-home');
-  speak(HOME_TEXT);
-}
-
-function goMindForYou(){
-  showScreen('screen-mind');
-  document.getElementById('chat-area').innerHTML='';
-  addMsg('nova',"Mind for You is all about self-discovery! Ask me anything — what type of person you are, how the rating works, or what your results mean.");
-  speak("Mind for You helps you discover who you really are — through the eyes of people who know you best. Ask me anything!");
-}
-
-function goMind(){
-  showScreen('screen-mind');
-  document.getElementById('chat-area').innerHTML='';
-  addMsg('nova',"Hi! I can answer your questions about Mind. Tap the mic and ask anything, or choose a topic below!");
-  speak(MIND_TEXT);
-}
-
-function goExplore(){
-  showScreen('screen-explore');
-  if(!window.qrDone){
-    new QRCode(document.getElementById('qrcode'),{text:'https://www.discovermind.net',width:180,height:180,colorDark:'#000',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
-    window.qrDone=true;
-  }
-  speak(EXPLORE_TEXT);
-}
-
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');stopSpeaking();stopListening();}
+function goWelcome(){showScreen('screen-welcome');speak(WELCOME_TEXT)}
+function goHome(){showScreen('screen-home');speak(HOME_TEXT)}
+function goMindForYou(){showScreen('screen-mind');document.getElementById('chat-area').innerHTML='';addMsg('nova',"Mind for You is about self-discovery! Ask me anything about your personality type, how the rating works, or what your results mean.");speak("Mind for You helps you discover who you really are — through the eyes of people who know you best. Ask me anything!");}
+function goMind(){showScreen('screen-mind');document.getElementById('chat-area').innerHTML='';addMsg('nova',"Hi! I can answer your questions about Mind for Work. Tap the mic and ask anything, or choose a topic below!");speak(MIND_TEXT);}
+function goExplore(){showScreen('screen-explore');if(!window.qrDone){new QRCode(document.getElementById('qrcode'),{text:'https://www.discovermind.net',width:180,height:180,colorDark:'#000',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});window.qrDone=true;}speak(EXPLORE_TEXT);}
 function goSilence(){stopSpeaking();showScreen('screen-silence')}
-
-// ---- Claude / Groq chat ----
-const SYS=`You are Nova, a warm concise voice agent for Mind, a platform with two products, speaking to passengers in Anvesh's Uber in the Bay Area.
-
-MIND FOR WORK: A B2B peer assessment platform for Series B to enterprise companies. Uses structured peer feedback to generate talent profiles across three dimensions: Leader, Manager, and Independent Contributor. Tagline: Align Your Workforce With Your Vision. The problem: Companies make talent decisions based on gut feeling. Great contributors get overlooked. Managers are promoted for wrong reasons. Teams drift culturally. Mind helps leaders see what hierarchy hides. How it works: Peers rate each other on 36 attributes. Output is a talent profile scored on a 7-10 scale with percentile ranking. Who it is for: Founders, CHROs, and People leaders at Series B to enterprise companies.
-
-MIND FOR YOU: A personal self-discovery product for individuals. Find out if you are a born Leader, a natural Manager, or an Elite Contributor — rated by people who know you best. You get your top 5 strengths, bottom 5 growth areas, and a percentile ranking. It costs $1.99 to get your real rating from friends. Tagline: Find out who you really are.
-
-EARLY ACCESS: Both products are available at discovermind.net. Mind for Work is free for 3 months. Mind for You costs $1.99 for a real peer rating.
-
-ABOUT ANVESH: cofounded eLogist in India in 2017, acquired by Axestrack in 2020, MBA at NYU Stern 2025, then built Mind.
-
-RULES: 2-3 sentences max. Warm and conversational. No markdown. Plain prose only. If asked how to help: suggest trying discovermind.net and introducing Anvesh to founders or People leaders.`;
+const SYS=`You are Nova, a warm concise voice agent for Mind, speaking to passengers in Anvesh's Uber in the Bay Area. Mind has two products. Mind for Work is a B2B peer assessment platform for Series B to enterprise companies. It uses structured peer feedback to generate talent profiles across Leader, Manager, and Independent Contributor dimensions on a 7-10 scale. Mind for You is a personal self-discovery product. Find out if you are a born Leader, a natural Manager, or an Elite Contributor, rated by people who know you best. You get your top 5 strengths, bottom 5 growth areas, and a percentile ranking. Both are available at discovermind.net. Mind for Work is free for 3 months. About Anvesh: cofounded eLogist in India in 2017, acquired by Axestrack in 2020, MBA at NYU Stern 2025, then built Mind. Rules: 2-3 sentences max. Warm and conversational. No markdown. Plain prose only. If asked how to help: suggest trying discovermind.net and introducing Anvesh to founders or People leaders.`;
 const hist=[];
-
 async function askNova(q){
   hist.push({role:'user',content:q});
   const m=addMsg('nova','<div class="loading-dots"><span></span><span></span><span></span></div>');
   setWave(true);
-  try{
-    const r=await fetch(CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SYS,messages:hist})});
-    const d=await r.json();
-    const reply=d.content?.[0]?.text||"Sorry, could you ask again?";
-    hist.push({role:'assistant',content:reply});
-    m.innerHTML=reply;m.classList.add('slide-up');
-    setWave(false);setSpeak('mind-avatar',true);
-    speak(reply,()=>setSpeak('mind-avatar',false));
-    document.getElementById('chat-area').scrollTop=99999;
-  }catch(e){m.innerHTML="Sorry, having trouble connecting. Ask Anvesh directly!";setWave(false)}
+  try{const r=await fetch(CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SYS,messages:hist})});
+  const d=await r.json();const reply=d.content?.[0]?.text||"Sorry, could you ask again?";
+  hist.push({role:'assistant',content:reply});m.innerHTML=reply;m.classList.add('slide-up');
+  setWave(false);setSpeak('mind-avatar',true);speak(reply,()=>setSpeak('mind-avatar',false));
+  document.getElementById('chat-area').scrollTop=99999;}catch(e){m.innerHTML="Sorry, having trouble connecting. Ask Anvesh directly!";setWave(false)}
 }
-
-function addMsg(r,t){
-  const a=document.getElementById('chat-area'),d=document.createElement('div');
-  d.className='chat-msg '+r;d.innerHTML=t;a.appendChild(d);a.scrollTop=99999;return d;
-}
+function addMsg(r,t){const a=document.getElementById('chat-area'),d=document.createElement('div');d.className='chat-msg '+r;d.innerHTML=t;a.appendChild(d);a.scrollTop=99999;return d;}
 function askQuick(q){addMsg('user',q);askNova(q)}
 function setWave(on){const w=document.getElementById('mind-wave');if(on)w.classList.remove('hidden');else w.classList.add('hidden')}
 function setSpeak(id,on){const e=document.getElementById(id);if(e){if(on)e.classList.add('speaking');else e.classList.remove('speaking')}}
-
-// ---- Mic ----
 function toggleMic(){if(listening)stopListening();else startListening()}
 function startListening(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){document.getElementById('mic-hint').textContent='Voice requires Chrome on HTTPS.';return}
-  stopSpeaking();
-  recognition=new SR();recognition.lang='en-US';recognition.interimResults=true;recognition.continuous=false;
+  stopSpeaking();recognition=new SR();recognition.lang='en-US';recognition.interimResults=true;recognition.continuous=false;
   recognition.onstart=()=>{listening=true;document.getElementById('mic-btn').classList.add('listening');document.getElementById('mic-hint').textContent='Listening... speak now';document.getElementById('transcript').textContent=''};
-  recognition.onresult=(e)=>{
-    let fi='',fn='';
-    for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)fn+=e.results[i][0].transcript;else fi+=e.results[i][0].transcript}
-    document.getElementById('transcript').textContent=fn||fi;
-    if(fn){stopListening();addMsg('user',fn);document.getElementById('transcript').textContent='';askNova(fn)}
-  };
+  recognition.onresult=(e)=>{let fi='',fn='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)fn+=e.results[i][0].transcript;else fi+=e.results[i][0].transcript}document.getElementById('transcript').textContent=fn||fi;if(fn){stopListening();addMsg('user',fn);document.getElementById('transcript').textContent='';askNova(fn)}};
   recognition.onerror=(e)=>{document.getElementById('mic-hint').textContent=e.error==='not-allowed'?'Mic blocked — allow in browser settings.':'Could not hear you — try again.';stopListening()};
-  recognition.onend=()=>{if(listening)stopListening()};
-  recognition.start();
+  recognition.onend=()=>{if(listening)stopListening()};recognition.start();
 }
-function stopListening(){
-  listening=false;
-  if(recognition){try{recognition.stop()}catch(e){}recognition=null}
-  const b=document.getElementById('mic-btn');if(b)b.classList.remove('listening');
-  const h=document.getElementById('mic-hint');if(h)h.textContent='Tap mic and speak, or choose a topic:';
-}
+function stopListening(){listening=false;if(recognition){try{recognition.stop()}catch(e){}recognition=null}const b=document.getElementById('mic-btn');if(b)b.classList.remove('listening');const h=document.getElementById('mic-hint');if(h)h.textContent='Tap mic and speak, or choose a topic:';}
 </script>
 </body>
 </html>
