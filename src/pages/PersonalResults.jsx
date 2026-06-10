@@ -83,11 +83,6 @@ export default function PersonalResults() {
   const topType = getTopType(scores);
   const type = TYPE_DATA[topType];
 
-  const allAttributes = [
-    { name: 'Leadership', score: scores.leader_score },
-    { name: 'Management', score: scores.manager_score },
-    { name: 'Contribution', score: scores.ic_score },
-  ];
 
   const overallPercentile = percentiles.total_percentile || 0;
 

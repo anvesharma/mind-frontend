@@ -9,7 +9,7 @@ function NebulaOrb({ id, size, colors, pulseColor }) {
     if (!c) return;
     const ctx = c.getContext('2d');
     const cx = size / 2, cy = size / 2, r = size / 2;
-    let t = 0, animId;
+    let animId;
     const blobs = colors.map(() => ({
       ox: cx * (0.7 + Math.random() * 0.6),
       oy: cy * (0.7 + Math.random() * 0.6),
@@ -56,12 +56,12 @@ function NebulaOrb({ id, size, colors, pulseColor }) {
       rim.addColorStop(1, colors[0] + '33');
       ctx.fillStyle = rim; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
-      t += 0.016;
+      
       animId = requestAnimationFrame(draw);
     }
     draw();
     return () => cancelAnimationFrame(animId);
-  }, []);
+  }, [size, colors]);
   return <canvas ref={canvasRef} width={size} height={size} style={{ borderRadius: '50%', display: 'block' }} />;
 }
 
@@ -97,7 +97,7 @@ export default function Landing() {
     }
     tick();
     return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
-  }, []);
+  }, [size, colors]);
 
   return (
     <div className="landing-bg">
