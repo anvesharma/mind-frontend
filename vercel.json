@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/nova.html", "destination": "/nova.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
