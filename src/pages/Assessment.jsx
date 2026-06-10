@@ -76,12 +76,29 @@ export default function Assessment() {
           </div>
           <h1 className="login-title">Welcome, {user.user_name}</h1>
           <p className="login-sub">What would you like to do?</p>
-          <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
-            {mode === 'personal' ? 'Get my Mind profile →' : 'Review someone →'}
-          </button>
-          <button className="btn-ghost" onClick={() => mode === 'personal' ? navigate('/results-preview') : navigate('/reports')}>
-            Check out sample results report
-          </button>
+
+          {mode === 'personal' ? (
+            <>
+              <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
+                Try Mind for free →
+              </button>
+              <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => navigate('/get-rated', { state: { rateeId: user.user_id } })}>
+                Get your real Mind rating
+              </button>
+              <button className="btn-ghost" onClick={() => navigate('/results-preview')}>
+                Check out sample results report
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
+                Review someone →
+              </button>
+              <button className="btn-ghost" onClick={() => navigate('/reports')}>
+                View sample reports
+              </button>
+            </>
+          )}
         </div>
       </div>
     );
@@ -100,8 +117,8 @@ export default function Assessment() {
           </h1>
           <p className="login-sub">
             {mode === 'personal'
-              ? 'Enter the name of the person you\'re rating to build their profile.'
-              : 'Enter the name of the person you\'d like to review.'}
+              ? "Enter the name of the person you're rating."
+              : "Enter the name of the person you'd like to review."}
           </p>
           <form onSubmit={handleStartAssessment}>
             <div className="field">

@@ -6,20 +6,28 @@ import './GetRated.css';
 export default function GetRated() {
   const navigate = useNavigate();
   const location = useLocation();
-  const rateeId = location.state?.rateeId;
-  const [emails, setEmails] = useState(['', '', '', '', '']);
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const rateeId = location.state?.rateeId || user.user_id;
+  const [friends, setFriends] = useState([
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' },
+  ]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleEmailChange = (index, value) => {
-    const updated = [...emails];
-    updated[index] = value.trim().toLowerCase();
-    setEmails(updated);
+  const handleChange = (index, field, value) => {
+    const updated = [...friends];
+    updated[index][field] = value.trim();
+    setFriends(updated);
   };
 
-  const validEmails = emails.filter(e => e && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e));
-  const hasDuplicates = validEmails.length !== new Set(validEmails).size;
-  const canPay = validEmails.length >= 3 && !hasDuplicates;
+  const validFriends = friends.filter(f => f.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email));
+  const emails = validFriends.map(f => f.email.toLowerCase());
+  const hasDuplicates = emails.length !== new Set(emails).size;
+  const canPay = validFriends.length >= 3 && !hasDuplicates;
 
   const handlePay = async () => {
     if (!canPay) return;
@@ -27,11 +35,12 @@ export default function GetRated() {
     setLoading(true);
     try {
       const res = await api.post('/social/create-checkout', {
-        emails: validEmails,
+        emails: validFriends.map(f => ({ email: f.email.toLowerCase(), name: f.name || f.email.split('@')[0] })),
         rateeId,
+        userName: user.user_name,
       });
       window.location.href = res.data.url;
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
@@ -41,7 +50,6 @@ export default function GetRated() {
   return (
     <div className="gr-bg">
       <div className="gr-wrapper">
-
         <div className="gr-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
           <span className="gr-logo-dot" />
           <span className="gr-logo-text">Mind</span>
@@ -91,27 +99,36 @@ export default function GetRated() {
 
         <div className="gr-emails-section">
           <div className="gr-emails-title">Who should rate you?</div>
-          <div className="gr-emails-sub">Enter up to 5 email addresses — min 3 required to unlock results</div>
+          <div className="gr-emails-sub">Enter up to 5 people — min 3 required to unlock results</div>
           <div className="gr-emails-grid">
-            {emails.map((email, i) => (
-              <div className="gr-email-row" key={i}>
+            {friends.map((friend, i) => (
+              <div className="gr-friend-row" key={i}>
                 <span className="gr-email-num">{i + 1}</span>
-                <input
-                  className="gr-email-input"
-                  type="email"
-                  placeholder={i < 3 ? `friend${i + 1}@email.com (required)` : `friend${i + 1}@email.com (optional)`}
-                  value={email}
-                  onChange={e => handleEmailChange(i, e.target.value)}
-                />
+                <div className="gr-friend-inputs">
+                  <input
+                    className="gr-email-input gr-name-input"
+                    type="text"
+                    placeholder={i < 3 ? `Name (required)` : `Name (optional)`}
+                    value={friend.name}
+                    onChange={e => handleChange(i, 'name', e.target.value)}
+                  />
+                  <input
+                    className="gr-email-input"
+                    type="email"
+                    placeholder={i < 3 ? `Email (required)` : `Email (optional)`}
+                    value={friend.email}
+                    onChange={e => handleChange(i, 'email', e.target.value)}
+                  />
+                </div>
               </div>
             ))}
           </div>
           {hasDuplicates && <p className="gr-error">Please remove duplicate email addresses</p>}
           {error && <p className="gr-error">{error}</p>}
           <div className="gr-email-count">
-            {validEmails.length < 3
-              ? `Enter ${3 - validEmails.length} more email${3 - validEmails.length > 1 ? 's' : ''} to continue`
-              : `${validEmails.length} ${validEmails.length === 1 ? 'person' : 'people'} will rate you`}
+            {validFriends.length < 3
+              ? `Enter ${3 - validFriends.length} more email${3 - validFriends.length > 1 ? 's' : ''} to continue`
+              : `${validFriends.length} ${validFriends.length === 1 ? 'person' : 'people'} will rate you`}
           </div>
         </div>
 
@@ -124,7 +141,6 @@ export default function GetRated() {
         </button>
 
         <p className="gr-fine-print">One-time payment. No subscription. Results unlock when 3+ people complete your rating (within 7 days).</p>
-
         <button className="gr-back" onClick={() => navigate(-1)}>← Back to my results</button>
       </div>
     </div>
