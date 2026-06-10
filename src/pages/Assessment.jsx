@@ -80,7 +80,7 @@ export default function Assessment() {
             {mode === 'personal' ? 'Get my Mind profile →' : 'Review someone →'}
           </button>
           <button className="btn-ghost" onClick={() => mode === 'personal' ? navigate('/results-preview') : navigate('/reports')}>
-            See your results →
+            Check out sample results report
           </button>
         </div>
       </div>
