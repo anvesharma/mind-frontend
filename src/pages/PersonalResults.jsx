@@ -80,7 +80,8 @@ export default function PersonalResults() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    api.get(`/responses/personal-results/${rateeId}`)
+    const isPeer = props.peer || new URLSearchParams(window.location.search).get('peer');
+    api.get(`/responses/personal-results${isPeer ? '/peer' : ''}/${rateeId}`)
       .then(res => setData(res.data))
       .catch(() => setError('Could not load your results. Please try again.'))
       .finally(() => setLoading(false));
