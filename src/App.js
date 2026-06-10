@@ -6,6 +6,9 @@ import Assessment from './pages/Assessment';
 import Results from './pages/Results';
 import PersonalResults from './pages/PersonalResults';
 import PersonalResultsPreview from './pages/PersonalResultsPreview';
+import GetRated from './pages/GetRated';
+import FriendRating from './pages/FriendRating';
+import PaymentSuccess from './pages/PaymentSuccess';
 import Reports from './pages/Reports';
 
 const ProtectedRoute = ({ children }) => {
@@ -22,8 +25,11 @@ function App() {
         <Route path="/discover" element={<Login mode="personal" />} />
         <Route path="/assessment" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
         <Route path="/results/:rateeId" element={<ProtectedRoute><Results /></ProtectedRoute>} />
-        <Route path="/results-preview" element={<ProtectedRoute><PersonalResultsPreview /></ProtectedRoute>} />
         <Route path="/personal-results/:rateeId" element={<ProtectedRoute><PersonalResults /></ProtectedRoute>} />
+        <Route path="/results-preview" element={<ProtectedRoute><PersonalResultsPreview /></ProtectedRoute>} />
+        <Route path="/get-rated" element={<ProtectedRoute><GetRated /></ProtectedRoute>} />
+        <Route path="/rate/:token" element={<FriendRating />} />
+        <Route path="/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
         <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>

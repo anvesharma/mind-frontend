@@ -1,0 +1,244 @@
+.gr-bg {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 20%, #1a0e00 0%, #050810 55%, #020308 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 4rem;
+}
+
+.gr-wrapper {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.gr-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.gr-logo-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ef9f27;
+}
+
+.gr-logo-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ef9f27;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.gr-logo-tag {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.06em;
+}
+
+.gr-hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.gr-emoji { font-size: 2.5rem; }
+
+.gr-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.gr-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.gr-price {
+  color: #ef9f27;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.gr-sub2 {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.3);
+  max-width: 340px;
+}
+
+.gr-what-you-get {
+  background: rgba(239,159,39,0.06);
+  border: 1px solid rgba(239,159,39,0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.gr-what-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #ef9f27;
+  margin-bottom: 1rem;
+}
+
+.gr-what-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.gr-what-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.gr-what-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+
+.gr-what-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.gr-what-desc {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.gr-emails-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gr-emails-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.gr-emails-sub {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+}
+
+.gr-emails-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.gr-email-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gr-email-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(239,159,39,0.12);
+  border: 1px solid rgba(239,159,39,0.25);
+  color: #ef9f27;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gr-email-input {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  color: #fff;
+  font-size: 0.88rem;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.gr-email-input:focus { border-color: rgba(239,159,39,0.5); }
+.gr-email-input::placeholder { color: rgba(255,255,255,0.2); }
+
+.gr-email-count {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+}
+
+.gr-error {
+  font-size: 0.8rem;
+  color: #e05c5c;
+  text-align: center;
+}
+
+.gr-pay-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 14px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+
+.gr-pay-btn.active {
+  background: #ef9f27;
+  color: #050810;
+}
+
+.gr-pay-btn.active:hover { opacity: 0.88; transform: scale(1.02); }
+
+.gr-pay-btn.disabled {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.25);
+  cursor: not-allowed;
+}
+
+.gr-fine-print {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.2);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.gr-back {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.25);
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.2s;
+}
+
+.gr-back:hover { color: rgba(255,255,255,0.5); }
+
+@media (max-width: 480px) {
+  .gr-headline { font-size: 1.4rem; }
+}

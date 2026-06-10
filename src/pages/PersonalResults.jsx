@@ -205,6 +205,12 @@ export default function PersonalResults() {
             ))}
           </div>
         </div>
+        
+          <button className="pr-btn-primary" 
+          style={{ background: '#ef9f27', color: '#050810', marginBottom: '0.5rem' }}
+          onClick={() => navigate('/get-rated', { state: { rateeId } })}>
+          Click here to get your real score! →
+          </button>
 
         {/* Actions */}
         <div className="pr-actions">
