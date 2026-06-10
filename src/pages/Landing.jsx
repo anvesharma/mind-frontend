@@ -10,9 +10,10 @@ function NebulaOrb({ size, colors }) {
     const ctx = c.getContext('2d');
     const cx = size / 2, cy = size / 2, r = size / 2;
     let animId;
-    const blobs = colors.map((_col, i) => ({
-      ox: cx * (0.7 + Math.random() * 0.6),
-      oy: cy * (0.7 + Math.random() * 0.6),
+    const blobColors = colors;
+    const blobs = blobColors.map((_col, i) => ({
+      ox: cx * (0.65 + Math.random() * 0.7),
+      oy: cy * (0.65 + Math.random() * 0.7),
       rx: size * (0.28 + Math.random() * 0.18),
       ry: size * (0.2 + Math.random() * 0.15),
       a: Math.random() * Math.PI * 2,
@@ -20,7 +21,7 @@ function NebulaOrb({ size, colors }) {
       pox: 0, poy: 0,
       dpx: (Math.random() - 0.5) * 0.25,
       dpy: (Math.random() - 0.5) * 0.25,
-      colIndex: i,
+      ci: i,
     }));
     let pulse = 1, dp = 0.0012;
     function draw() {
@@ -28,16 +29,16 @@ function NebulaOrb({ size, colors }) {
       ctx.save();
       ctx.beginPath(); ctx.arc(cx, cy, r - 1, 0, Math.PI * 2); ctx.clip();
       const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      bg.addColorStop(0, colors[0] + '22'); bg.addColorStop(1, '#050810');
+      bg.addColorStop(0, blobColors[0] + '22'); bg.addColorStop(1, '#050810');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, size, size);
-      blobs.forEach((b) => {
+      blobs.forEach(b => {
         b.pox += b.dpx; b.poy += b.dpy;
         if (Math.abs(b.pox) > size * 0.1) b.dpx *= -1;
         if (Math.abs(b.poy) > size * 0.1) b.dpy *= -1;
         b.a += b.da;
         ctx.save();
         ctx.translate(b.ox + b.pox, b.oy + b.poy); ctx.rotate(b.a);
-        const col = colors[b.colIndex % colors.length];
+        const col = blobColors[b.ci % blobColors.length];
         const g = ctx.createRadialGradient(0, 0, 0, 0, 0, b.rx);
         g.addColorStop(0, col + 'bb');
         g.addColorStop(0.45, col + '55');
@@ -49,13 +50,13 @@ function NebulaOrb({ size, colors }) {
       });
       pulse += dp; if (pulse > 1.09 || pulse < 0.93) dp *= -1;
       const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 0.35 * pulse);
-      cg.addColorStop(0, colors[0] + 'ff');
-      cg.addColorStop(0.3, colors[0] + '99');
-      cg.addColorStop(1, colors[0] + '00');
+      cg.addColorStop(0, blobColors[0] + 'ff');
+      cg.addColorStop(0.3, blobColors[0] + '99');
+      cg.addColorStop(1, blobColors[0] + '00');
       ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, r * 0.35 * pulse, 0, Math.PI * 2); ctx.fill();
       const rim = ctx.createRadialGradient(cx, cy, r * 0.82, cx, cy, r);
-      rim.addColorStop(0, colors[0] + '00');
-      rim.addColorStop(1, colors[0] + '33');
+      rim.addColorStop(0, blobColors[0] + '00');
+      rim.addColorStop(1, blobColors[0] + '33');
       ctx.fillStyle = rim; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
       animId = requestAnimationFrame(draw);
@@ -77,7 +78,7 @@ export default function Landing() {
     let W, H, stars = [], animId;
     function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
     resize(); window.addEventListener('resize', resize);
-    for (let i = 0; i < 150; i++) stars.push({
+    for (let i = 0; i < 160; i++) stars.push({
       x: Math.random(), y: Math.random(),
       r: Math.random() * 1.4 + 0.2,
       op: Math.random(), dop: (Math.random() - 0.5) * 0.006,
@@ -100,6 +101,8 @@ export default function Landing() {
     return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
   }, []);
 
+  // Mixed colors for Nova orb (both teal + amber)
+  const novaColors = ['#1db88a', '#ef9f27', '#38e0aa', '#fac775', '#0f6e56'];
   const tealColors = ['#1db88a', '#38e0aa', '#0f6e56', '#a8f0d8'];
   const amberColors = ['#ef9f27', '#fac775', '#854f0b', '#faedda'];
 
@@ -107,32 +110,51 @@ export default function Landing() {
     <div className="landing-bg">
       <canvas ref={starsRef} className="landing-stars" />
       <div className="landing-content">
-        <div className="landing-eyebrow">✦ Discover Mind</div>
-        <h1 className="landing-headline">Who are you, really?</h1>
-        <p className="landing-sub">Two paths. One truth.</p>
-        <div className="landing-orbs">
-          <div className="landing-path" onClick={() => navigate('/login')}>
-            <div className="orb-wrap">
-              <NebulaOrb size={200} colors={tealColors} />
-              <div className="orb-letter teal-letter">M</div>
-              <div className="orb-ring teal-ring ring-1" />
-              <div className="orb-ring teal-ring ring-2" />
-            </div>
-            <div className="path-name">Mind for Work</div>
-            <div className="path-desc">Talent visibility and team culture — for growing companies and their leaders</div>
-            <button className="path-btn teal-btn">Explore →</button>
+
+        {/* Nova at top center */}
+        <div className="landing-nova-wrap" onClick={() => window.open('/nova.html', '_blank')}>
+          <div className="landing-nova-orb">
+            <NebulaOrb size={72} colors={novaColors} />
+            <div className="landing-nova-letter">N</div>
+            <div className="landing-nova-ring ring-1" />
+            <div className="landing-nova-ring ring-2" />
           </div>
+          <div className="landing-nova-label">Ask Nova</div>
+        </div>
+
+        {/* Headline */}
+        <div className="landing-eyebrow">✦ Discover Mind</div>
+        <p className="landing-sub">What brings you here today?</p>
+
+        {/* Two paths */}
+        <div className="landing-orbs">
+
+          {/* Mind for You — LEFT */}
           <div className="landing-path" onClick={() => navigate('/discover')}>
             <div className="orb-wrap">
-              <NebulaOrb size={200} colors={amberColors} />
+              <NebulaOrb size={190} colors={amberColors} />
               <div className="orb-letter amber-letter">M</div>
               <div className="orb-ring amber-ring ring-1" />
               <div className="orb-ring amber-ring ring-2" />
             </div>
-            <div className="path-name">Mind for You</div>
-            <div className="path-desc">Are you a born Leader? A natural Manager? An Elite Contributor? Find out.</div>
-            <button className="path-btn amber-btn">Discover →</button>
+            <div className="path-name amber-name">Mind for You</div>
+            <div className="path-desc">Discover your strengths. Know who you really are — through the eyes of people who know you best.</div>
+            <button className="path-btn amber-btn">Discover yourself →</button>
           </div>
+
+          {/* Mind for Work — RIGHT */}
+          <div className="landing-path" onClick={() => navigate('/login')}>
+            <div className="orb-wrap">
+              <NebulaOrb size={190} colors={tealColors} />
+              <div className="orb-letter teal-letter">M</div>
+              <div className="orb-ring teal-ring ring-1" />
+              <div className="orb-ring teal-ring ring-2" />
+            </div>
+            <div className="path-name teal-name">Mind for Work</div>
+            <div className="path-desc">Build stronger teams. Surface talent your org charts can't see — through structured peer insight.</div>
+            <button className="path-btn teal-btn">Explore for teams →</button>
+          </div>
+
         </div>
       </div>
     </div>
