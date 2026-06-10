@@ -79,8 +79,8 @@ export default function Assessment() {
           <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
             {mode === 'personal' ? 'Get my Mind profile →' : 'Review someone →'}
           </button>
-          <button className="btn-ghost" onClick={() => navigate('/reports')}>
-            View sample reports
+          <button className="btn-ghost" onClick={() => mode === 'personal' ? navigate('/results-preview') : navigate('/reports')}>
+            See your results →
           </button>
         </div>
       </div>
