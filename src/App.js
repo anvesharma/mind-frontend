@@ -26,6 +26,7 @@ function App() {
         <Route path="/assessment" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
         <Route path="/results/:rateeId" element={<ProtectedRoute><Results /></ProtectedRoute>} />
         <Route path="/peer-results/:rateeId" element={<ProtectedRoute><PersonalResults peer={true} /></ProtectedRoute>} />
+        <Route path="/peer-results/:rateeId" element={<ProtectedRoute><PersonalResults peer={true} /></ProtectedRoute>} />
         <Route path="/personal-results/:rateeId" element={<ProtectedRoute><PersonalResults /></ProtectedRoute>} />
         <Route path="/results-preview" element={<ProtectedRoute><PersonalResultsPreview /></ProtectedRoute>} />
         <Route path="/get-rated" element={<ProtectedRoute><GetRated /></ProtectedRoute>} />
