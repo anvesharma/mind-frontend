@@ -316,3 +316,8 @@
   .path-desc { margin-bottom: 0 !important; }
   .clickable-desc { padding: 0.2rem 0.6rem !important; }
 }
+
+@media (max-width: 600px) {
+  .path-name { margin-bottom: 0.15rem !important; }
+  .landing-orbs { gap: 0.75rem !important; }
+}
