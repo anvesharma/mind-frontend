@@ -6,37 +6,23 @@ import './PersonalResults.css';
 const TYPE_DATA = {
   leader: {
     headline: 'You are a born Leader',
-    sub: 'People follow your vision. You inspire before you instruct.',
-    tag: 'LEADER',
-    emoji: '👑',
-    color: '#ef9f27',
-    glow: 'rgba(239,159,39,0.2)',
-    border: 'rgba(239,159,39,0.35)',
+    tag: 'LEADER', emoji: '👑',
+    color: '#ef9f27', glow: 'rgba(239,159,39,0.2)', border: 'rgba(239,159,39,0.35)',
   },
   manager: {
     headline: 'You are a natural Manager',
-    sub: 'Teams thrive under you. You turn chaos into coordination.',
-    tag: 'MANAGER',
-    emoji: '🎯',
-    color: '#fac775',
-    glow: 'rgba(250,199,117,0.2)',
-    border: 'rgba(250,199,117,0.35)',
+    tag: 'MANAGER', emoji: '🎯',
+    color: '#fac775', glow: 'rgba(250,199,117,0.2)', border: 'rgba(250,199,117,0.35)',
   },
   ic: {
     headline: 'You are an Elite Contributor',
-    sub: 'You outthink the room. Your depth is your superpower.',
-    tag: 'ELITE CONTRIBUTOR',
-    emoji: '⚡',
-    color: '#faedda',
-    glow: 'rgba(250,237,218,0.15)',
-    border: 'rgba(250,237,218,0.25)',
+    tag: 'ELITE CONTRIBUTOR', emoji: '⚡',
+    color: '#faedda', glow: 'rgba(250,237,218,0.15)', border: 'rgba(250,237,218,0.25)',
   },
 };
 
 function getTopType(scores) {
-  const l = parseFloat(scores.leader_score);
-  const m = parseFloat(scores.manager_score);
-  const ic = parseFloat(scores.ic_score);
+  const l = parseFloat(scores.leader_score), m = parseFloat(scores.manager_score), ic = parseFloat(scores.ic_score);
   if (l >= m && l >= ic) return 'leader';
   if (m >= l && m >= ic) return 'manager';
   return 'ic';
@@ -44,8 +30,7 @@ function getTopType(scores) {
 
 function ScoreRing({ score, color, label, isTop }) {
   const pct = Math.max(0, Math.min(100, ((score - 7) / 3) * 100));
-  const r = 38, circ = 2 * Math.PI * r;
-  const dash = (pct / 100) * circ;
+  const r = 38, circ = 2 * Math.PI * r, dash = (pct / 100) * circ;
   return (
     <div className="pr-score-item">
       <div className="pr-ring-wrap" style={{ width: isTop ? 110 : 90, height: isTop ? 110 : 90 }}>
@@ -80,7 +65,7 @@ export default function PersonalResults() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const isPeer = false || new URLSearchParams(window.location.search).get('peer');
+    const isPeer = false;
     api.get(`/responses/personal-results${isPeer ? '/peer' : ''}/${rateeId}`)
       .then(res => setData(res.data))
       .catch(() => setError('Could not load your results. Please try again.'))
@@ -134,39 +119,43 @@ export default function PersonalResults() {
   const { ratee, scores, percentiles, top5, bottom5 } = data;
   const topType = getTopType(scores);
   const type = TYPE_DATA[topType];
-  const overallPct = 100 - (parseInt(percentiles.total_pct) || 0);
+  const totalPct = parseInt(percentiles?.total_pct) || 0;
+  const percentileRank = totalPct; // e.g. 78
+  const topPercent = 100 - totalPct; // e.g. 22
 
-  const dimOrder = ['leader', 'manager', 'ic'];
+  // Dynamic sub from top strengths
+  const topStrengthNames = top5 ? top5.slice(0, 3).map(a => a.name).join(', ') : '';
+  const dynamicSub = topStrengthNames
+    ? `Your standout traits: ${topStrengthNames}`
+    : 'Rated by the people who know you best.';
+
   const dims = [
     { key: 'leader', label: 'Leader', score: scores.leader_score },
     { key: 'manager', label: 'Manager', score: scores.manager_score },
-    { key: 'ic', label: 'Contributor', score: scores.ic_score },
-  ].sort((a, b) => (a.key === topType ? -1 : b.key === topType ? 1 : dimOrder.indexOf(a.key) - dimOrder.indexOf(b.key)));
+    { key: 'ic', label: 'Independent Contributor', score: scores.ic_score },
+  ].sort((a, b) => a.key === topType ? -1 : b.key === topType ? 1 : 0);
 
   return (
     <div className="pr-bg">
       <canvas ref={starsRef} className="pr-stars" />
       <div className="pr-wrapper">
 
-        {/* Logo */}
         <div className="pr-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
           <span className="pr-logo-dot" style={{ background: type.color }} />
           <span className="pr-logo-text" style={{ color: type.color }}>Mind</span>
           <span className="pr-logo-tag">for You</span>
         </div>
 
-        {/* Hero */}
         <div className="pr-hero">
           <div className="pr-emoji">{type.emoji}</div>
           <div className="pr-type-tag" style={{ color: type.color, borderColor: type.border, background: type.glow }}>
             {type.tag}
           </div>
           <h1 className="pr-headline" style={{ color: type.color }}>{type.headline}</h1>
-          <p className="pr-sub">{type.sub}</p>
+          <p className="pr-sub">{dynamicSub}</p>
           {ratee?.user_name && <p className="pr-name">{ratee.user_name}</p>}
         </div>
 
-        {/* Scores */}
         <div className="pr-scores">
           {dims.map(d => (
             <ScoreRing
@@ -179,18 +168,15 @@ export default function PersonalResults() {
           ))}
         </div>
 
-        {/* Percentile */}
         <div className="pr-percentile-card" style={{ borderColor: type.border, boxShadow: `0 0 40px ${type.glow}` }}>
-          <div className="pr-percentile-label">You rank in the</div>
-          <div className="pr-percentile-value" style={{ color: type.color }}>Top {overallPct}%</div>
-          <div className="pr-percentile-sub">of all Mind users</div>
+          <div className="pr-percentile-value" style={{ color: type.color }}>{percentileRank}th percentile!</div>
+          <div className="pr-percentile-sub">You rank in the Top {topPercent}% of all Mind users</div>
         </div>
 
-        {/* Top 5 & Bottom 5 */}
         <div className="pr-attributes">
           <div className="pr-attr-col">
             <div className="pr-attr-title" style={{ color: type.color }}>✦ Your Strengths</div>
-            {top5.map((a, i) => (
+            {top5 && top5.map((a, i) => (
               <div className="pr-attr-tag pr-attr-top" key={i}
                 style={{ background: type.glow, borderColor: type.border, color: type.color }}>
                 {a.name}
@@ -199,26 +185,22 @@ export default function PersonalResults() {
           </div>
           <div className="pr-attr-col">
             <div className="pr-attr-title" style={{ color: 'rgba(255,255,255,0.35)' }}>↓ Growth Areas</div>
-            {bottom5.map((a, i) => (
-              <div className="pr-attr-tag pr-attr-bottom" key={i}>
-                {a.name}
-              </div>
+            {bottom5 && bottom5.map((a, i) => (
+              <div className="pr-attr-tag pr-attr-bottom" key={i}>{a.name}</div>
             ))}
           </div>
         </div>
-        
-          <button className="pr-btn-primary" 
-          style={{ background: '#ef9f27', color: '#050810', marginBottom: '0.5rem' }}
-          onClick={() => navigate('/get-rated', { state: { rateeId } })}>
-          Click here to get your real score! →
-          </button>
 
-        {/* Actions */}
         <div className="pr-actions">
+          <button className="pr-btn-primary"
+            style={{ background: '#ef9f27', color: '#050810', marginBottom: '0.5rem' }}
+            onClick={() => navigate('/get-rated', { state: { rateeId } })}>
+            Click here to get your real score! →
+          </button>
           <button className="pr-btn-primary"
             style={{ background: type.color, color: '#050810' }}
             onClick={() => navigate('/assessment')}>
-            Rate someone else
+            Review someone else
           </button>
           <button className="pr-btn-ghost" onClick={() => navigate('/')}>
             ← Back to Mind

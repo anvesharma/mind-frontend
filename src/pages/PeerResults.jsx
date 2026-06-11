@@ -87,7 +87,7 @@ export default function PeerResults() {
   const dims = [
     { key: 'leader', label: 'Leader', score: scores.leader_score },
     { key: 'manager', label: 'Manager', score: scores.manager_score },
-    { key: 'ic', label: 'Contributor', score: scores.ic_score },
+    { key: 'ic', label: 'Independent Contributor', score: scores.ic_score },
   ].sort((a, b) => a.key === topType ? -1 : b.key === topType ? 1 : 0);
 
   return (
@@ -110,9 +110,8 @@ export default function PeerResults() {
           {dims.map(d => <ScoreRing key={d.key} score={d.score} color={type.color} label={d.label} isTop={d.key === topType} />)}
         </div>
         <div className="pr-percentile-card" style={{ borderColor: type.border, boxShadow: `0 0 40px ${type.glow}` }}>
-          <div className="pr-percentile-label">You rank in the</div>
-          <div className="pr-percentile-value" style={{ color: type.color }}>Top {overallPct}%</div>
-          <div className="pr-percentile-sub">of all Mind users</div>
+          <div className="pr-percentile-value" style={{ color: type.color }}>{100 - overallPct}th percentile!</div>
+          <div className="pr-percentile-sub">You rank in the Top {overallPct}% of all Mind users</div>
         </div>
         <div className="pr-attributes">
           <div className="pr-attr-col">

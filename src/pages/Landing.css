@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem 3rem;
+  padding: 1.5rem 1rem 2rem;
   width: 100%;
   gap: 0;
 }
@@ -32,7 +32,7 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.5rem;
   transition: transform 0.3s;
 }
 .landing-nova-wrap:hover { transform: scale(1.05); }
@@ -78,14 +78,16 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.25);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   font-weight: 500;
 }
 
 .landing-sub {
-  font-size: 1rem;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 2.5rem;
+  font-size: 1.4rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2rem;
   letter-spacing: 0.02em;
 }
 
@@ -168,43 +170,45 @@
 .amber-name { color: #ef9f27; }
 
 .path-desc {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.35);
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.4);
   text-align: center;
   line-height: 1.55;
-  margin-bottom: 1.1rem;
 }
 
-.path-btn {
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  font-weight: 600;
-  padding: 0.5rem 1.3rem;
-  border-radius: 999px;
+.clickable-desc {
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
-  font-family: 'DM Sans', sans-serif;
-  text-transform: none;
-}
-.path-btn:hover { opacity: 0.75; transform: scale(1.04); }
-
-.teal-btn {
-  background: rgba(29,184,138,0.1);
-  color: #1db88a;
-  border: 1px solid rgba(29,184,138,0.3);
+  transition: all 0.2s;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
 }
 
-.amber-btn {
-  background: rgba(239,159,39,0.1);
+.amber-desc:hover {
   color: #ef9f27;
-  border: 1px solid rgba(239,159,39,0.3);
+  border-color: rgba(239,159,39,0.3);
+  background: rgba(239,159,39,0.08);
 }
 
+.teal-desc:hover {
+  color: #1db88a;
+  border-color: rgba(29,184,138,0.3);
+  background: rgba(29,184,138,0.08);
+}
+
+/* Mobile responsive */
 @media (max-width: 600px) {
-  .landing-orbs { gap: 2rem; }
-  .orb-wrap { width: 150px; height: 150px; }
-  .orb-letter { font-size: 1.8rem; }
-  .landing-path { max-width: 165px; }
-  .path-name { font-size: 0.95rem; }
+  .landing-orbs { gap: 1.5rem; flex-wrap: nowrap; justify-content: center; }
+  .orb-wrap { width: 140px; height: 140px; }
+  .orb-letter { font-size: 1.7rem; }
+  .landing-path { max-width: 155px; }
+  .path-name { font-size: 0.9rem; }
   .path-desc { font-size: 0.72rem; }
+  .landing-sub { font-size: 1.1rem; }
+  .landing-nova-wrap { margin-bottom: 1rem; }
+}
+
+@media (max-width: 380px) {
+  .orb-wrap { width: 120px; height: 120px; }
+  .landing-path { max-width: 130px; }
 }

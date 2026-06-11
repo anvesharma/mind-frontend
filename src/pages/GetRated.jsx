@@ -59,8 +59,8 @@ export default function GetRated() {
         <div className="gr-hero">
           <div className="gr-emoji">🔥</div>
           <h1 className="gr-headline">Are you a born Leader?<br />A great Manager?<br />An exceptional Contributor?</h1>
-          <p className="gr-sub">Get your <strong>real rating</strong> for just <span className="gr-price">$1.99</span></p>
-          <p className="gr-sub2">Send Mind to up to 5 people who know you — unlock what they really think</p>
+          <p className="gr-sub">Get your <strong>real review</strong> for just <span className="gr-price">$1.99</span></p>
+          <p className="gr-sub2">Send Mind to up to 5 people who know you — Discover who you really are</p>
         </div>
 
         <div className="gr-what-you-get">
@@ -98,8 +98,8 @@ export default function GetRated() {
         </div>
 
         <div className="gr-emails-section">
-          <div className="gr-emails-title">Who should rate you?</div>
-          <div className="gr-emails-sub">Enter up to 5 people — min 3 required to unlock results</div>
+          <div className="gr-emails-title">Who should review you?</div>
+          <div className="gr-emails-sub">Enter up to 5 people — min 3 required to unlock results (min)</div>
           <div className="gr-emails-grid">
             {friends.map((friend, i) => (
               <div className="gr-friend-row" key={i}>
@@ -128,7 +128,7 @@ export default function GetRated() {
           <div className="gr-email-count">
             {validFriends.length < 3
               ? `Enter ${3 - validFriends.length} more email${3 - validFriends.length > 1 ? 's' : ''} to continue`
-              : `${validFriends.length} ${validFriends.length === 1 ? 'person' : 'people'} will rate you`}
+              : `${validFriends.length} ${validFriends.length === 1 ? 'person' : 'people'} will review you`}
           </div>
         </div>
 
@@ -140,7 +140,7 @@ export default function GetRated() {
           {loading ? 'Redirecting to payment...' : canPay ? 'Pay $1.99 & send →' : 'Enter at least 3 emails to pay'}
         </button>
 
-        <p className="gr-fine-print">One-time payment. No subscription. Results unlock when 3+ people complete your rating (within 7 days).</p>
+        <p className="gr-fine-print">One-time payment. No subscription. Results unlock when 3+ people complete your review (within 7 days).</p>
         <button className="gr-back" onClick={() => navigate(-1)}>← Back to my results</button>
       </div>
     </div>
