@@ -12,10 +12,10 @@
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);overflow:hidden}
 body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#0d2a1f 0%,#060d1a 55%,#020710 100%)}
 canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
-.screen{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:700px;padding:2rem 1.5rem;position:relative;z-index:1;animation:fadeIn 0.5s ease;min-height:100vh}
+.screen{display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:700px;padding:1.5rem 1.5rem;position:relative;z-index:1;animation:fadeIn 0.5s ease;min-height:100vh}
 .screen.active{display:flex}
 @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.nova-orb-wrap{position:relative;cursor:pointer;margin-bottom:1.5rem;flex-shrink:0}
+.nova-orb-wrap{position:relative;cursor:pointer;margin-bottom:1.2rem;flex-shrink:0}
 .nova-orb-wrap canvas{border-radius:50%;display:block}
 .nova-orb-label{font-family:'Palatino Linotype',Palatino,'Book Antiqua',serif;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3.2rem;font-weight:400;color:rgba(255,255,255,0.95);pointer-events:none;text-shadow:0 0 20px rgba(56,224,170,0.6),0 0 30px rgba(239,159,39,0.4);letter-spacing:2px}
 .nova-pulse-ring{position:absolute;inset:-10px;border-radius:50%;border:1.5px solid rgba(29,184,138,0.5);animation:pulse-ring 3s ease-out infinite;pointer-events:none}
@@ -23,34 +23,36 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
 @keyframes pulse-ring{0%{transform:scale(1);opacity:0.8}100%{transform:scale(1.15);opacity:0}}
 .nova-avatar{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#38e0aa,#0f6e56);display:flex;align-items:center;justify-content:center;font-family:'Palatino Linotype',Palatino,serif;font-size:1.4rem;font-weight:400;color:#fff;flex-shrink:0;position:relative;box-shadow:0 0 0 4px rgba(29,184,138,0.12),0 0 20px rgba(29,184,138,0.2)}
 .nova-avatar.speaking::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--accent);animation:pulse-ring 1.2s ease-out infinite}
-.nova-bubble{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;font-size:1.1rem;line-height:1.7;color:var(--text);max-width:560px;width:100%;text-align:center;margin-bottom:2rem;backdrop-filter:blur(12px)}
+.nova-bubble{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem 1.5rem;font-size:1.05rem;line-height:1.7;color:var(--text);max-width:560px;width:100%;text-align:center;margin-bottom:1.5rem;backdrop-filter:blur(12px)}
 .nova-bubble .highlight{color:var(--accent2);font-weight:600}
 .tap-hint{font-size:0.85rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-top:1rem}
 .mind-logo{font-family:var(--font-head);font-size:0.95rem;font-weight:700;color:var(--accent);letter-spacing:0.08em;margin-top:0.5rem;opacity:0.6}
-.options-grid{display:grid;grid-template-columns:1fr;gap:0.9rem;width:100%;max-width:520px}
-.option-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;color:var(--text);font-family:var(--font-body);font-size:1.05rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-align:left;display:flex;align-items:center;gap:1rem;backdrop-filter:blur(12px)}
+.options-grid{display:grid;grid-template-columns:1fr;gap:0.75rem;width:100%;max-width:520px}
+.option-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.3rem;color:var(--text);font-family:var(--font-body);font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-align:left;display:flex;align-items:center;gap:1rem;backdrop-filter:blur(12px)}
 .option-btn:hover,.option-btn:active{background:rgba(29,184,138,0.1);border-color:var(--accent);transform:translateX(4px)}
-.option-btn .icon{width:42px;height:42px;border-radius:10px;background:rgba(29,184,138,0.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
-.option-btn .label{font-weight:600;font-size:1rem;display:block}
-.option-btn .sublabel{font-size:0.82rem;color:var(--muted);display:block;margin-top:2px}
-.back-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.6rem 1.2rem;color:var(--muted);font-family:var(--font-body);font-size:0.9rem;cursor:pointer;margin-top:1.5rem;transition:all 0.2s}
-.action-btn{background:var(--accent);border:none;border-radius:12px;padding:0.9rem 2rem;color:#fff;font-family:var(--font-body);font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s;margin:0.4rem}
-.action-btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text)}
-.mic-btn{width:80px;height:80px;border-radius:50%;border:2px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;margin:1.5rem auto 0;position:relative}
-.mic-btn svg{width:32px;height:32px;fill:var(--muted);transition:fill 0.2s}
+.option-btn .icon{width:40px;height:40px;border-radius:10px;background:rgba(29,184,138,0.12);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.option-btn .label{font-weight:600;font-size:0.95rem;display:block}
+.option-btn .sublabel{font-size:0.78rem;color:var(--muted);display:block;margin-top:2px}
+.back-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.5rem 1.1rem;color:var(--muted);font-family:var(--font-body);font-size:0.88rem;cursor:pointer;margin-top:1rem;transition:all 0.2s}
+.action-btn{background:var(--accent);border:none;border-radius:12px;padding:0.85rem 1.75rem;color:#fff;font-family:var(--font-body);font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.2s;margin:0.35rem}
+.action-btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:0.5rem 0.9rem;border-radius:10px}
+.mic-btn{width:72px;height:72px;border-radius:50%;border:2px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;margin:1rem auto 0;position:relative}
+.mic-btn svg{width:28px;height:28px;fill:var(--muted);transition:fill 0.2s}
 .mic-btn.listening{border-color:#e05c5c;background:rgba(224,92,92,0.12)}
 .mic-btn.listening svg{fill:#e05c5c}
 .mic-btn.listening::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid #e05c5c;animation:pulse-ring 1s ease-out infinite}
-.mic-hint{font-size:0.85rem;color:var(--muted);text-align:center;margin-top:0.6rem}
-.transcript{font-size:0.9rem;color:var(--accent2);font-style:italic;margin-top:0.5rem;min-height:22px;text-align:center}
-.qr-container{background:#fff;border-radius:16px;padding:1.2rem;display:inline-block;margin:1.5rem 0}
+.mic-hint{font-size:0.82rem;color:var(--muted);text-align:center;margin-top:0.5rem}
+.transcript{font-size:0.88rem;color:var(--accent2);font-style:italic;margin-top:0.4rem;min-height:20px;text-align:center}
+.qr-mini{background:#fff;border-radius:10px;padding:0.6rem;display:inline-block;margin-top:0.75rem}
+.qr-mini-label{font-size:0.68rem;color:var(--muted);text-align:center;margin-top:0.3rem;letter-spacing:0.04em}
+.qr-container{background:#fff;border-radius:16px;padding:1.2rem;display:inline-block;margin:1.2rem 0}
 .waveform{display:flex;align-items:center;gap:3px;height:24px;margin:0 auto;justify-content:center}
 .wave-bar{width:3px;background:var(--accent);border-radius:2px;animation:wave var(--s) ease-in-out infinite alternate;height:6px}
 @keyframes wave{from{height:4px;opacity:0.4}to{height:20px;opacity:1}}
 .waveform.hidden{visibility:hidden}
-.chat-area{width:100%;max-width:580px;max-height:300px;overflow-y:auto;margin-bottom:0.5rem;display:flex;flex-direction:column;gap:0.75rem;scrollbar-width:none}
+.chat-area{width:100%;max-width:580px;max-height:240px;overflow-y:auto;margin-bottom:0.4rem;display:flex;flex-direction:column;gap:0.65rem;scrollbar-width:none}
 .chat-area::-webkit-scrollbar{display:none}
-.chat-msg{padding:0.8rem 1.1rem;border-radius:14px;font-size:0.95rem;line-height:1.6;max-width:88%}
+.chat-msg{padding:0.7rem 1rem;border-radius:14px;font-size:0.92rem;line-height:1.6;max-width:88%}
 .chat-msg.nova{background:var(--card);border:1px solid var(--border);align-self:flex-start}
 .chat-msg.user{background:rgba(29,184,138,0.15);border:1px solid rgba(29,184,138,0.3);align-self:flex-end}
 .chat-msg.nova.amber{border-color:rgba(239,159,39,0.25)}
@@ -59,12 +61,14 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
 .loading-dots span:nth-child(2){animation-delay:0.2s}
 .loading-dots span:nth-child(3){animation-delay:0.4s}
 @keyframes dot-bounce{0%,80%,100%{transform:translateY(0);opacity:0.4}40%{transform:translateY(-6px);opacity:1}}
-.btn-row{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem}
+.btn-row{display:flex;flex-wrap:wrap;justify-content:center;gap:0.4rem}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .slide-up{animation:slideUp 0.4s ease forwards}
-.mode-badge{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.7rem;border-radius:999px;margin-bottom:0.5rem}
+.mode-badge{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.7rem;border-radius:999px;margin-bottom:0.4rem}
 .mode-badge.you{background:rgba(239,159,39,0.15);color:#ef9f27;border:1px solid rgba(239,159,39,0.3)}
 .mode-badge.work{background:rgba(29,184,138,0.15);color:#1db88a;border:1px solid rgba(29,184,138,0.3)}
+.chat-bottom{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:580px;gap:1rem;margin-top:0.5rem}
+.chat-bottom-left{display:flex;flex-direction:column;align-items:center}
 </style>
 </head>
 <body>
@@ -80,9 +84,9 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
   <div class="mind-logo">✦ DISCOVER MIND</div>
 </div>
 <div class="screen" id="screen-welcome">
-  <div class="nova-orb-wrap" onclick="goHome()" style="width:140px;height:140px;margin-bottom:1.5rem">
-    <canvas id="nebula2" width="140" height="140"></canvas>
-    <div class="nova-orb-label" style="font-size:1.8rem">N</div>
+  <div class="nova-orb-wrap" onclick="goHome()" style="width:130px;height:130px;margin-bottom:1.2rem">
+    <canvas id="nebula2" width="130" height="130"></canvas>
+    <div class="nova-orb-label" style="font-size:1.7rem">N</div>
     <div class="nova-pulse-ring"></div>
   </div>
   <div class="nova-bubble">
@@ -94,11 +98,11 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
   </div>
 </div>
 <div class="screen" id="screen-home">
-  <div class="nova-orb-wrap" style="width:100px;height:100px;margin-bottom:1.2rem">
-    <canvas id="nebula3" width="100" height="100"></canvas>
-    <div class="nova-orb-label" style="font-size:1.4rem">N</div>
+  <div class="nova-orb-wrap" style="width:90px;height:90px;margin-bottom:1rem">
+    <canvas id="nebula3" width="90" height="90"></canvas>
+    <div class="nova-orb-label" style="font-size:1.3rem">N</div>
   </div>
-  <div class="nova-bubble" style="margin-bottom:1.5rem;font-size:1rem">What would you like to explore?</div>
+  <div class="nova-bubble" style="margin-bottom:1.2rem;font-size:0.95rem">What would you like to explore?</div>
   <div class="options-grid">
     <button class="option-btn" onclick="goMindForYou()">
       <div class="icon" style="background:rgba(239,159,39,0.12)">✨</div>
@@ -115,37 +119,46 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
   </div>
 </div>
 <div class="screen" id="screen-mind">
-  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;width:100%;max-width:580px">
+  <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.4rem;width:100%;max-width:580px">
     <div class="nova-avatar" id="mind-avatar">N</div>
-    <div>
-      <div style="font-family:var(--font-head);font-weight:700;font-size:1.1rem">Nova</div>
-      <div style="font-size:0.8rem;color:var(--muted)" id="mind-subtitle">Ask me anything</div>
+    <div style="flex:1">
+      <div style="font-family:var(--font-head);font-weight:700;font-size:1rem">Nova</div>
+      <div style="font-size:0.75rem;color:var(--muted)" id="mind-subtitle">Ask me anything</div>
     </div>
-    <div class="waveform hidden" id="mind-wave" style="margin-left:auto">
+    <div class="waveform hidden" id="mind-wave">
       <div class="wave-bar" style="--s:0.8s"></div>
       <div class="wave-bar" style="--s:0.6s;animation-delay:0.1s"></div>
       <div class="wave-bar" style="--s:1s;animation-delay:0.2s"></div>
       <div class="wave-bar" style="--s:0.7s;animation-delay:0.3s"></div>
     </div>
   </div>
-  <div id="mode-badge-wrap" style="width:100%;max-width:580px;margin-bottom:0.75rem"></div>
+  <div id="mode-badge-wrap" style="width:100%;max-width:580px;margin-bottom:0.5rem"></div>
   <div class="chat-area" id="chat-area"></div>
   <div class="transcript" id="transcript"></div>
-  <div class="mic-btn" id="mic-btn" onclick="toggleMic()">
-    <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM6.5 10a.5.5 0 0 0-1 0 6.5 6.5 0 0 0 13 0 .5.5 0 0 0-1 0 5.5 5.5 0 0 1-11 0zm4.5 8.5v2h-2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-2v-2a6.5 6.5 0 0 0 6-6.5.5.5 0 0 0-1 0 5.5 5.5 0 0 1-11 0 .5.5 0 0 0-1 0 6.5 6.5 0 0 0 6 6.5z"/></svg>
+  <div class="btn-row" id="quick-btns" style="margin-top:0.5rem;width:100%;max-width:580px"></div>
+  <div class="chat-bottom">
+    <div class="chat-bottom-left">
+      <div class="mic-btn" id="mic-btn" onclick="toggleMic()">
+        <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM6.5 10a.5.5 0 0 0-1 0 6.5 6.5 0 0 0 13 0 .5.5 0 0 0-1 0 5.5 5.5 0 0 1-11 0zm4.5 8.5v2h-2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-2v-2a6.5 6.5 0 0 0 6-6.5.5.5 0 0 0-1 0 5.5 5.5 0 0 1-11 0 .5.5 0 0 0-1 0 6.5 6.5 0 0 0 6 6.5z"/></svg>
+      </div>
+      <div class="mic-hint" id="mic-hint">Tap to speak</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="qr-mini" id="qr-mini-wrap"></div>
+      <div class="qr-mini-label">Scan to open Mind</div>
+    </div>
   </div>
-  <div class="mic-hint" id="mic-hint">Tap mic and speak, or ask a question:</div>
   <button class="back-btn" onclick="goHome()">Back</button>
 </div>
 <div class="screen" id="screen-explore">
-  <div class="nova-orb-wrap" style="width:80px;height:80px;margin-bottom:1rem">
-    <canvas id="nebula4" width="80" height="80"></canvas>
-    <div class="nova-orb-label" style="font-size:1.1rem">N</div>
+  <div class="nova-orb-wrap" style="width:75px;height:75px;margin-bottom:0.8rem">
+    <canvas id="nebula4" width="75" height="75"></canvas>
+    <div class="nova-orb-label" style="font-size:1rem">N</div>
   </div>
-  <div class="nova-bubble" style="font-size:0.95rem;margin-bottom:1.5rem">Ready to explore Mind? Scan the QR code on your phone, or open it right here.</div>
+  <div class="nova-bubble" style="font-size:0.92rem;margin-bottom:1.2rem">Ready to explore Mind? Scan the QR code on your phone, or open it right here.</div>
   <div class="qr-container"><div id="qrcode"></div></div>
-  <div style="font-size:0.9rem;color:var(--muted);text-align:center;margin-top:0.5rem">Scan to open discovermind.net</div>
-  <div class="btn-row" style="margin-top:1.5rem">
+  <div style="font-size:0.88rem;color:var(--muted);text-align:center;margin-top:0.4rem">Scan to open discovermind.net</div>
+  <div class="btn-row" style="margin-top:1.2rem">
     <button class="action-btn" onclick="window.open('https://www.discovermind.net','_blank')">Open here</button>
     <button class="action-btn secondary" onclick="goHome()">Back</button>
   </div>
@@ -185,7 +198,7 @@ const CHAT='https://mind-backend-production-0973.up.railway.app/api/nova-chat';
   tick();
 })();
 
-// Mixed nebula painter (teal + amber)
+// Mixed nebula painter
 function paintNebula(canvasId,size){
   const c=document.getElementById(canvasId);
   if(!c)return null;
@@ -199,8 +212,7 @@ function paintNebula(canvasId,size){
   ];
   let pulse=1,dpulse=0.0015;
   function draw(){
-    ctx.clearRect(0,0,size,size);
-    ctx.save();
+    ctx.clearRect(0,0,size,size);ctx.save();
     ctx.beginPath();ctx.arc(cx,cy,r-1,0,Math.PI*2);ctx.clip();
     const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
     bg.addColorStop(0,'#0d1a2a');bg.addColorStop(1,'#060d1a');
@@ -210,13 +222,11 @@ function paintNebula(canvasId,size){
       if(Math.abs(b.pox)>size*0.12)b.dpx*=-1;
       if(Math.abs(b.poy)>size*0.12)b.dpy*=-1;
       b.a+=b.da;
-      const bx=b.ox+b.pox,by=b.oy+b.poy;
-      ctx.save();ctx.translate(bx,by);ctx.rotate(b.a);
+      ctx.save();ctx.translate(b.ox+b.pox,b.oy+b.poy);ctx.rotate(b.a);
       const g=ctx.createRadialGradient(0,0,0,0,0,b.rx);
       g.addColorStop(0,b.col+'cc');g.addColorStop(0.4,b.col+'55');g.addColorStop(1,b.col+'00');
       ctx.fillStyle=g;ctx.scale(1,b.ry/b.rx);
-      ctx.beginPath();ctx.arc(0,0,b.rx,0,Math.PI*2);ctx.fill();
-      ctx.restore();
+      ctx.beginPath();ctx.arc(0,0,b.rx,0,Math.PI*2);ctx.fill();ctx.restore();
     });
     pulse+=dpulse;if(pulse>1.08||pulse<0.94)dpulse*=-1;
     const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,r*0.38*pulse);
@@ -230,17 +240,24 @@ function paintNebula(canvasId,size){
     rim.addColorStop(0.5,'rgba(239,159,39,0.1)');
     rim.addColorStop(1,'rgba(29,184,138,0.2)');
     ctx.fillStyle=rim;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
-    ctx.restore();
-    requestAnimationFrame(draw);
+    ctx.restore();requestAnimationFrame(draw);
   }
   return draw();
 }
-paintNebula('nebula',260);paintNebula('nebula2',140);paintNebula('nebula3',100);paintNebula('nebula4',80);
+paintNebula('nebula',260);paintNebula('nebula2',130);paintNebula('nebula3',90);paintNebula('nebula4',75);
+
+// Mini QR code in chat screen
+let miniQrDone=false;
+function initMiniQr(){
+  if(miniQrDone)return;
+  new QRCode(document.getElementById('qr-mini-wrap'),{text:'https://www.discovermind.net',width:70,height:70,colorDark:'#000',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
+  miniQrDone=true;
+}
 
 // Audio
 const audioCache={};
 let curAudio=null,speakSession=0,recognition=null,listening=false;
-let novaMode='neutral'; // 'neutral' | 'you' | 'work'
+let novaMode='neutral';
 
 const WELCOME_TEXT="Hi! I'm Nova, Anvesh's digital avatar. I'm here to assist you. If you'd prefer silence, tap Keep it quiet. Otherwise, let's chat!";
 const HOME_TEXT="What would you like to explore? I can tell you about Mind for You, Mind for Work, or help you try the app.";
@@ -262,10 +279,39 @@ async function speak(text,cb){
     if(s!==speakSession)return;
     curAudio=new Audio(src);
     curAudio.onended=()=>{curAudio=null;if(cb)cb()};curAudio.onerror=()=>{curAudio=null;if(cb)cb()};curAudio.play();
-  }catch(e){console.error(e);if(cb)cb()}
+  }catch(e){if(cb)cb()}
 }
 function stopSpeaking(){speakSession++;if(curAudio){curAudio.pause();curAudio=null}}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');stopSpeaking();stopListening();}
+
+// Quick question buttons per mode
+const YOU_QUESTIONS=[
+  {label:'What type am I?',q:'Am I a Leader, Manager or Independent Contributor?'},
+  {label:'How does rating work?',q:'How does the peer rating work?'},
+  {label:'What do I get?',q:'What will I get for $1.99?'},
+  {label:'Is it anonymous?',q:'Will my friends know how I rated them?'},
+];
+const WORK_QUESTIONS=[
+  {label:'What problem does it solve?',q:'What problem does Mind for Work solve?'},
+  {label:'Who is it for?',q:'Who is Mind for Work designed for?'},
+  {label:'How does it work?',q:'How does Mind for Work work?'},
+  {label:'Early access?',q:'How can I get early access to Mind for Work?'},
+];
+
+function setQuickBtns(questions,isAmber){
+  const wrap=document.getElementById('quick-btns');
+  wrap.innerHTML='';
+  questions.forEach(q=>{
+    const btn=document.createElement('button');
+    btn.className='action-btn secondary';
+    btn.style.fontSize='0.75rem';
+    btn.style.padding='0.45rem 0.8rem';
+    if(isAmber){btn.style.borderColor='rgba(239,159,39,0.3)';btn.style.color='#ef9f27';}
+    btn.textContent=q.label;
+    btn.onclick=()=>{addMsg('user',q.q,isAmber?'amber':'');askNova(q.q);};
+    wrap.appendChild(btn);
+  });
+}
 
 // Navigation
 function goWelcome(){showScreen('screen-welcome');speak(WELCOME_TEXT)}
@@ -275,23 +321,25 @@ function goSilence(){stopSpeaking();showScreen('screen-silence')}
 function goMindForYou(){
   novaMode='you';
   showScreen('screen-mind');
+  initMiniQr();
   document.getElementById('chat-area').innerHTML='';
   document.getElementById('mind-subtitle').textContent='Mind for You';
-  document.getElementById('mode-badge-wrap').innerHTML='<div class="mode-badge you">✨ Mind for You mode</div>';
-  const intro="Mind for You is about self-discovery! Whether you are a born Leader, a natural Manager, or an Elite Contributor — find out through the honest eyes of people who know you best. What would you like to know?";
-  addMsg('nova', intro, 'amber');
-  speak(intro);
+  document.getElementById('mode-badge-wrap').innerHTML='<div class="mode-badge you">✨ Mind for You</div>';
+  setQuickBtns(YOU_QUESTIONS,true);
+  const intro="Mind for You is about self-discovery! Find out if you are a born Leader, a natural Manager, or an Elite Contributor — through honest feedback from people who know you best. What would you like to know?";
+  addMsg('nova',intro,'amber');speak(intro);
 }
 
 function goMindForWork(){
   novaMode='work';
   showScreen('screen-mind');
+  initMiniQr();
   document.getElementById('chat-area').innerHTML='';
   document.getElementById('mind-subtitle').textContent='Mind for Work';
-  document.getElementById('mode-badge-wrap').innerHTML='<div class="mode-badge work">🧠 Mind for Work mode</div>';
-  const intro="Mind for Work helps companies see the talent they already have. Ask me about how it surfaces hidden leaders, flags management risks, or tracks team culture. What would you like to know?";
-  addMsg('nova', intro);
-  speak(intro);
+  document.getElementById('mode-badge-wrap').innerHTML='<div class="mode-badge work">🧠 Mind for Work</div>';
+  setQuickBtns(WORK_QUESTIONS,false);
+  const intro="Mind for Work helps companies see the talent they already have. It surfaces hidden leaders, flags management risks, and tracks team culture through peer assessment. What would you like to know?";
+  addMsg('nova',intro);speak(intro);
 }
 
 function goExplore(){
@@ -300,30 +348,12 @@ function goExplore(){
   speak(EXPLORE_TEXT);
 }
 
-// System prompts per mode
-const SYS_YOU=`You are Nova, a warm friendly voice agent for Mind for You — a personal self-discovery product. You are speaking to a passenger in Anvesh's Uber in the Bay Area.
+// System prompts
+const SYS_YOU=`You are Nova, a warm friendly voice agent for Mind for You — a personal self-discovery product. You are speaking to a passenger in Anvesh's Uber in the Bay Area. Mind for You helps people find out if they are a born Leader, a natural Manager, or an Elite Contributor — through honest ratings from friends who know them best. Users see their top 5 strengths, bottom 5 growth areas, and percentile ranking. To get peer-rated by real friends, users pay $1.99 and invite 3-5 people via email. Results unlock when at least 3 friends complete the review within 7 days. Available at discovermind.net. Tone: Warm, personal, encouraging. 2-3 sentences max. No markdown. Plain prose only.`;
 
-Mind for You helps regular people find out who they really are through honest peer feedback. Users discover if they are a born Leader, a natural Manager, or an Elite Contributor — based on ratings from friends who know them best. They see their top 5 strengths, bottom 5 growth areas, and a percentile ranking among all users.
+const SYS_WORK=`You are Nova, a professional voice agent for Mind for Work — a B2B talent assessment platform. You are speaking to a passenger in Anvesh's Uber in the Bay Area. Mind for Work is for Series B to enterprise companies. It uses structured peer feedback to generate talent profiles across Leader, Manager, and Independent Contributor dimensions. It helps founders, CHROs, and People leaders see what hierarchy hides. Early access: 3 months free at discovermind.net. About Anvesh: cofounded eLogist in India in 2017, acquired by Axestrack in 2020, MBA at NYU Stern 2025, then built Mind. Tone: Professional, confident. 2-3 sentences max. No markdown. Plain prose only.`;
 
-The experience: Users rate someone they know on 36 personality and skill attributes. The output is a personal profile scored on a 7-10 scale. To get rated by real friends, users pay $1.99 and invite 3-5 people via email. Results unlock when at least 3 friends complete the rating. Available at discovermind.net.
-
-Tone: Warm, personal, encouraging. Like talking to a friend. Avoid corporate language. Focus on personality, self-awareness, relationships, and personal growth.
-
-Rules: 2-3 sentences max. No markdown. Plain prose only. If asked how to help: suggest trying the app at discovermind.net or sharing it with friends.`;
-
-const SYS_WORK=`You are Nova, a professional voice agent for Mind for Work — a B2B talent assessment platform. You are speaking to a passenger in Anvesh's Uber in the Bay Area.
-
-Mind for Work is for Series B to enterprise companies. It uses structured peer feedback to generate talent profiles across three dimensions: Leader, Manager, and Independent Contributor. It helps founders, CHROs, and People leaders see what hierarchy hides — who should be trusted with more scope, where management quality is weakening, which teams are drifting culturally.
-
-How it works: Peers rate each other on 36 attributes. Output is a talent profile scored on a 7-10 scale with percentile ranking. Early access: 3 months free at discovermind.net.
-
-About Anvesh: cofounded eLogist in India in 2017, acquired by Axestrack in 2020, MBA at NYU Stern 2025, then built Mind.
-
-Tone: Professional, confident, data-driven. Speak to business decision-makers.
-
-Rules: 2-3 sentences max. No markdown. Plain prose only. If asked how to help: suggest an intro to a founder, CHRO, or People leader, or trying the demo at discovermind.net.`;
-
-const SYS_NEUTRAL=`You are Nova, a warm voice agent for Mind — a platform with two products: Mind for You (personal self-discovery) and Mind for Work (B2B talent assessment). You are speaking to a passenger in Anvesh's Uber. Keep answers brief and steer the user toward one of the two products based on what they seem interested in. 2-3 sentences max. No markdown.`;
+const SYS_NEUTRAL=`You are Nova, a warm voice agent for Mind — a platform with two products: Mind for You (personal self-discovery) and Mind for Work (B2B talent assessment). Steer the user toward one of the two products. 2-3 sentences max. No markdown.`;
 
 const hist=[];
 async function askNova(q){
@@ -352,12 +382,12 @@ function startListening(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){document.getElementById('mic-hint').textContent='Voice requires Chrome on HTTPS.';return}
   stopSpeaking();recognition=new SR();recognition.lang='en-US';recognition.interimResults=true;recognition.continuous=false;
-  recognition.onstart=()=>{listening=true;document.getElementById('mic-btn').classList.add('listening');document.getElementById('mic-hint').textContent='Listening... speak now';document.getElementById('transcript').textContent=''};
+  recognition.onstart=()=>{listening=true;document.getElementById('mic-btn').classList.add('listening');document.getElementById('mic-hint').textContent='Listening...';document.getElementById('transcript').textContent=''};
   recognition.onresult=(e)=>{let fi='',fn='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)fn+=e.results[i][0].transcript;else fi+=e.results[i][0].transcript}document.getElementById('transcript').textContent=fn||fi;if(fn){stopListening();addMsg('user',fn,novaMode==='you'?'amber':'');document.getElementById('transcript').textContent='';askNova(fn)}};
-  recognition.onerror=(e)=>{document.getElementById('mic-hint').textContent=e.error==='not-allowed'?'Mic blocked — allow in browser settings.':'Could not hear you — try again.';stopListening()};
+  recognition.onerror=(e)=>{document.getElementById('mic-hint').textContent=e.error==='not-allowed'?'Mic blocked.':'Could not hear you.';stopListening()};
   recognition.onend=()=>{if(listening)stopListening()};recognition.start();
 }
-function stopListening(){listening=false;if(recognition){try{recognition.stop()}catch(e){}recognition=null}const b=document.getElementById('mic-btn');if(b)b.classList.remove('listening');const h=document.getElementById('mic-hint');if(h)h.textContent='Tap mic and speak, or ask a question:';}
+function stopListening(){listening=false;if(recognition){try{recognition.stop()}catch(e){}recognition=null}const b=document.getElementById('mic-btn');if(b)b.classList.remove('listening');const h=document.getElementById('mic-hint');if(h)h.textContent='Tap to speak';}
 </script>
 </body>
 </html>
