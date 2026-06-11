@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { QRCode } from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 import './Landing.css';
 
 function NebulaOrb({ size, colors }) {
@@ -161,7 +161,7 @@ export default function Landing() {
         {/* QR Code */}
         <div className="landing-qr-wrap">
           <div className="landing-qr-box">
-            <QRCode value="https://www.discovermind.net" size={64} />
+            <QRCodeSVG value="https://www.discovermind.net" size={64} />
           </div>
           <div className="landing-qr-label">Scan to open on your phone</div>
         </div>
