@@ -245,3 +245,49 @@
   .orb-wrap { width: 130px; height: 130px; }
   .landing-path { width: 132px; }
 }
+
+/* Fix pulse ring centering — rings must be centered on canvas, not wrapper */
+.orb-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orb-ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orb-pulse 3s ease-out infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+}
+
+.ring-2 {
+  width: calc(100% + 44px);
+  height: calc(100% + 44px);
+  animation-delay: 1s;
+}
+
+/* Mobile — stack vertically */
+@media (max-width: 600px) {
+  .landing-orbs {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .landing-path {
+    width: 100%;
+    max-width: 280px;
+  }
+  .orb-wrap {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 0.8rem;
+  }
+  .orb-letter { font-size: 2rem; }
+  .path-name { font-size: 1rem; }
+  .path-desc { font-size: 0.82rem; white-space: normal; }
+}
