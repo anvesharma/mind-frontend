@@ -286,3 +286,25 @@
 
   .landing-qr-wrap { display: none; }
 }
+
+@media (max-width: 600px) {
+  .landing-path {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 300px !important;
+  }
+
+  .orb-wrap {
+    margin-bottom: 0.8rem !important;
+  }
+
+  .path-name {
+    text-align: center !important;
+  }
+
+  .path-desc {
+    text-align: center !important;
+  }
+}
