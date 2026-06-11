@@ -148,7 +148,7 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
       <div class="qr-mini-label">Scan to open Mind</div>
     </div>
   </div>
-  <button class="back-btn" onclick="goHome()">Back</button>
+  <button onclick="goHome()" style="position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);background:rgba(13,26,48,0.9);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:0.5rem 1.5rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);font-size:0.88rem;cursor:pointer;z-index:10;backdrop-filter:blur(8px);">← Back</button>
 </div>
 <div class="screen" id="screen-explore">
   <div class="nova-orb-wrap" style="width:75px;height:75px;margin-bottom:0.8rem">
@@ -259,7 +259,7 @@ const audioCache={};
 let curAudio=null,speakSession=0,recognition=null,listening=false;
 let novaMode='neutral';
 
-const WELCOME_TEXT="Hi! I'm Nova, Anvesh's digital avatar. I'm here to assist you. If you'd prefer silence, tap Keep it quiet. Otherwise, let's chat!";
+const WELCOME_TEXT="Hi, I'm Nova, Anvesh's digital avatar. I'm here to assist you. Let's chat to learn more about Mind!";
 const HOME_TEXT="What would you like to explore? I can tell you about Mind for You, Mind for Work, or help you try the app.";
 const EXPLORE_TEXT="Here's the QR code. Scan it to open Mind on your phone, or tap Open here.";
 

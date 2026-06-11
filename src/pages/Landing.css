@@ -212,3 +212,21 @@
   .orb-wrap { width: 120px; height: 120px; }
   .landing-path { max-width: 130px; }
 }
+
+@media (max-width: 430px) {
+  .landing-content { padding: 1rem 0.5rem 1.5rem; }
+  .landing-orbs { gap: 0.5rem; }
+  .orb-wrap { width: 155px; height: 155px; }
+  .orb-letter { font-size: 1.8rem; }
+  .landing-path { max-width: 160px; }
+  .path-name { font-size: 0.85rem; }
+  .path-desc { font-size: 0.7rem; }
+  .ring-1 { inset: -6px; }
+  .ring-2 { inset: -12px; }
+}
+
+.landing-eyebrow,
+.landing-sub {
+  text-align: center;
+  width: 100%;
+}
