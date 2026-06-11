@@ -47,7 +47,7 @@ export default function PeerResults() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    api.get(`/responses/personal-results/peer/${rateeId}`)
+    axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:3001/api'}/responses/personal-results/peer/${rateeId}`)
       .then(res => setData(res.data))
       .catch(() => setError('Could not load your results. Please try again.'))
       .finally(() => setLoading(false));
