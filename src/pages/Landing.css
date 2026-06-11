@@ -21,9 +21,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem 1rem 2rem;
+  justify-content: center;
+  padding: 2rem 1rem 2rem;
   width: 100%;
-  gap: 0;
+  text-align: center;
 }
 
 /* Nova orb at top */
@@ -32,7 +33,7 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   transition: transform 0.3s;
 }
 .landing-nova-wrap:hover { transform: scale(1.05); }
@@ -80,6 +81,8 @@
   color: rgba(255,255,255,0.25);
   margin-bottom: 0.4rem;
   font-weight: 500;
+  text-align: center;
+  width: 100%;
 }
 
 .landing-sub {
@@ -87,16 +90,18 @@
   font-family: 'Syne', sans-serif;
   font-weight: 700;
   color: rgba(255,255,255,0.7);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   letter-spacing: 0.02em;
+  text-align: center;
+  width: 100%;
 }
 
 .landing-orbs {
   display: flex;
-  gap: 3rem;
+  gap: 5rem;
   align-items: flex-start;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .landing-path {
@@ -105,15 +110,16 @@
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease;
-  max-width: 210px;
+  width: 220px;
+  flex-shrink: 0;
 }
 .landing-path:hover { transform: translateY(-8px); }
 
 .orb-wrap {
   position: relative;
-  width: 190px;
-  height: 190px;
-  margin-bottom: 1.3rem;
+  width: 210px;
+  height: 210px;
+  margin-bottom: 1.4rem;
   flex-shrink: 0;
 }
 
@@ -122,7 +128,7 @@
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', serif;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   font-weight: 400;
   pointer-events: none;
   letter-spacing: 2px;
@@ -159,11 +165,11 @@
 
 .path-name {
   font-family: 'Syne', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: #fff;
   margin-bottom: 0.5rem;
   text-align: center;
+  white-space: nowrap;
 }
 
 .teal-name { color: #1db88a; }
@@ -173,13 +179,14 @@
   font-size: 0.82rem;
   color: rgba(255,255,255,0.4);
   text-align: center;
-  line-height: 1.55;
+  line-height: 1.5;
+  white-space: nowrap;
 }
 
 .clickable-desc {
   cursor: pointer;
   transition: all 0.2s;
-  padding: 0.4rem 0.8rem;
+  padding: 0.35rem 0.8rem;
   border-radius: 999px;
   border: 1px solid transparent;
 }
@@ -196,37 +203,45 @@
   background: rgba(29,184,138,0.08);
 }
 
-/* Mobile responsive */
+/* QR on landing */
+.landing-qr-wrap {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.landing-qr-box {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.5rem;
+  display: inline-block;
+}
+.landing-qr-label {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Mobile ── */
 @media (max-width: 600px) {
-  .landing-orbs { gap: 1.5rem; flex-wrap: nowrap; justify-content: center; }
-  .orb-wrap { width: 140px; height: 140px; }
-  .orb-letter { font-size: 1.7rem; }
-  .landing-path { max-width: 155px; }
-  .path-name { font-size: 0.9rem; }
-  .path-desc { font-size: 0.72rem; }
-  .landing-sub { font-size: 1.1rem; }
-  .landing-nova-wrap { margin-bottom: 1rem; }
+  .landing-content { padding: 1.2rem 0.75rem 1.5rem; }
+  .landing-sub { font-size: 1.1rem; margin-bottom: 1.5rem; }
+  .landing-orbs { gap: 1rem; }
+  .orb-wrap { width: 148px; height: 148px; margin-bottom: 0.8rem; }
+  .orb-letter { font-size: 1.8rem; }
+  .landing-path { width: 150px; }
+  .path-name { font-size: 0.9rem; white-space: normal; }
+  .path-desc { font-size: 0.72rem; white-space: normal; }
+  .ring-1 { inset: -6px; }
+  .ring-2 { inset: -12px; }
+  .landing-nova-wrap { margin-bottom: 0.8rem; }
+  .landing-qr-wrap { margin-top: 1.2rem; }
 }
 
 @media (max-width: 380px) {
-  .orb-wrap { width: 120px; height: 120px; }
-  .landing-path { max-width: 130px; }
-}
-
-@media (max-width: 430px) {
-  .landing-content { padding: 1rem 0.5rem 1.5rem; }
   .landing-orbs { gap: 0.5rem; }
-  .orb-wrap { width: 155px; height: 155px; }
-  .orb-letter { font-size: 1.8rem; }
-  .landing-path { max-width: 160px; }
-  .path-name { font-size: 0.85rem; }
-  .path-desc { font-size: 0.7rem; }
-  .ring-1 { inset: -6px; }
-  .ring-2 { inset: -12px; }
-}
-
-.landing-eyebrow,
-.landing-sub {
-  text-align: center;
-  width: 100%;
+  .orb-wrap { width: 130px; height: 130px; }
+  .landing-path { width: 132px; }
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import QRCode from 'qrcode.react';
 import './Landing.css';
 
 function NebulaOrb({ size, colors }) {
@@ -130,7 +131,7 @@ export default function Landing() {
           {/* Mind for You — LEFT */}
           <div className="landing-path" onClick={() => navigate('/discover')}>
             <div className="orb-wrap">
-              <NebulaOrb size={190} colors={amberColors} />
+              <NebulaOrb size={210} colors={amberColors} />
               <div className="orb-letter amber-letter">M</div>
               <div className="orb-ring amber-ring ring-1" />
               <div className="orb-ring amber-ring ring-2" />
@@ -144,7 +145,7 @@ export default function Landing() {
           {/* Mind for Work — RIGHT */}
           <div className="landing-path" onClick={() => navigate('/login')}>
             <div className="orb-wrap">
-              <NebulaOrb size={190} colors={tealColors} />
+              <NebulaOrb size={210} colors={tealColors} />
               <div className="orb-letter teal-letter">M</div>
               <div className="orb-ring teal-ring ring-1" />
               <div className="orb-ring teal-ring ring-2" />
@@ -156,6 +157,15 @@ export default function Landing() {
           </div>
 
         </div>
+
+        {/* QR Code */}
+        <div className="landing-qr-wrap">
+          <div className="landing-qr-box">
+            <QRCode value="https://www.discovermind.net" size={64} />
+          </div>
+          <div className="landing-qr-label">Scan to open on your phone</div>
+        </div>
+
       </div>
     </div>
   );
