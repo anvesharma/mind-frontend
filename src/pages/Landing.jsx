@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import QRCode from 'qrcode.react';
+import { QRCode } from 'qrcode.react';
 import './Landing.css';
 
 function NebulaOrb({ size, colors }) {
