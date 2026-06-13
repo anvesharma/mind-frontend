@@ -175,7 +175,6 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
 const TTS='https://mind-backend-production-0973.up.railway.app/api/tts';
 const CHAT='https://mind-backend-production-0973.up.railway.app/api/nova-chat';
 
-// Star field
 (function(){
   const c=document.getElementById('starfield');
   const ctx=c.getContext('2d');
@@ -198,7 +197,6 @@ const CHAT='https://mind-backend-production-0973.up.railway.app/api/nova-chat';
   tick();
 })();
 
-// Mixed nebula painter
 function paintNebula(canvasId,size){
   const c=document.getElementById(canvasId);
   if(!c)return null;
@@ -246,7 +244,6 @@ function paintNebula(canvasId,size){
 }
 paintNebula('nebula',260);paintNebula('nebula2',130);paintNebula('nebula3',90);paintNebula('nebula4',75);
 
-// Mini QR code in chat screen
 let miniQrDone=false;
 function initMiniQr(){
   if(miniQrDone)return;
@@ -254,12 +251,11 @@ function initMiniQr(){
   miniQrDone=true;
 }
 
-// Audio
 const audioCache={};
 let curAudio=null,speakSession=0,recognition=null,listening=false;
 let novaMode='neutral';
 
-const WELCOME_TEXT="const WELCOME_TEXT="Hi, I'm Nova, Anvesh's digital avatar. I'm here to assist you. What would you like to know?";";
+const WELCOME_TEXT="Hi, I'm Nova, Anvesh's digital avatar. I'm here to assist you. What would you like to know?";
 const HOME_TEXT="What would you like to explore? I can tell you about Mind for You, Mind for Work, or help you try the app.";
 const EXPLORE_TEXT="Here's the QR code. Scan it to open Mind on your phone, or tap Open here.";
 
@@ -284,7 +280,6 @@ async function speak(text,cb){
 function stopSpeaking(){speakSession++;if(curAudio){curAudio.pause();curAudio=null}}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');stopSpeaking();stopListening();}
 
-// Quick question buttons per mode
 const YOU_QUESTIONS=[
   {label:'What kind am I?',q:'Am I a Leader, Manager or Independent Contributor?'},
   {label:'How does rating work?',q:'How does the peer rating work?'},
@@ -313,7 +308,6 @@ function setQuickBtns(questions,isAmber){
   });
 }
 
-// Navigation
 function goWelcome(){showScreen('screen-welcome');speak(WELCOME_TEXT)}
 function goHome(){novaMode='neutral';showScreen('screen-home');speak(HOME_TEXT)}
 function goSilence(){stopSpeaking();showScreen('screen-silence')}
@@ -348,7 +342,6 @@ function goExplore(){
   speak(EXPLORE_TEXT);
 }
 
-// System prompts
 const SYS_YOU=`You are Nova, a warm friendly voice agent for Mind for You — a personal self-discovery product. You are speaking to a passenger in Anvesh's Uber in the Bay Area. Mind for You helps people find out if they are a born Leader, a natural Manager, or an Elite Contributor — through honest ratings from friends who know them best. Users see their top 5 strengths, top 5 growth areas, and percentile ranking. To get peer-rated by real friends, users pay $1.99 and invite 3-5 people via email. Results unlock when at least 3 friends complete the review within 7 days. Available at discovermind.net. Tone: Warm, personal, encouraging. 2-3 sentences max. No markdown. Plain prose only.`;
 
 const SYS_WORK=`You are Nova, a professional voice agent for Mind for Work — a B2B talent assessment platform. You are speaking to a passenger in Anvesh's Uber in the Bay Area. Mind for Work is for Series B to enterprise companies. It uses structured peer feedback to generate talent profiles across Leader, Manager, and Independent Contributor dimensions. It helps founders, CHROs, and People leaders see what hierarchy hides. Early access: 3 months free at discovermind.net. About Anvesh: cofounded eLogist in India in 2017, acquired by Axestrack in 2020, MBA at NYU Stern 2025, then built Mind. Tone: Professional, confident. 2-3 sentences max. No markdown. Plain prose only.`;
@@ -376,7 +369,6 @@ function addMsg(r,t,extra){
 function setWave(on){const w=document.getElementById('mind-wave');if(on)w.classList.remove('hidden');else w.classList.add('hidden')}
 function setSpeak(id,on){const e=document.getElementById(id);if(e){if(on)e.classList.add('speaking');else e.classList.remove('speaking')}}
 
-// Mic
 function toggleMic(){if(listening)stopListening();else startListening()}
 function startListening(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
