@@ -90,7 +90,7 @@ canvas#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
     <div class="nova-pulse-ring"></div>
   </div>
   <div class="nova-bubble">
-    Hi! I'm <span class="highlight">Nova</span>, Anvesh's digital avatar. I'm here to assist you. Whar would you like to know?
+    Hi! I'm <span class="highlight">Nova</span>, Anvesh's digital avatar. I'm here to assist you. What would you like to know?
   </div>
   <div>
     <button class="action-btn" onclick="goHome()">Let's chat</button>
@@ -326,7 +326,7 @@ function goMindForYou(){
   document.getElementById('mind-subtitle').textContent='Mind for You';
   document.getElementById('mode-badge-wrap').innerHTML='<div class="mode-badge you">✨ Mind for You</div>';
   setQuickBtns(YOU_QUESTIONS,true);
-  const intro="Mind for You is about self-discovery! Find out if you are a born Leader, a natural Manager, or an Elite Contributor — through honest feedback from people who know you best. What would you like to know?";
+  const intro="Mind for You is about self-discovery! Find out if you are a born Leader, a natural Manager, or an Elite Contributor — through real feedback from people who know you best. What would you like to know?";
   addMsg('nova',intro,'amber');speak(intro);
 }
 
