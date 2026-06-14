@@ -140,12 +140,24 @@
 /* ── Mobile ────────────────────────────────────────────────── */
 
 @media (max-width: 480px) {
+  .fc-wrap {
+    padding: 4px 0 24px;
+  }
+
   .fc-card {
-    padding: 20px 16px;
+    padding: 18px 16px;
+    min-height: unset;
+    height: auto;
   }
 
   .fc-attr {
     font-size: 22px;
+  }
+
+  .fc-desc {
+    font-size: 13px;
+    padding-top: 10px;
+    margin-top: 10px;
   }
 
   .fc-tiles {
@@ -155,6 +167,10 @@
   .fc-tile {
     font-size: 13px;
     border-radius: 8px;
+  }
+
+  .fc-rate-label {
+    margin-bottom: 10px;
   }
 }
 
