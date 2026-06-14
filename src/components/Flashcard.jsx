@@ -1,78 +1,123 @@
-import React, { useState } from 'react';
-import './Flashcard.css';
+import { useState, useEffect } from "react";
+import "./Flashcard.css";
 
-const LABELS = ['', 'Very Low', 'Low', 'Below Average', 'Average', 'Above Average', 'Good', 'Strong', 'Very Strong', 'Excellent', 'Exceptional'];
+const ATTRIBUTE_DESCRIPTIONS = {
+  "Courage":              "Willingness to take difficult positions, speak up under pressure, and act despite uncertainty.",
+  "Vision":               "Ability to see beyond the immediate and articulate a compelling direction for the future.",
+  "Adaptability":         "Adjusts effectively to new information, changing conditions, and unexpected challenges.",
+  "Listening":            "Gives full attention, seeks to understand before responding, and retains what's shared.",
+  "Resilience":           "Recovers from setbacks, maintains effectiveness under pressure, and keeps perspective.",
+  "Humility":             "Acknowledges limits, credits others, and remains open to being wrong.",
+  "Communication":        "Conveys ideas clearly and adjusts their style to the audience and context.",
+  "Interpersonal Skills": "Builds rapport, navigates relationships with ease, and makes people feel at ease.",
+  "Integrity":            "Acts consistently with their values, even when no one is watching.",
+  "Ethical Behaviour":    "Makes decisions guided by fairness and principle, not just convenience or gain.",
+  "Creativity":           "Generates original ideas and approaches problems from unexpected angles.",
+  "Compassion":           "Notices when others are struggling and responds with genuine care.",
+  "Execution":            "Follows through on commitments reliably and delivers results.",
+  "Confidence":           "Projects assurance in their abilities without crossing into arrogance.",
+  "Awareness":            "Reads situations accurately and understands how their presence lands on others.",
+  "Ownership":            "Takes full responsibility for outcomes — not just the parts they can control.",
+  "Negotiation":          "Finds mutually workable solutions while holding their ground where it matters.",
+  "Trustworthiness":      "Does what they say they will do. People rely on them without needing to check in.",
+  "Logic":                "Reasons clearly, spots flawed arguments, and makes decisions grounded in evidence.",
+  "Critical Thinking":    "Questions assumptions, weighs competing explanations, and avoids jumping to conclusions.",
+  "Discipline":           "Maintains consistency in behaviour and effort, even without external accountability.",
+  "Story Telling":        "Frames ideas as narratives that stick and move people to act.",
+  "Curiosity":            "Asks deeper questions and actively seeks out things they don't yet understand.",
+  "Problem Solving":      "Breaks down complex problems and finds practical paths through them.",
+  "Planning":             "Thinks ahead, anticipates obstacles, and organises resources before they're needed.",
+  "Consistency":          "Shows up the same way over time — reliable in character and in output.",
+  "Diligence":            "Puts in sustained effort and attention, especially on tasks that demand patience.",
+  "Time Management":      "Uses their time deliberately and protects it from low-value activities.",
+  "Coordination":         "Keeps people, timelines, and moving parts aligned with minimal friction.",
+  "Strategic Thinking":   "Connects day-to-day decisions to long-term goals and broader organisational priorities.",
+  "Decision Making":      "Makes clear calls in ambiguous situations and stands behind them.",
+  "Influence":            "Shifts thinking and behaviour in others through credibility and persuasion, not authority.",
+  "Inspiration":          "Elevates the motivation and sense of purpose of the people around them.",
+  "Coaching":             "Develops others by asking better questions, not just giving better answers.",
+  "Accountability":       "Creates a culture where standards are held and follow-through is expected — including of themselves.",
+  "Innovation":           "Turns new ideas into real improvements — not just brainstorming, but doing.",
+};
 
-export default function Flashcard({ question, onResponse }) {
-  const [value, setValue] = useState(5);
-  const [flipped, setFlipped] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+export default function Flashcard({ question, onSubmit, current, total }) {
+  const [selected, setSelected] = useState(null);
+  const [animating, setAnimating] = useState(false);
+  const [leaving, setLeaving] = useState(false);
 
-  const handleSubmit = () => {
-    if (submitted) return;
-    setSubmitted(true);
-    setFlipped(true);
+  useEffect(() => {
+    setSelected(null);
+    setLeaving(false);
+  }, [question]);
+
+  const description = ATTRIBUTE_DESCRIPTIONS[question?.question_text] || null;
+
+  function handleSelect(val) {
+    if (animating) return;
+    setSelected(val);
+    setAnimating(true);
+    setLeaving(true);
     setTimeout(() => {
-      onResponse(question.question_id, value);
-    }, 280);
-  };
+      onSubmit(val);
+      setAnimating(false);
+      setLeaving(false);
+      setSelected(null);
+    }, 420);
+  }
 
-  const getAccentColor = (val) => {
-    if (val <= 2) return '#e05c5c';
-    if (val <= 4) return '#e0a05c';
-    if (val <= 6) return '#7a9ab5';
-    if (val <= 8) return '#1db88a';
-    return '#a8f0d8';
-  };
+  const pct = total > 0 ? Math.round((current / total) * 100) : 0;
 
-  const accent = getAccentColor(value);
+  const tileColor = (val) => {
+    if (val === selected) return "tile tile--selected";
+    if (val <= 3)  return "tile tile--low";
+    if (val <= 6)  return "tile tile--mid";
+    return "tile tile--high";
+  };
 
   return (
-    <div className="fc-scene">
-      <div className={`fc-card ${flipped ? 'fc-flipped' : ''}`}>
-        {/* Front */}
-        <div className="fc-face fc-front">
-          <div className="fc-attribute" style={{ color: accent }}>
-            {question.question_text}
-          </div>
+    <div className={`fc-wrap${leaving ? " fc-wrap--leaving" : ""}`}>
 
-          <div className="fc-value-display">
-            <span className="fc-number" style={{ color: accent }}>{value}</span>
-            <span className="fc-label">{LABELS[value]}</span>
-          </div>
-
-          <div className="fc-slider-wrap">
-            <input
-              type="range"
-              min={1}
-              max={10}
-              step={1}
-              value={value}
-              onChange={(e) => setValue(Number(e.target.value))}
-              className="fc-slider"
-              style={{ '--accent': accent }}
-            />
-            <div className="fc-slider-ends">
-              <span>1</span>
-              <span>10</span>
-            </div>
-          </div>
-
-          <button
-            className="fc-submit"
-            onClick={handleSubmit}
-            disabled={submitted}
-            style={{ background: accent }}
-          >
-            Next →
-          </button>
-        </div>
-
-        {/* Back */}
-        <div className="fc-face fc-back">
-          <div className="fc-saving">Saving...</div>
-        </div>
+      <div className="fc-progress-row">
+        <span className="fc-progress-label">{current} of {total}</span>
+        <span className="fc-progress-label">{pct}%</span>
       </div>
+      <div className="fc-progress-bg">
+        <div className="fc-progress-fill" style={{ width: `${pct}%` }} />
+      </div>
+
+      <div className="fc-card">
+        <div className="fc-eyebrow">Rate this person</div>
+        <div className="fc-attr">{question?.question_text}</div>
+        {description && (
+          <div className="fc-desc">{description}</div>
+        )}
+      </div>
+
+      <div className="fc-rate-label">How would you rate them?</div>
+
+      <div className="fc-tiles">
+        {[1,2,3,4,5,6,7,8,9,10].map(val => (
+          <button
+            key={val}
+            className={tileColor(val)}
+            onClick={() => handleSelect(val)}
+            aria-label={`Rate ${val} out of 10`}
+            disabled={animating}
+          >
+            {val}
+          </button>
+        ))}
+      </div>
+
+      <div className="fc-range-labels">
+        <span>Needs work</span>
+        <span>Exceptional</span>
+      </div>
+
+      <div className="fc-hint">
+        {selected ? "Moving to next question…" : "Tap a number to rate and continue"}
+      </div>
+
     </div>
   );
 }
