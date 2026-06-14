@@ -1,135 +1,170 @@
-.fc-scene {
-  perspective: 1000px;
+/* ── Flashcard — Mind for Work ─────────────────────────────── */
+
+.fc-wrap {
   width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 8px 0 32px;
+  transition: opacity 0.32s ease, transform 0.32s ease;
 }
+
+.fc-wrap--leaving {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+/* ── Card ──────────────────────────────────────────────────── */
 
 .fc-card {
-  position: relative;
-  width: 100%;
-  height: 340px;
-  transform-style: preserve-3d;
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.fc-card.fc-flipped {
-  transform: rotateY(180deg);
-}
-
-.fc-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: var(--radius);
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  background: var(--bg-card);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-  box-shadow: 0 0 60px rgba(29, 184, 138, 0.05);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 24px;
 }
 
-.fc-back {
-  transform: rotateY(180deg);
-  background: var(--bg-card);
+.fc-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
 }
 
-.fc-attribute {
+.fc-attr {
   font-size: 28px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 24px;
-  transition: color 0.2s ease;
+  color: var(--text-primary);
+  margin-bottom: 0;
+  line-height: 1.15;
 }
 
-.fc-value-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 28px;
-  gap: 4px;
-}
-
-.fc-number {
-  font-size: 52px;
-  font-weight: 700;
-  line-height: 1;
-  transition: color 0.2s ease;
-}
-
-.fc-label {
-  font-size: 12px;
+.fc-desc {
+  font-size: 14px;
   color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  line-height: 1.65;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+/* ── Rating label ──────────────────────────────────────────── */
+
+.fc-rate-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 12px;
   font-weight: 500;
 }
 
-.fc-slider-wrap {
-  width: 100%;
-  margin-bottom: 28px;
+/* ── Tiles ─────────────────────────────────────────────────── */
+
+.fc-tiles {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
-.fc-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 4px;
-  border-radius: 99px;
-  background: var(--border);
-  outline: none;
+.fc-tile {
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
   cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s, transform 0.1s;
+  font-family: 'Inter', sans-serif;
+  padding: 0;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.fc-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--accent, #1db88a);
-  cursor: pointer;
-  box-shadow: 0 0 12px rgba(29, 184, 138, 0.4);
-  transition: background 0.2s ease, transform 0.1s ease;
+.fc-tile:hover:not(:disabled) {
+  background: rgba(29, 184, 138, 0.15);
+  border-color: var(--accent);
+  color: var(--text-primary);
+  transform: translateY(-2px);
 }
 
-.fc-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
+.fc-tile:active:not(:disabled) {
+  transform: scale(0.95);
 }
 
-.fc-slider-ends {
+.fc-tile--low:hover:not(:disabled) {
+  background: rgba(239, 159, 39, 0.15);
+  border-color: #ef9f27;
+  color: var(--text-primary);
+}
+
+.fc-tile--selected {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+  transform: translateY(-2px) scale(1.06) !important;
+}
+
+.fc-tile:disabled {
+  cursor: default;
+}
+
+/* ── Labels + hint ─────────────────────────────────────────── */
+
+.fc-range-labels {
   display: flex;
   justify-content: space-between;
   font-size: 11px;
   color: var(--text-secondary);
-  margin-top: 6px;
+  margin-bottom: 16px;
+  padding: 0 2px;
+  opacity: 0.6;
 }
 
-.fc-submit {
-  padding: 12px 36px;
-  color: #071120;
-  font-size: 15px;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  transition: opacity 0.15s ease, box-shadow 0.15s ease;
-}
-
-.fc-submit:hover:not(:disabled) {
-  opacity: 0.88;
-  box-shadow: 0 0 20px rgba(29, 184, 138, 0.3);
-}
-
-.fc-submit:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.fc-saving {
-  font-size: 14px;
+.fc-hint {
+  text-align: center;
+  font-size: 13px;
   color: var(--text-secondary);
-  font-weight: 500;
+  opacity: 0.5;
+  min-height: 20px;
+}
+
+/* ── Mobile ────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .fc-card {
+    padding: 20px 16px;
+  }
+
+  .fc-attr {
+    font-size: 22px;
+  }
+
+  .fc-tiles {
+    gap: 4px;
+  }
+
+  .fc-tile {
+    font-size: 13px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .fc-attr {
+    font-size: 19px;
+  }
+
+  .fc-tile {
+    font-size: 12px;
+    border-radius: 7px;
+  }
 }

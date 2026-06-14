@@ -40,7 +40,7 @@ const ATTRIBUTE_DESCRIPTIONS = {
   "Innovation":           "Turns new ideas into real improvements — not just brainstorming, but doing.",
 };
 
-export default function Flashcard({ question, onSubmit, current, total }) {
+export default function Flashcard({ question, onResponse }) {
   const [selected, setSelected] = useState(null);
   const [animating, setAnimating] = useState(false);
   const [leaving, setLeaving] = useState(false);
@@ -48,6 +48,7 @@ export default function Flashcard({ question, onSubmit, current, total }) {
   useEffect(() => {
     setSelected(null);
     setLeaving(false);
+    setAnimating(false);
   }, [question]);
 
   const description = ATTRIBUTE_DESCRIPTIONS[question?.question_text] || null;
@@ -58,32 +59,18 @@ export default function Flashcard({ question, onSubmit, current, total }) {
     setAnimating(true);
     setLeaving(true);
     setTimeout(() => {
-      onSubmit(val);
-      setAnimating(false);
-      setLeaving(false);
-      setSelected(null);
-    }, 420);
+      onResponse(question.question_id, val);
+    }, 380);
   }
 
-  const pct = total > 0 ? Math.round((current / total) * 100) : 0;
-
-  const tileColor = (val) => {
-    if (val === selected) return "tile tile--selected";
-    if (val <= 3)  return "tile tile--low";
-    if (val <= 6)  return "tile tile--mid";
-    return "tile tile--high";
+  const tileClass = (val) => {
+    if (val === selected) return "fc-tile fc-tile--selected";
+    if (val <= 3)         return "fc-tile fc-tile--low";
+    return "fc-tile";
   };
 
   return (
     <div className={`fc-wrap${leaving ? " fc-wrap--leaving" : ""}`}>
-
-      <div className="fc-progress-row">
-        <span className="fc-progress-label">{current} of {total}</span>
-        <span className="fc-progress-label">{pct}%</span>
-      </div>
-      <div className="fc-progress-bg">
-        <div className="fc-progress-fill" style={{ width: `${pct}%` }} />
-      </div>
 
       <div className="fc-card">
         <div className="fc-eyebrow">Rate this person</div>
@@ -99,7 +86,7 @@ export default function Flashcard({ question, onSubmit, current, total }) {
         {[1,2,3,4,5,6,7,8,9,10].map(val => (
           <button
             key={val}
-            className={tileColor(val)}
+            className={tileClass(val)}
             onClick={() => handleSelect(val)}
             aria-label={`Rate ${val} out of 10`}
             disabled={animating}
