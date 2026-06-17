@@ -32,9 +32,9 @@ export default function Results() {
   ];
 
   const getColor = (score) => {
-    if (score >= 9.5) return '#a8f0d8';
-    if (score >= 8.5) return '#1db88a';
-    if (score >= 7.5) return '#7a9ab5';
+    if (score >= 9.0) return '#a8f0d8';
+    if (score >= 7.5) return '#1db88a';
+    if (score >= 6.5) return '#7a9ab5';
     return '#e05c5c';
   };
 

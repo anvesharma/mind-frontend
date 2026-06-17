@@ -29,7 +29,7 @@ function getTopType(scores) {
 }
 
 function ScoreRing({ score, color, label, isTop }) {
-  const pct = Math.max(0, Math.min(100, ((score - 7) / 3) * 100));
+  const pct = Math.max(0, Math.min(100, ((score - 5) / 5) * 100));
   const r = 38, circ = 2 * Math.PI * r, dash = (pct / 100) * circ;
   return (
     <div className="pr-score-item">
