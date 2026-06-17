@@ -5,6 +5,34 @@ import './Login.css';
 
 const STEPS = { EMAIL: 'email', OTP: 'otp' };
 
+const NovaButton = () => (
+  <a
+    href="https://www.discovermind.net/nova.html"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+      marginTop: 16,
+      padding: '12px 20px',
+      borderRadius: 'var(--radius)',
+      border: '1px solid rgba(239,159,39,0.35)',
+      background: 'rgba(239,159,39,0.07)',
+      color: '#ef9f27',
+      fontSize: '0.9rem',
+      fontWeight: 500,
+      textDecoration: 'none',
+      cursor: 'pointer',
+      transition: 'background 0.2s',
+    }}
+  >
+    <span style={{ fontSize: '1rem' }}>✦</span>
+    Discover Mind for You — Ask Nova
+  </a>
+);
+
 export default function Login({ mode: modeProp }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -92,6 +120,8 @@ export default function Login({ mode: modeProp }) {
             <button type="submit" className="btn-primary" disabled={loading}>
               {loading ? 'Sending...' : 'Send verification code'}
             </button>
+
+            {mode === 'work' && <NovaButton />}
           </form>
         ) : (
           <form onSubmit={handleVerifyOtp}>
@@ -124,6 +154,8 @@ export default function Login({ mode: modeProp }) {
             >
               ← Back
             </button>
+
+            {mode === 'work' && <NovaButton />}
           </form>
         )}
       </div>

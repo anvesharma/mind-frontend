@@ -6,6 +6,33 @@ import './Assessment.css';
 
 const STEPS = { HOME: 'home', RATEE: 'ratee', ASSESSMENT: 'assessment' };
 
+const NovaButton = () => (
+  <a
+    href="https://www.discovermind.net/nova.html"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+      marginTop: 4,
+      padding: '12px 20px',
+      borderRadius: 'var(--radius)',
+      border: '1px solid rgba(239,159,39,0.35)',
+      background: 'rgba(239,159,39,0.07)',
+      color: '#ef9f27',
+      fontSize: '0.9rem',
+      fontWeight: 500,
+      textDecoration: 'none',
+      cursor: 'pointer',
+    }}
+  >
+    <span style={{ fontSize: '1rem' }}>✦</span>
+    Discover Mind for Work — Ask Nova
+  </a>
+);
+
 export default function Assessment() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,18 +112,42 @@ export default function Assessment() {
               <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => navigate('/get-rated', { state: { rateeId: user.user_id } })}>
                 Get your real Mind rating
               </button>
-              <button className="btn-ghost" onClick={() => navigate('/results-preview')}>
+              <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => navigate('/results-preview')}>
                 Check out sample results report
               </button>
+              <NovaButton />
             </>
           ) : (
             <>
               <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
                 Review someone →
               </button>
-              <button className="btn-ghost" onClick={() => navigate('/reports')}>
+              <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => navigate('/reports')}>
                 View sample reports
               </button>
+              <a
+                href="https://www.discovermind.net/nova.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  marginTop: 4,
+                  padding: '12px 20px',
+                  borderRadius: 'var(--radius)',
+                  border: '1px solid rgba(239,159,39,0.35)',
+                  background: 'rgba(239,159,39,0.07)',
+                  color: '#ef9f27',
+                  fontSize: '0.9rem',
+                  fontWeight: 500,
+                  textDecoration: 'none',
+                }}
+              >
+                <span style={{ fontSize: '1rem' }}>✦</span>
+                Discover Mind for You — Ask Nova
+              </a>
             </>
           )}
         </div>
