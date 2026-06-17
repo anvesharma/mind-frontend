@@ -121,7 +121,7 @@ export default function Login({ mode: modeProp }) {
               {loading ? 'Sending...' : 'Send verification code'}
             </button>
 
-            {mode === 'work' && <NovaButton />}
+            <NovaButton />
           </form>
         ) : (
           <form onSubmit={handleVerifyOtp}>
@@ -155,7 +155,7 @@ export default function Login({ mode: modeProp }) {
               ← Back
             </button>
 
-            {mode === 'work' && <NovaButton />}
+            <NovaButton />
           </form>
         )}
       </div>
