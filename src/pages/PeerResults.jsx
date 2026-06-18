@@ -17,7 +17,7 @@ function getTopType(scores) {
 }
 
 function ScoreRing({ score, color, label, isTop }) {
-  const pct = Math.max(0, Math.min(100, ((score - 7) / 3) * 100));
+  const pct = Math.max(0, Math.min(100, ((score - 5) / 5) * 100));
   const r = 38, circ = 2 * Math.PI * r, dash = (pct / 100) * circ;
   return (
     <div className="pr-score-item">
@@ -47,7 +47,7 @@ export default function PeerResults() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:3001/api'}/responses/personal-results/peer/${rateeId}`)
+    axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:3001/api'}/responses/personal-results/${rateeId}`)
       .then(res => setData(res.data))
       .catch(() => setError('Could not load your results. Please try again.'))
       .finally(() => setLoading(false));
@@ -83,7 +83,9 @@ export default function PeerResults() {
   const { ratee, scores, percentiles, top5, bottom5 } = data;
   const topType = getTopType(scores);
   const type = TYPE_DATA[topType];
-  const overallPct = 100 - (parseInt(percentiles?.total_pct) || 0);
+  const totalPct = parseInt(percentiles?.total_pct) || 0;
+  const percentileRank = totalPct;
+  const topPercent = 100 - totalPct;
   const dims = [
     { key: 'leader', label: 'Leader', score: scores.leader_score },
     { key: 'manager', label: 'Manager', score: scores.manager_score },
@@ -110,8 +112,8 @@ export default function PeerResults() {
           {dims.map(d => <ScoreRing key={d.key} score={d.score} color={type.color} label={d.label} isTop={d.key === topType} />)}
         </div>
         <div className="pr-percentile-card" style={{ borderColor: type.border, boxShadow: `0 0 40px ${type.glow}` }}>
-          <div className="pr-percentile-value" style={{ color: type.color }}>{100 - overallPct}th percentile!</div>
-          <div className="pr-percentile-sub">You rank in the Top {overallPct}% of all Mind users</div>
+          <div className="pr-percentile-value" style={{ color: type.color }}>{percentileRank}th percentile!</div>
+          <div className="pr-percentile-sub">You rank in the Top {topPercent}% of all Mind users</div>
         </div>
         <div className="pr-attributes">
           <div className="pr-attr-col">
