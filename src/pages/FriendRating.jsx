@@ -162,6 +162,7 @@ export default function FriendRating() {
         <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>⚠️</div>
         <h2 style={{ color: '#e05c5c', marginBottom: '0.75rem' }}>{error}</h2>
         <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem' }}>This link may have expired or already been used.</p>
+        <a href="https://www.discovermind.net/nova.html" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 20, padding: '10px 20px', borderRadius: 12, border: '1px solid rgba(239,159,39,0.35)', background: 'rgba(239,159,39,0.07)', color: '#ef9f27', fontSize: '0.88rem', fontWeight: 500, textDecoration: 'none' }}>✦ Ask Nova</a>
       </div>
     </div>
   );
