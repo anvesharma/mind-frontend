@@ -29,7 +29,7 @@ const NovaButton = () => (
     }}
   >
     <span style={{ fontSize: '1rem' }}>✦</span>
-    Discover Mind for Work — Ask Nova
+    Ask Nova
   </a>
 );
 
