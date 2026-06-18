@@ -59,17 +59,17 @@ export default function GetRated() {
         <div className="gr-hero">
           <div className="gr-emoji">🔥</div>
           <h1 className="gr-headline">Are you a born Leader?<br />A great Manager?<br />An exceptional Contributor?</h1>
-          <p className="gr-sub">Get your <strong>real review</strong> for just <span className="gr-price">$1.99</span></p>
+          <p className="gr-sub">Get your <strong>real review</strong> for just <span className="gr-price">$3.66</span></p>
           <p className="gr-sub2">Send Mind to up to 5 people who know you — Discover who you really are</p>
         </div>
 
         <div className="gr-what-you-get">
-          <div className="gr-what-title">What you get for $1.99</div>
+          <div className="gr-what-title">What you get for $3.66</div>
           <div className="gr-what-items">
             <div className="gr-what-item">
               <span className="gr-what-icon">🎯</span>
               <div>
-                <div className="gr-what-name">Real L, M, IC scores</div>
+                <div className="gr-what-name">Real Leadership, Management, and Independent Contributor scores</div>
                 <div className="gr-what-desc">Reviewed by people who actually know you</div>
               </div>
             </div>
@@ -137,7 +137,7 @@ export default function GetRated() {
           onClick={handlePay}
           disabled={!canPay || loading}
         >
-          {loading ? 'Redirecting to payment...' : canPay ? 'Pay $1.99 & send →' : 'Enter at least 3 emails to pay'}
+          {loading ? 'Redirecting to payment...' : canPay ? 'Pay $3.66 & send →' : 'Enter at least 3 emails to pay'}
         </button>
 
         <p className="gr-fine-print">One-time payment. No subscription. Results unlock when 3+ people complete your review (within 7 days).</p>
