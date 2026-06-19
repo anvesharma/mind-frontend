@@ -116,6 +116,15 @@ export default function Assessment() {
                 Check out sample results report
               </button>
               <NovaButton />
+            </>
+          ) : (
+            <>
+              <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
+                Review someone →
+              </button>
+              <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => navigate('/reports')}>
+                View sample reports
+              </button>
               <a
                 href="https://www.discovermind.net/influencer-board.html"
                 target="_blank"
@@ -139,15 +148,6 @@ export default function Assessment() {
                 <span style={{ fontSize: '1rem' }}>✦</span>
                 Join Board of Influencers
               </a>
-            </>
-          ) : (
-            <>
-              <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
-                Review someone →
-              </button>
-              <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => navigate('/reports')}>
-                View sample reports
-              </button>
               <a
                 href="https://www.discovermind.net/nova.html"
                 target="_blank"
@@ -170,29 +170,6 @@ export default function Assessment() {
               >
                 <span style={{ fontSize: '1rem' }}>✦</span>
                 Ask Nova
-              </a>
-              <a
-                href="https://www.discovermind.net/influencer-board.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 8,
-                  marginTop: 4,
-                  padding: '12px 20px',
-                  borderRadius: 'var(--radius)',
-                  border: '1px solid rgba(29,184,138,0.35)',
-                  background: 'rgba(29,184,138,0.07)',
-                  color: '#1db88a',
-                  fontSize: '0.9rem',
-                  fontWeight: 500,
-                  textDecoration: 'none',
-                }}
-              >
-                <span style={{ fontSize: '1rem' }}>✦</span>
-                Join Board of Influencers
               </a>
             </>
           )}
