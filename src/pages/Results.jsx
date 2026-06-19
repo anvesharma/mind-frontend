@@ -76,7 +76,7 @@ export default function Results() {
             Review someone else
           </button>
           <button className="btn-secondary" onClick={() => navigate('/reports')}>
-            View sample reports
+            Sample reports
           </button>
           <a
             href="https://www.discovermind.net/influencer-board.html"
