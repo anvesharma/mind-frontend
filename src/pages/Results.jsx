@@ -87,15 +87,15 @@ export default function Results() {
               alignItems: 'center',
               justifyContent: 'center',
               gap: 8,
-              marginTop: 4,
-              padding: '12px 20px',
+              padding: '13px 20px',
               borderRadius: 'var(--radius)',
               border: '1px solid rgba(29,184,138,0.35)',
               background: 'rgba(29,184,138,0.07)',
               color: '#1db88a',
-              fontSize: '0.9rem',
-              fontWeight: 500,
+              fontSize: '15px',
+              fontWeight: 600,
               textDecoration: 'none',
+              whiteSpace: 'nowrap',
             }}
           >
             <span style={{ fontSize: '1rem' }}>✦</span>
