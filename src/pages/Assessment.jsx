@@ -116,6 +116,29 @@ export default function Assessment() {
                 Check out sample results report
               </button>
               <NovaButton />
+              <a
+                href="https://www.discovermind.net/influencer-board.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  marginTop: 4,
+                  padding: '12px 20px',
+                  borderRadius: 'var(--radius)',
+                  border: '1px solid rgba(29,184,138,0.35)',
+                  background: 'rgba(29,184,138,0.07)',
+                  color: '#1db88a',
+                  fontSize: '0.9rem',
+                  fontWeight: 500,
+                  textDecoration: 'none',
+                }}
+              >
+                <span style={{ fontSize: '1rem' }}>✦</span>
+                Join Board of Influencers
+              </a>
             </>
           ) : (
             <>
@@ -146,7 +169,30 @@ export default function Assessment() {
                 }}
               >
                 <span style={{ fontSize: '1rem' }}>✦</span>
-                Discover Mind for You — Ask Nova
+                Ask Nova
+              </a>
+              <a
+                href="https://www.discovermind.net/influencer-board.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  marginTop: 4,
+                  padding: '12px 20px',
+                  borderRadius: 'var(--radius)',
+                  border: '1px solid rgba(29,184,138,0.35)',
+                  background: 'rgba(29,184,138,0.07)',
+                  color: '#1db88a',
+                  fontSize: '0.9rem',
+                  fontWeight: 500,
+                  textDecoration: 'none',
+                }}
+              >
+                <span style={{ fontSize: '1rem' }}>✦</span>
+                Join Board of Influencers
               </a>
             </>
           )}
