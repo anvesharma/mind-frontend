@@ -29,7 +29,7 @@ function getTopType(scores) {
 }
 
 function ScoreRing({ score, color, label, isTop }) {
-  const pct = Math.max(0, Math.min(100, ((score - 5) / 5) * 100));
+  const pct = Math.max(0, Math.min(100, ((score - 7) / 3) * 100));
   const r = 38, circ = 2 * Math.PI * r, dash = (pct / 100) * circ;
   return (
     <div className="pr-score-item">
@@ -120,8 +120,8 @@ export default function PersonalResults() {
   const topType = getTopType(scores);
   const type = TYPE_DATA[topType];
   const totalPct = parseInt(percentiles?.total_pct) || 0;
-  const percentileRank = totalPct; // e.g. 78
-  const topPercent = 100 - totalPct; // e.g. 22
+  const topPercent = totalPct === 0 ? 100 : 100 - totalPct;
+  const percentileRank = totalPct === 0 ? 100 : totalPct;
 
   // Dynamic sub from top strengths
   const topStrengthNames = top5 ? top5.slice(0, 3).map(a => a.name).join(', ') : '';
