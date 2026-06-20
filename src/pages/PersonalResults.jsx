@@ -119,9 +119,9 @@ export default function PersonalResults() {
   const { ratee, scores, percentiles, top5, bottom5 } = data;
   const topType = getTopType(scores);
   const type = TYPE_DATA[topType];
-  const totalPct = parseInt(percentiles?.total_pct) || 0;
-  const topPercent = totalPct === 0 ? 100 : 100 - totalPct;
-  const percentileRank = totalPct === 0 ? 100 : totalPct;
+  const totalPct = parseInt(percentiles?.total_pct) ?? 0;
+  const percentileRank = totalPct;
+  const topPercent = Math.max(1, 100 - totalPct);
 
   // Dynamic sub from top strengths
   const topStrengthNames = top5 ? top5.slice(0, 3).map(a => a.name).join(', ') : '';
