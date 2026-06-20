@@ -124,7 +124,7 @@ export default function PersonalResultsPreview() {
           </div>
         </div>
         <div className="pr-actions">
-          <button className="pr-btn-primary" style={{ background: type.color, color: '#050810' }} onClick={() => navigate('/discover')}>
+          <button className="pr-btn-primary" style={{ background: type.color, color: '#050810' }} onClick={() => navigate('/assessment', { state: { mode: 'personal' } })}>
             Get my real results →
           </button>
           <button className="pr-btn-ghost" onClick={() => navigate('/assessment')}>← Back</button>
