@@ -104,8 +104,8 @@
 .results-actions {
   display: flex;
   gap: 12px;
-  width: max-content;
-  margin: 0 auto;
+  justify-content: center;
+  width: 100%;
 }
 
 .results-actions .btn-primary {
