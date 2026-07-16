@@ -152,7 +152,7 @@ export default function Landing() {
             </div>
             <div className="path-name teal-name">Mind for Work</div>
             <div className="path-desc clickable-desc teal-desc" onClick={(e) => { e.stopPropagation(); navigate('/login'); }}>
-              Align Workforce with Founder's Vision
+              Align your team with your vision
             </div>
           </div>
 
