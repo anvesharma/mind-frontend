@@ -202,6 +202,10 @@ export default function PersonalResults() {
             onClick={() => navigate('/assessment')}>
             Review someone else
           </button>
+          <a href="mailto:nova@discovermind.net?subject=Mind%20Feedback&body=Here's%20my%20feedback%20on%20Mind:%0D%0A%0D%0A"
+            style={{ display: 'block', textAlign: 'center', marginBottom: '0.75rem', padding: '0.7rem', borderRadius: 12, border: '1px solid rgba(239,159,39,0.3)', color: '#ef9f27', fontSize: '0.9rem', fontWeight: 600, fontFamily: 'DM Sans, sans-serif', textDecoration: 'none' }}>
+            💬 Share feedback
+          </a>
           <button className="pr-btn-ghost" onClick={() => navigate('/')}>
             ← Back to Mind
           </button>

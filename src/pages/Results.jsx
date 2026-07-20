@@ -101,6 +101,10 @@ export default function Results() {
             <span style={{ fontSize: '1rem' }}>✦</span>
             Join Board of Influencers
           </a>
+          <a href="mailto:nova@discovermind.net?subject=Mind%20Feedback&body=Here's%20my%20feedback%20on%20Mind:%0D%0A%0D%0A"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px 20px', borderRadius: 12, border: '1px solid rgba(29,184,138,0.3)', color: '#1db88a', fontSize: '15px', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+            💬 Share feedback
+          </a>
         </div>
       </div>
     </div>

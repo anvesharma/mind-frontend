@@ -6,6 +6,22 @@ import './Assessment.css';
 
 const STEPS = { HOME: 'home', RATEE: 'ratee', ASSESSMENT: 'assessment' };
 
+const FeedbackButton = ({ theme = 'teal' }) => (
+  <a
+    href="mailto:nova@discovermind.net?subject=Mind%20Feedback&body=Here's%20my%20feedback%20on%20Mind:%0D%0A%0D%0A"
+    style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+      marginBottom: 12, padding: '12px 20px', borderRadius: 12,
+      border: `1px solid ${theme === 'amber' ? 'rgba(239,159,39,0.3)' : 'rgba(29,184,138,0.3)'}`,
+      background: 'transparent', color: theme === 'amber' ? '#ef9f27' : '#1db88a',
+      fontSize: '0.95rem', fontWeight: 600, fontFamily: 'DM Sans, sans-serif',
+      textDecoration: 'none', cursor: 'pointer',
+    }}
+  >
+    💬 Share feedback
+  </a>
+);
+
 const NovaButton = () => (
   <a
     href="https://www.discovermind.net/nova.html"
@@ -120,6 +136,7 @@ export default function Assessment() {
                 Check out sample results report
               </button>
               <NovaButton />
+              <FeedbackButton theme="amber" />
             </>
           ) : (
             <>
@@ -175,6 +192,7 @@ export default function Assessment() {
                 <span style={{ fontSize: '1rem' }}>✦</span>
                 Ask Nova
               </a>
+              <FeedbackButton theme="teal" />
             </>
           )}
         </div>
