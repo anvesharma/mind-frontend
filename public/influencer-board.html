@@ -655,7 +655,7 @@ document.getElementById('influencer-form').addEventListener('submit', function(e
     contact_linkedin: document.getElementById('contact-linkedin') ? document.getElementById('contact-linkedin').value : ''
   };
 
-  fetch('https://mind-backend-production-0973.up.railway.app/api/influencer', {
+  fetch('https://mind-backend-production-0973.up.railway.app/api/influencer-applications', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
