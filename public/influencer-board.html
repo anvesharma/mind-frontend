@@ -498,6 +498,11 @@
 
           <div class="form-grid">
             <div class="field">
+              <label for="contact-name">Their name</label>
+              <input type="text" id="contact-name" name="contact_name" placeholder="Their full name" required/>
+              <span class="field-error" id="contact-name-err">Please enter their name.</span>
+            </div>
+            <div class="field">
               <label for="contact-email">Their email address</label>
               <input type="email" id="contact-email" name="contact_email" placeholder="leader@theircompany.com" required/>
               <span class="field-error" id="contact-email-err">Please enter their email address.</span>
@@ -615,6 +620,7 @@ document.getElementById('influencer-form').addEventListener('submit', function(e
     { id:'email',           check: validateEmail },
     { id:'phone',           check: validatePhone },
     { id:'company',         check: v => v.trim().length >= 2 },
+    { id:'contact-name',    check: v => v.trim().length >= 2 },
     { id:'contact-email',   check: validateEmail },
     { id:'contact-company', check: v => v.trim().length >= 2 },
   ];
@@ -636,12 +642,35 @@ document.getElementById('influencer-form').addEventListener('submit', function(e
   btn.disabled = true;
   btn.textContent = 'Submitting…';
 
-  /* Simulate submit (replace with real endpoint) */
-  setTimeout(()=>{
+  const payload = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    company: document.getElementById('company').value,
+    linkedin: document.getElementById('linkedin') ? document.getElementById('linkedin').value : '',
+    contact_name: document.getElementById('contact-name').value,
+    contact_email: document.getElementById('contact-email').value,
+    contact_company: document.getElementById('contact-company').value,
+    contact_phone: document.getElementById('contact-phone') ? document.getElementById('contact-phone').value : '',
+    contact_linkedin: document.getElementById('contact-linkedin') ? document.getElementById('contact-linkedin').value : ''
+  };
+
+  fetch('https://mind-backend-production-0973.up.railway.app/api/influencer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(r => r.json())
+  .then(() => {
     document.getElementById('form-view').style.display  = 'none';
     document.getElementById('success-view').style.display = 'block';
     document.getElementById('signup').scrollIntoView({behavior:'smooth'});
-  }, 900);
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'Submit my application';
+    alert('Something went wrong. Please try again.');
+  });
 });
 </script>
 </body>
