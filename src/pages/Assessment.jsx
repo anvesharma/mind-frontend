@@ -75,11 +75,7 @@ export default function Assessment() {
       const res = await api.post('/users/ratee', { name: rateeName.trim() });
       setRatee(res.data);
       const progress = await api.get(`/responses/progress/${res.data.user_id}`);
-      if (progress.data) {
-        if (progress.data.completed) {
-          setLoading(false);
-          return setError("You've already reviewed this person. Each person can only be reviewed once.");
-        }
+      if (progress.data && !progress.data.completed) {
         const idx = questions.findIndex(q => q.question_id === progress.data.last_question_id);
         if (idx >= 0) setCurrentIndex(idx + 1);
       }
