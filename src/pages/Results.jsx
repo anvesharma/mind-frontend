@@ -3,6 +3,51 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api';
 import './Results.css';
 
+const TrialSignupButton = () => {
+  const [status, setStatus] = useState('idle');
+
+  const handleClick = async () => {
+    if (status !== 'idle') return;
+    setStatus('loading');
+    try {
+      await api.post('/users/trial-signup');
+      setStatus('done');
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'done') {
+    return (
+      <div style={{
+        padding: '13px 20px', borderRadius: 'var(--radius)',
+        border: '1px solid rgba(29,184,138,0.4)', background: 'rgba(29,184,138,0.1)',
+        color: '#1db88a', fontSize: '14px', fontWeight: 600, textAlign: 'center',
+        lineHeight: 1.4, whiteSpace: 'nowrap',
+      }}>
+        ✓ Thanks! We'll reach out shortly.
+      </div>
+    );
+  }
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={status === 'loading'}
+      style={{
+        padding: '13px 24px', borderRadius: 'var(--radius)', border: 'none',
+        background: '#1db88a', color: '#050810',
+        fontSize: '15px', fontWeight: 700, fontFamily: 'Inter, sans-serif',
+        cursor: status === 'loading' ? 'default' : 'pointer', whiteSpace: 'nowrap',
+      }}
+    >
+      {status === 'loading' ? 'Signing up…'
+        : status === 'error' ? 'Try again'
+        : 'Sign up for free trial →'}
+    </button>
+  );
+};
+
 export default function Results() {
   const { rateeId } = useParams();
   const navigate = useNavigate();
@@ -72,8 +117,9 @@ export default function Results() {
         </div>
 
         <div className="results-actions">
-          <button className="btn-primary" onClick={() => navigate('/assessment')}>
-            Review someone else
+          <TrialSignupButton />
+          <button className="btn-secondary" onClick={() => navigate('/assessment')}>
+            Review again
           </button>
           <button className="btn-secondary" onClick={() => navigate('/reports')}>
             Sample reports

@@ -6,6 +6,54 @@ import './Assessment.css';
 
 const STEPS = { HOME: 'home', RATEE: 'ratee', ASSESSMENT: 'assessment' };
 
+const TrialSignupButton = ({ style = {} }) => {
+  const [status, setStatus] = useState('idle');
+
+  const handleClick = async () => {
+    if (status !== 'idle') return;
+    setStatus('loading');
+    try {
+      await api.post('/users/trial-signup');
+      setStatus('done');
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'done') {
+    return (
+      <div style={{
+        marginBottom: 12, padding: '14px 18px', borderRadius: 12,
+        border: '1px solid rgba(29,184,138,0.4)', background: 'rgba(29,184,138,0.1)',
+        color: '#1db88a', fontSize: '0.9rem', fontWeight: 600, textAlign: 'center',
+        lineHeight: 1.5, ...style,
+      }}>
+        ✓ Thank you for signing up!<br />
+        <span style={{ fontWeight: 400, color: 'rgba(255,255,255,0.55)', fontSize: '0.85rem' }}>
+          We'll reach out to you shortly.
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={status === 'loading'}
+      style={{
+        width: '100%', marginBottom: 12, padding: '14px 20px', borderRadius: 12,
+        border: 'none', background: '#1db88a', color: '#050810',
+        fontSize: '1rem', fontWeight: 700, fontFamily: 'Inter, sans-serif',
+        cursor: status === 'loading' ? 'default' : 'pointer', ...style,
+      }}
+    >
+      {status === 'loading' ? 'Signing up…'
+        : status === 'error' ? 'Try again'
+        : 'Sign up for free trial →'}
+    </button>
+  );
+};
+
 const FeedbackButton = ({ theme = 'teal' }) => (
   <a
     href="mailto:nova@discovermind.net?subject=Mind%20Feedback&body=Here's%20my%20feedback%20on%20Mind:%0D%0A%0D%0A"
@@ -136,7 +184,8 @@ export default function Assessment() {
             </>
           ) : (
             <>
-              <button className="btn-primary" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
+              <TrialSignupButton />
+              <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
                 Review someone →
               </button>
               <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => navigate('/reports')}>
