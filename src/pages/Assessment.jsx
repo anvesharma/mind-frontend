@@ -10,7 +10,7 @@ const TrialSignupButton = ({ style = {} }) => {
   const [status, setStatus] = useState('idle');
 
   const handleClick = async () => {
-    if (status !== 'idle') return;
+    if (status === 'loading' || status === 'done') return;
     setStatus('loading');
     try {
       await api.post('/users/trial-signup');
