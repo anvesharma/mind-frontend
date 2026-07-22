@@ -184,7 +184,6 @@ export default function Assessment() {
             </>
           ) : (
             <>
-              <TrialSignupButton />
               <button className="btn-ghost" style={{ marginBottom: 12 }} onClick={() => setStep(STEPS.RATEE)}>
                 Review someone →
               </button>
@@ -238,6 +237,7 @@ export default function Assessment() {
                 Ask Nova
               </a>
               <FeedbackButton theme="teal" />
+              <TrialSignupButton />
             </>
           )}
         </div>
