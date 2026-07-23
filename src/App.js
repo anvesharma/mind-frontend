@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Assessment from './pages/Assessment';
@@ -34,6 +35,7 @@ function App() {
         <Route path="/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
         <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
