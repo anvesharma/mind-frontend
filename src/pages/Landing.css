@@ -316,3 +316,24 @@
   .path-desc { margin-bottom: 0 !important; }
   .clickable-desc { padding: 0.2rem 0.6rem !important; }
 }
+
+.landing-footer {
+  position: fixed;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.22);
+  z-index: 2;
+  letter-spacing: 0.02em;
+}
+.landing-footer a {
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+}
+.landing-footer a:hover { color: rgba(29,184,138,0.8); }
+
+@media (max-width: 600px) {
+  .landing-footer { font-size: 0.62rem; bottom: 8px; }
+}

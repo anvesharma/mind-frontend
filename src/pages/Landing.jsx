@@ -166,6 +166,11 @@ export default function Landing() {
           <div className="landing-qr-label">Scan to open on your phone</div>
         </div>
 
+
+        <div className="landing-footer">
+          © 2026 Discover Mind. All rights reserved. ·{' '}
+          <a href="/terms.html">Terms of Use</a>
+        </div>
       </div>
     </div>
   );
