@@ -7,17 +7,32 @@ import './Assessment.css';
 const STEPS = { HOME: 'home', RATEE: 'ratee', ASSESSMENT: 'assessment' };
 
 const TrialSignupButton = ({ style = {} }) => {
-  const [status, setStatus] = useState('idle');
+  const [status, setStatus] = useState('idle'); // idle | loading | needEmail | done | error
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
-  const handleClick = async () => {
-    if (status === 'loading' || status === 'done') return;
+  const submit = async (payload) => {
     setStatus('loading');
     try {
-      await api.post('/users/trial-signup');
+      await api.post('/users/trial-signup', payload || {});
       setStatus('done');
-    } catch {
-      setStatus('error');
+    } catch (err) {
+      if (err.response?.status === 400 && err.response?.data?.error === 'email_required') {
+        setStatus('needEmail');
+      } else {
+        setStatus('error');
+      }
     }
+  };
+
+  const handleClick = () => {
+    if (status === 'loading' || status === 'done') return;
+    submit();
+  };
+
+  const handleEmailSubmit = () => {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    submit({ email: email.trim(), name: name.trim() || undefined });
   };
 
   if (status === 'done') {
@@ -32,6 +47,33 @@ const TrialSignupButton = ({ style = {} }) => {
         <span style={{ fontWeight: 400, color: 'rgba(255,255,255,0.55)', fontSize: '0.85rem' }}>
           We'll reach out to you shortly.
         </span>
+      </div>
+    );
+  }
+
+  if (status === 'needEmail') {
+    return (
+      <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', gap: 8, ...style }}>
+        <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', textAlign: 'center' }}>
+          Enter your details and we'll set up your free trial.
+        </div>
+        <input
+          type="text" placeholder="Your name" value={name}
+          onChange={(e) => setName(e.target.value)}
+          style={{ padding: '12px 14px', borderRadius: 10, border: '1px solid rgba(29,184,138,0.3)', background: 'rgba(255,255,255,0.04)', color: '#fff', fontSize: '0.95rem' }}
+        />
+        <input
+          type="email" placeholder="Your work email" value={email}
+          onChange={(e) => setEmail(e.target.value)} autoFocus
+          onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
+          style={{ padding: '12px 14px', borderRadius: 10, border: '1px solid rgba(29,184,138,0.3)', background: 'rgba(255,255,255,0.04)', color: '#fff', fontSize: '0.95rem' }}
+        />
+        <button
+          onClick={handleEmailSubmit}
+          style={{ padding: '13px 20px', borderRadius: 12, border: 'none', background: '#1db88a', color: '#050810', fontSize: '1rem', fontWeight: 700, fontFamily: 'Inter, sans-serif', cursor: 'pointer' }}
+        >
+          Confirm free trial →
+        </button>
       </div>
     );
   }

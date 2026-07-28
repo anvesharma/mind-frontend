@@ -12,6 +12,7 @@ import FriendRating from './pages/FriendRating';
 import PeerResults from './pages/PeerResults';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Reports from './pages/Reports';
+import GuestEntry from './pages/GuestEntry';
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/w" element={<GuestEntry />} />
         <Route path="/discover" element={<Login mode="personal" />} />
         <Route path="/assessment" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
         <Route path="/results/:rateeId" element={<ProtectedRoute><Results /></ProtectedRoute>} />
