@@ -109,11 +109,30 @@ export default function Results() {
 
   const { ratee, scores, percentiles } = data;
 
+  // topPercent comes pre-floored from the server at 0.1%, so the highest
+  // scorer never reads "Top 0%". The fallback mirrors that floor.
+  const floored = (pct) => Math.max(0.1, 100 - pct);
+
   const dimensions = [
-    { label: 'Leader',                  score: scores.leader_score,  percentile: percentiles.leader_percentile },
-    { label: 'Manager',                 score: scores.manager_score, percentile: percentiles.manager_percentile },
-    { label: 'Independent Contributor', score: scores.ic_score,      percentile: percentiles.ic_percentile },
+    {
+      label: 'Leader',
+      score: scores.leader_score,
+      topPercent: percentiles.leader_top_percent ?? floored(percentiles.leader_percentile),
+    },
+    {
+      label: 'Manager',
+      score: scores.manager_score,
+      topPercent: percentiles.manager_top_percent ?? floored(percentiles.manager_percentile),
+    },
+    {
+      label: 'Independent Contributor',
+      score: scores.ic_score,
+      topPercent: percentiles.ic_top_percent ?? floored(percentiles.ic_percentile),
+    },
   ];
+
+  const totalTopPercent =
+    percentiles.total_top_percent ?? floored(percentiles.total_percentile);
 
   const getColor = (score) => {
     if (score >= 9.0) return '#a8f0d8';
@@ -143,7 +162,7 @@ export default function Results() {
               </div>
               <div className="result-percentile">
                 <span className="percentile-badge" style={{ borderColor: getColor(dim.score), color: getColor(dim.score) }}>
-                  Top {100 - dim.percentile}%
+                  Top {dim.topPercent}%
                 </span>
               </div>
             </div>
@@ -152,7 +171,7 @@ export default function Results() {
 
         <div className="total-percentile">
           <span className="total-label">Overall percentile</span>
-          <span className="total-value">Top {100 - percentiles.total_percentile}%</span>
+          <span className="total-value">Top {totalTopPercent}%</span>
         </div>
 
         <div className="results-actions">

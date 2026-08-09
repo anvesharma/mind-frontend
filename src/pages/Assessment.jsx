@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../api';
 import Flashcard from '../components/Flashcard';
@@ -147,14 +147,20 @@ export default function Assessment() {
   const [step, setStep] = useState(STEPS.HOME);
   const [rateeName, setRateeName] = useState('');
   const [ratee, setRatee] = useState(null);
+  // `questions` holds only what is still UNANSWERED for this (rater, ratee)
+  // pair. `alreadyAnswered` is how many were completed on earlier visits, and
+  // `totalQuestions` is the full bank — both are needed for the progress bar.
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [alreadyAnswered, setAlreadyAnswered] = useState(0);
+  const [totalQuestions, setTotalQuestions] = useState(0);
+  const [resumed, setResumed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    api.get('/questions').then((res) => setQuestions(res.data));
-  }, []);
+  const goToResults = (rateeId) => {
+    navigate(mode === 'personal' ? `/personal-results/${rateeId}` : `/results/${rateeId}`);
+  };
 
   const handleStartAssessment = async (e) => {
     e.preventDefault();
@@ -164,11 +170,34 @@ export default function Assessment() {
     try {
       const res = await api.post('/users/ratee', { name: rateeName.trim() });
       setRatee(res.data);
-      const progress = await api.get(`/responses/progress/${res.data.user_id}`);
-      if (progress.data && !progress.data.completed) {
-        const idx = questions.findIndex(q => q.question_id === progress.data.last_question_id);
-        if (idx >= 0) setCurrentIndex(idx + 1);
+
+      // Fetch the bank and the resume state together. The bank comes back in a
+      // fresh random order every time, so resume works by REMOVING answered
+      // question ids — never by jumping to a saved position, which would point
+      // at a different question under the new shuffle.
+      const [questionsRes, progressRes] = await Promise.all([
+        api.get('/questions'),
+        api.get(`/responses/progress/${res.data.user_id}`),
+      ]);
+
+      const bank = questionsRes.data || [];
+      const answeredIds = new Set(progressRes.data?.answered_question_ids || []);
+      const remaining = bank.filter((q) => !answeredIds.has(q.question_id));
+
+      setTotalQuestions(bank.length);
+      setAlreadyAnswered(answeredIds.size);
+      setResumed(answeredIds.size > 0 && remaining.length > 0);
+      setCurrentIndex(0);
+
+      // Every question already answered: nothing to resume, go straight to
+      // results rather than showing an empty assessment.
+      if (!remaining.length) {
+        await api.post('/responses/complete', { ratee_id: res.data.user_id });
+        goToResults(res.data.user_id);
+        return;
       }
+
+      setQuestions(remaining);
       setStep(STEPS.ASSESSMENT);
     } catch {
       setError('Something went wrong. Please try again.');
@@ -179,6 +208,8 @@ export default function Assessment() {
 
   const handleResponse = async (questionId, value) => {
     try {
+      // Saved one answer at a time, so an abandoned assessment is always
+      // resumable from exactly where it stopped.
       await api.post('/responses', {
         ratee_id: ratee.user_id,
         question_id: questionId,
@@ -188,11 +219,7 @@ export default function Assessment() {
         setCurrentIndex((prev) => prev + 1);
       } else {
         await api.post('/responses/complete', { ratee_id: ratee.user_id });
-        if (mode === 'personal') {
-          navigate(`/personal-results/${ratee.user_id}`);
-        } else {
-          navigate(`/results/${ratee.user_id}`);
-        }
+        goToResults(ratee.user_id);
       }
     } catch {
       setError('Failed to save response. Please try again.');
@@ -330,7 +357,13 @@ export default function Assessment() {
   if (!questions.length) return null;
 
   const currentQuestion = questions[currentIndex];
-  const progress = Math.round((currentIndex / questions.length) * 100);
+
+  // Count against the full bank, not just this sitting, so a resumed rater
+  // sees "24 of 33" rather than restarting the counter at 1.
+  const answeredSoFar = alreadyAnswered + currentIndex;
+  const progress = totalQuestions
+    ? Math.round((answeredSoFar / totalQuestions) * 100)
+    : 0;
 
   return (
     <div className="assessment-bg">
@@ -342,9 +375,21 @@ export default function Assessment() {
           </div>
           <span className="ratee-label">Reviewing: <strong>{ratee?.user_name}</strong></span>
         </div>
+        {resumed && (
+          <p
+            style={{
+              textAlign: 'center',
+              marginBottom: 12,
+              fontSize: '0.85rem',
+              color: 'rgba(255,255,255,0.55)',
+            }}
+          >
+            Picking up where you left off — {alreadyAnswered} of {totalQuestions} already answered.
+          </p>
+        )}
         <div className="progress-section">
           <div className="progress-info">
-            <span className="progress-count">{currentIndex + 1} of {questions.length}</span>
+            <span className="progress-count">{answeredSoFar + 1} of {totalQuestions}</span>
             <span className="progress-pct">{progress}%</span>
           </div>
           <div className="progress-bar">

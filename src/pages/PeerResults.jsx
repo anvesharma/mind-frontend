@@ -85,7 +85,8 @@ export default function PeerResults() {
   const type = TYPE_DATA[topType];
   const totalPct = parseInt(percentiles?.total_pct) || 0;
   const percentileRank = totalPct;
-  const topPercent = 100 - totalPct;
+  // Floored server-side at 0.1% so the top scorer never reads "Top 0%".
+  const topPercent = percentiles?.total_top_percent ?? Math.max(0.1, 100 - totalPct);
   const dims = [
     { key: 'leader', label: 'Leader', score: scores.leader_score },
     { key: 'manager', label: 'Manager', score: scores.manager_score },

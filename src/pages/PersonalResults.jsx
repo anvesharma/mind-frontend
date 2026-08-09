@@ -121,7 +121,8 @@ export default function PersonalResults() {
   const type = TYPE_DATA[topType];
   const totalPct = parseInt(percentiles?.total_pct) ?? 0;
   const percentileRank = totalPct;
-  const topPercent = Math.max(1, 100 - totalPct);
+  // Floored server-side at 0.1% so the top scorer never reads "Top 0%".
+  const topPercent = percentiles?.total_top_percent ?? Math.max(0.1, 100 - totalPct);
 
   // Dynamic sub from top strengths
   const topStrengthNames = top5 ? top5.slice(0, 3).map(a => a.name).join(', ') : '';
