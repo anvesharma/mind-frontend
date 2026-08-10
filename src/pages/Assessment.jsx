@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../api';
 import Flashcard from '../components/Flashcard';
@@ -156,7 +156,12 @@ export default function Assessment() {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [resumed, setResumed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [finishing, setFinishing] = useState(false);
   const [error, setError] = useState('');
+
+  // In-flight saves. The UI advances without waiting for them; they are
+  // collected here and settled before the assessment is marked complete.
+  const pendingSaves = useRef([]);
 
   const goToResults = (rateeId) => {
     navigate(mode === 'personal' ? `/personal-results/${rateeId}` : `/results/${rateeId}`);
@@ -188,6 +193,7 @@ export default function Assessment() {
       setAlreadyAnswered(answeredIds.size);
       setResumed(answeredIds.size > 0 && remaining.length > 0);
       setCurrentIndex(0);
+      pendingSaves.current = [];
 
       // Every question already answered: nothing to resume, go straight to
       // results rather than showing an empty assessment.
@@ -210,8 +216,9 @@ export default function Assessment() {
     }
   };
 
-  // A 429 means the per-IP rate limit was hit, not that anything is broken.
-  // Wait it out and retry rather than stranding the rater mid-assessment.
+  // A 429 means a rate limit was hit, not that anything is broken. Wait it out
+  // and retry. Retry-After can be the remainder of the whole window, so cap the
+  // wait — a five minute sleep is indistinguishable from a hang.
   const saveResponse = async (questionId, value, attempt = 0) => {
     try {
       await api.post('/responses', {
@@ -219,39 +226,64 @@ export default function Assessment() {
         question_id: questionId,
         response_value: value,
       });
-      setError('');
     } catch (err) {
       if (err.response?.status === 429 && attempt < 3) {
-        const retryAfter = Number(err.response.headers?.['retry-after']) || 5;
-        setError(`Too many requests — retrying in ${retryAfter}s. Your answers are saved.`);
-        await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
+        const header = Number(err.response.headers?.['retry-after']);
+        const wait = Math.min(Number.isFinite(header) && header > 0 ? header : 5, 15);
+        setError(`Server is throttling — retrying in ${wait}s. Nothing is lost.`);
+        await new Promise((resolve) => setTimeout(resolve, wait * 1000));
         return saveResponse(questionId, value, attempt + 1);
       }
       throw err;
     }
   };
 
-  const handleResponse = async (questionId, value) => {
-    try {
-      // Saved one answer at a time, so an abandoned assessment is always
-      // resumable from exactly where it stopped.
-      await saveResponse(questionId, value);
+  // Advance immediately and save in the background.
+  //
+  // Previously each tap awaited its POST before showing the next question, so
+  // any slow request — a retry, a cold backend, a bad connection — froze the
+  // assessment for as long as the round trip took. Rating is a read-then-tap
+  // loop; there is no reason for the next card to depend on the last save.
+  const handleResponse = (questionId, value) => {
+    setError('');
 
-      if (currentIndex < questions.length - 1) {
-        setCurrentIndex((prev) => prev + 1);
-      } else {
-        await api.post('/responses/complete', { ratee_id: ratee.user_id });
-        goToResults(ratee.user_id);
-      }
-    } catch (err) {
-      if (err.response?.status === 429) {
+    const save = saveResponse(questionId, value).then(
+      () => ({ ok: true }),
+      (err) => ({ ok: false, err })
+    );
+    pendingSaves.current.push(save);
+
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+    } else {
+      finishAssessment();
+    }
+  };
+
+  // Settle every outstanding save before marking the assessment complete, so a
+  // silently dropped answer can never produce a 32-of-33 "complete" review.
+  const finishAssessment = async () => {
+    setFinishing(true);
+    try {
+      const results = await Promise.all(pendingSaves.current);
+      const failures = results.filter((r) => !r.ok);
+
+      if (failures.length) {
         setError(
-          'Too many requests right now. Everything you have answered is saved — ' +
-            'wait a minute, then reopen this review to carry on.'
+          `${failures.length} answer${failures.length > 1 ? 's' : ''} could not be saved. ` +
+            'Everything else is stored — reopen this review to finish the rest.'
         );
-      } else {
-        setError('Failed to save response. Please try again.');
+        return;
       }
+
+      await api.post('/responses/complete', { ratee_id: ratee.user_id });
+      goToResults(ratee.user_id);
+    } catch {
+      setError(
+        'Could not finish the review. Your answers are saved — reopen it to continue.'
+      );
+    } finally {
+      setFinishing(false);
     }
   };
 
@@ -413,7 +445,7 @@ export default function Assessment() {
               color: 'rgba(255,255,255,0.55)',
             }}
           >
-            Picking up where you left off — {alreadyAnswered} of {totalQuestions} already answered.
+            Picking up where you left off
           </p>
         )}
         <div className="progress-section">
@@ -426,11 +458,17 @@ export default function Assessment() {
           </div>
         </div>
         {error && <p className="error" style={{ textAlign: 'center', marginBottom: 16 }}>{error}</p>}
-        <Flashcard
-          key={currentQuestion.question_id}
-          question={currentQuestion}
-          onResponse={handleResponse}
-        />
+        {finishing ? (
+          <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.6)', padding: '40px 0' }}>
+            Saving your answers…
+          </p>
+        ) : (
+          <Flashcard
+            key={currentQuestion.question_id}
+            question={currentQuestion}
+            onResponse={handleResponse}
+          />
+        )}
       </div>
     </div>
   );
