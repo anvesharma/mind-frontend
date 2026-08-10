@@ -199,10 +199,35 @@ export default function Assessment() {
 
       setQuestions(remaining);
       setStep(STEPS.ASSESSMENT);
-    } catch {
-      setError('Something went wrong. Please try again.');
+    } catch (err) {
+      if (err.response?.status === 429) {
+        setError('Too many requests right now. Please wait a minute and try again.');
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  // A 429 means the per-IP rate limit was hit, not that anything is broken.
+  // Wait it out and retry rather than stranding the rater mid-assessment.
+  const saveResponse = async (questionId, value, attempt = 0) => {
+    try {
+      await api.post('/responses', {
+        ratee_id: ratee.user_id,
+        question_id: questionId,
+        response_value: value,
+      });
+      setError('');
+    } catch (err) {
+      if (err.response?.status === 429 && attempt < 3) {
+        const retryAfter = Number(err.response.headers?.['retry-after']) || 5;
+        setError(`Too many requests — retrying in ${retryAfter}s. Your answers are saved.`);
+        await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
+        return saveResponse(questionId, value, attempt + 1);
+      }
+      throw err;
     }
   };
 
@@ -210,19 +235,23 @@ export default function Assessment() {
     try {
       // Saved one answer at a time, so an abandoned assessment is always
       // resumable from exactly where it stopped.
-      await api.post('/responses', {
-        ratee_id: ratee.user_id,
-        question_id: questionId,
-        response_value: value,
-      });
+      await saveResponse(questionId, value);
+
       if (currentIndex < questions.length - 1) {
         setCurrentIndex((prev) => prev + 1);
       } else {
         await api.post('/responses/complete', { ratee_id: ratee.user_id });
         goToResults(ratee.user_id);
       }
-    } catch {
-      setError('Failed to save response. Please try again.');
+    } catch (err) {
+      if (err.response?.status === 429) {
+        setError(
+          'Too many requests right now. Everything you have answered is saved — ' +
+            'wait a minute, then reopen this review to carry on.'
+        );
+      } else {
+        setError('Failed to save response. Please try again.');
+      }
     }
   };
 
